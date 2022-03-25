@@ -9,15 +9,25 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { RatingModule } from 'primeng/rating';
+import { MenuModule } from 'primeng/menu';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { IndexComponent } from './index/index.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { MainNavBarComponent } from './main-nav-bar/main-nav-bar.component';
-import { AccessRightErrorComponent } from './access-right-error/access-right-error.component';
-import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { IndexComponent } from './pages/index/index.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { MainNavBarComponent } from './components/main-nav-bar/main-nav-bar.component';
+import { AccessRightErrorComponent } from './pages/access-right-error/access-right-error.component';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { RegisterationComponent } from './pages/registeration/registeration.component';
+import { ProductsHomePageComponent } from './pages/productOperations/products-home-page/products-home-page.component';
+import { AccessoryHomePageComponent } from './pages/accessoryOperations/accessory-home-page/accessory-home-page.component';
+import { ViewMyCartPageComponent } from './pages/view-my-cart-page/view-my-cart-page.component';
+import { ForumPageComponent } from './pages/forum-page/forum-page.component';
+import { ViewMyOrdersPageComponent } from './pages/view-my-orders-page/view-my-orders-page.component';
+import { SupportPageComponent } from './pages/support-page/support-page.component';
+import { SettingsPageComponent } from './pages/settings-page/settings-page.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +38,14 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
     MainNavBarComponent,
     AccessRightErrorComponent,
     BreadcrumbComponent,
+    RegisterationComponent,
+    ProductsHomePageComponent,
+    AccessoryHomePageComponent,
+    ViewMyCartPageComponent,
+    ForumPageComponent,
+    ViewMyOrdersPageComponent,
+    SupportPageComponent,
+    SettingsPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +58,8 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
     ButtonModule,
     DialogModule,
     RatingModule,
+    BreadcrumbModule,
+    MenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
