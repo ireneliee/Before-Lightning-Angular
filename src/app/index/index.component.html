@@ -1,0 +1,28 @@
+<app-breadcrumb></app-breadcrumb>
+
+<article *ngIf="sessionService.getIsLogin() == false">
+    <h3>Welcome</h3>
+    
+    <p>
+        This version of the retail Point-Of-Sale (POS) system includes the following enhancements:
+    </p>
+    <ul style="margin-left: 20px;">
+        <li>Enhancement of existing use cases to meet v5.0 expanded logical data model.</li>
+        <li>Implementation of new use cases in v5.0 (except customer related use cases).</li>
+    </ul>
+</article>
+
+<ng-template [ngIf]="sessionService.getIsLogin() == true">		
+<div>  
+    <h3>Welcome</h3>
+    
+    <p>
+        This version of the retail Point-Of-Sale (POS) system includes the following enhancements:
+    </p>
+    <ul style="margin-left: 20px;">
+        <li>Enhancement of existing use cases to meet v5.0 expanded logical data model.</li>
+        <li>Implementation of new use cases in v5.0 (except customer related use cases).</li>
+    </ul>
+    
+    </div>
+</ng-template>

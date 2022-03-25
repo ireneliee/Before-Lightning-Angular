@@ -1,0 +1,60 @@
+<section id="breadcrumb" class="breadcrumb">
+	&#9776; Home
+	
+	<span *ngIf="pageName == 'checkout' ||
+				 pageName == 'voidRefund' ||
+				 pageName == 'viewMySaleTransactions'"> 
+		> Cashier Operation
+	</span>
+	
+	<span *ngIf="pageName == 'checkout'"> 
+		> Checkout
+	</span>
+	
+	<span *ngIf="pageName == 'voidRefund'"> 
+		> Void/Refund
+	</span>
+	
+	<span *ngIf="pageName == 'viewMySaleTransactions'"> 
+		> View My Sale Transactions
+	</span>
+	
+	<span *ngIf="pageName == 'createNewStaff' ||
+				 pageName == 'viewAllStaffs' ||
+				 pageName == 'createNewProduct' ||
+				 pageName == 'viewAllProducts' ||
+				 pageName == 'viewProductDetails' ||
+				 pageName == 'updateProduct' ||
+				 pageName == 'deleteProduct'"> 
+		> System Administration
+	</span>
+	
+	<span *ngIf="pageName == 'createNewStaff'"> 
+		> Create New Staff
+	</span>
+	
+	<span *ngIf="pageName == 'viewAllStaffs'"> 
+		> View All Staffs
+	</span>
+	
+	<span *ngIf="pageName == 'createNewProduct'"> 
+		> Create New Product
+	</span>
+	
+	<span *ngIf="pageName == 'viewAllProducts'"> 
+		> View All Products
+	</span>
+	
+	<span *ngIf="pageName == 'viewProductDetails'"> 
+		> View Product Details
+	</span>
+	
+	<span *ngIf="pageName == 'updateProduct'"> 
+		> Update Product
+	</span>
+	
+	<span *ngIf="pageName == 'deleteProduct'"> 
+		> Delete Product
+	</span>
+	
+</section>
