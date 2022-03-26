@@ -1,60 +1,8 @@
 <section id="mainmenu" class="mainmenu">
-  <h3>Main Menu</h3>
-  <nav>
-    <p-menu [model]="items"></p-menu>
-    <!-- 
-
-    <br />
-    <a routerLink="/index">Home</a>
-
-    <ng-template [ngIf]="sessionService.getIsLogin() == true">
-      <br /><br />
-      <a class="logoutlink" (click)="memberLogout()">Logout</a>
-      <br /><br />
-      <h4 class="menuHeader1">Cashier Operation</h4>
-      <ul class="secondaryMenu">
-        <li><a routerLink="/cashierOperation/checkout">Checkout</a></li>
-        <li><a routerLink="/cashierOperation/voidRefund">Void/Refund</a></li>
-        <li>
-          <a routerLink="/cashierOperation/viewMySaleTransactions"
-            >View My Sale Transactions</a
-          >
-        </li>
-      </ul>
-      <br />
-      <h4 class="menuHeader1">System Administration</h4>
-      <h5 class="menuHeader2">Staff</h5>
-      <ul class="secondaryMenu">
-        <li>
-          <a routerLink="/systemAdministration/createNewStaff"
-            >Create New Staff</a
-          >
-        </li>
-        <li>
-          <a routerLink="/systemAdministration/viewAllStaffs"
-            >View All Staffs</a
-          >
-        </li>
-      </ul>
-      <h5 class="menuHeader2">Product</h5>
-      <ul class="secondaryMenu">
-        <li>
-          <a routerLink="/systemAdministration/createNewProduct"
-            >Create New Product</a
-          >
-        </li>
-        <li>
-          <a routerLink="/systemAdministration/viewAllProducts"
-            >View All Products</a
-          >
-        </li>
-        <li>
-          <a routerLink="/systemAdministration/viewAllProductsPf"
-            >View All Products (PF)</a
-          >
-        </li>
-      </ul>
-      <br /><br />
-    </ng-template> -->
-  </nav>
+	<h3>Main Menu</h3>
+	<nav>
+		<ng-template [ngIf]="sessionService.getIsLogin() == true || sessionService.getIsLogin() == false">
+			<p-menu [model]="items"></p-menu>
+		</ng-template>
+	</nav>
 </section>

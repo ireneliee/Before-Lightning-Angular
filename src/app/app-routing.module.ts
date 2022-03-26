@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'viewMyOrdersPage', component: ViewMyOrdersPageComponent },
   { path: 'forumPage', component: ForumPageComponent },
   { path: 'supportPage', component: SupportPageComponent },
-  { path: 'settingPage', component: SettingsPageComponent },
+  { path: 'settingsPage', component: SettingsPageComponent },
 ];
 
 @NgModule({

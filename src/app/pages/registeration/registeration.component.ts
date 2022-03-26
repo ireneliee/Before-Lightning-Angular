@@ -25,4 +25,8 @@ export class RegisterationComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  createNewMember(newMember : Member) {
+    
+  }
+
 }
