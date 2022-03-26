@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpErrorResponse,
+} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SessionService } from './session.service';
@@ -20,18 +24,9 @@ export class MemberService {
     private sessionService: SessionService
   ) {}
 
-  MemberLogin(
-    username: string | undefined,
-    password: string | undefined
-  ): Observable<Member> {
-    return this.httpClient
-      .get<Member>(
-        this.baseUrl +
-          '/MemberLogin?username=' +
-          username +
-          '&password=' +
-          password
-      )
+  MemberLogin(username: string | undefined, password: string | undefined): Observable<Member> 
+  {
+    return this.httpClient.get<Member>(this.baseUrl + '/memberLogin?username=' + username +'&password=' + password)
       .pipe(catchError(this.handleError));
   }
 

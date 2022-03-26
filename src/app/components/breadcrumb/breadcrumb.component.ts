@@ -20,30 +20,32 @@ export class BreadcrumbComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    if (this.pageName == "Products") {
-      this.items.push({label: 'Products', routerLink: '/productsHomePage'});
+    if (this.pageName == 'Products') {
+      this.items.push({ label: 'Products', routerLink: '/productsHomePage' });
     }
-    if (this.pageName == "Registeration") {
-      this.items.push({label: 'Registeration', routerLink: '/registeration'});
+    if (this.pageName == 'Registeration') {
+      this.items.push({ label: 'Registeration', routerLink: '/registeration' });
     }
-    if (this.pageName == "Accessory") {
-      this.items.push({label: 'Accessory', routerLink: 'accessoryHomePage'});
+    if (this.pageName == 'Accessory') {
+      this.items.push({ label: 'Accessory', routerLink: 'accessoryHomePage' });
     }
-    if (this.pageName == "View My Cart") {
-      this.items.push({label: 'View My Cart', routerLink: '/viewMyCartPage'});
+    if (this.pageName == 'View My Cart') {
+      this.items.push({ label: 'View My Cart', routerLink: '/viewMyCartPage' });
     }
-    if (this.pageName == "View My Orders") {
-      this.items.push({label: 'View My Orders', routerLink: '/viewMyOrdersPage'});
+    if (this.pageName == 'View My Orders') {
+      this.items.push({
+        label: 'View My Orders',
+        routerLink: '/viewMyOrdersPage',
+      });
     }
-    if (this.pageName == "Support") {
-      this.items.push({label: 'Support', routerLink: '/supportPage'});
+    if (this.pageName == 'Support') {
+      this.items.push({ label: 'Support', routerLink: '/supportPage' });
     }
-    if (this.pageName == "Settings") {
-      this.items.push({label: 'Settings', routerLink: '/settingPage'});
+    if (this.pageName == 'Settings') {
+      this.items.push({ label: 'Settings', routerLink: '/settingPage' });
     }
-    if (this.pageName == "Forum") {
-      this.items.push({label: 'Forum', routerLink: 'forumPage'});
+    if (this.pageName == 'Forum') {
+      this.items.push({ label: 'Forum', routerLink: 'forumPage' });
     }
 
     this.home = { icon: 'pi pi-home', routerLink: '/' };
