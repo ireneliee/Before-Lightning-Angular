@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AccessRightErrorComponent } from './pages/access-right-error/access-right-error.component';
 import { IndexComponent } from './pages/index/index.component';
-import { RegisterationComponent } from './pages/registeration/registeration.component';
+import { RegisterationComponent } from './pages/registerationOperations/registeration/registeration.component';
 import { ProductsHomePageComponent } from './pages/productOperations/products-home-page/products-home-page.component';
 import { AccessoryHomePageComponent } from './pages/accessoryOperations/accessory-home-page/accessory-home-page.component';
 import { ViewMyCartPageComponent } from './pages/view-my-cart-page/view-my-cart-page.component';

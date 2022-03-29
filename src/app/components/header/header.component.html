@@ -14,15 +14,13 @@
 			&nbsp;
 			<input type="reset" value="Clear" />
 			&nbsp;
-			<input type="button" (click)="memberLogin()" value="Login" />					
+			<input type="button" (click)="memberLogin()" value="Login" />
 		</div>
-		
-		<div *ngIf="loginError == true" style="text-align: right; color: red;">
-			Invalid login credential: Username does not exist or invalid password!
-		</div>
-		
+
+		<div *ngIf="loginError == true" style="text-align: right; color: red">Invalid login credential: Username does not exist or invalid password!</div>
+
 		<div *ngIf="sessionService.getIsLogin() == true">
-			You are login as {{sessionService.getCurrentMember().firstName}} {{sessionService.getCurrentMember().lastName}} 
+			You are login as {{ sessionService.getCurrentMember().firstname }} {{ sessionService.getCurrentMember().lastname }}
 			<input type="button" (click)="memberLogout()" value="Logout" />
 		</div>
 	</aside>

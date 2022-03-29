@@ -4,6 +4,8 @@ import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { SessionService } from "./session.service";
 import { Member } from "../models/member";
+import { Address } from "../models/address";
+import { CreateNewMemberReq } from "../models/create-new-member-req";
 
 const httpOptions = {
 	headers: new HttpHeaders({ "Content-Type": "application/json" }),
@@ -21,8 +23,15 @@ export class MemberService {
 		return this.httpClient.get<Member>(this.baseUrl + "/memberLogin?username=" + username + "&password=" + password).pipe(catchError(this.handleError));
 	}
 
-	RegisterNewMember(newMember: Member): Observable<Member> {
-		return this.httpClient.put<Member>(this.baseUrl, newMember, httpOptions).pipe(catchError(this.handleError));
+	RegisterNewMember(newMember: Member, newAddress: Address): Observable<Member> {
+		console.log("======HERE IN MEMBER SERVICE =====");
+		console.log(newMember);
+		console.log(newAddress);
+
+		let createNewMemberReq = new CreateNewMemberReq(newMember, newAddress);
+		console.log(createNewMemberReq);
+
+		return this.httpClient.put<Member>(this.baseUrl, createNewMemberReq, httpOptions).pipe(catchError(this.handleError));
 	}
 
 	private handleError(error: HttpErrorResponse) {
