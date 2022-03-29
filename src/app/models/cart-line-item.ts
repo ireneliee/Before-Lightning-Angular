@@ -4,7 +4,6 @@ import { PartChoice } from "./part-choice";
 import { Product } from "./product";
 
 export class CartLineItem {
-	serialNumber: number | undefined;
 	quantity: number | undefined;
 	subtotalPrice: number | undefined;
 	cosmeticImageLink: string | undefined;
@@ -21,4 +20,6 @@ export class CartLineItem {
 		this.cosmeticImageLink = cosmeticImageLink;
 		this.purchaseOrderLineItemTypeEnum = purchaseOrderLineItemTypeEnum;
 	}
+
+	
 }

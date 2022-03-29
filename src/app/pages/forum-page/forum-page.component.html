@@ -1,3 +1,57 @@
-<app-breadcrumb pageName="Forum"></app-breadcrumb>
+<div class="card">
+  <p-dataView
+    #dv
+    [value]="forumPosts"
+    [paginator]="true"
+    [rows]="9"
+    filterBy="name"
+    [sortField]="sortField"
+    [sortOrder]="sortOrder"
+    layout="grid"
+  >
+    <ng-template pTemplate="header">
+      <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+        <p-dropdown
+          [options]="sortOptions"
+          [(ngModel)]="sortKey"
+          placeholder="Sort By Date"
+          (onChange)="onSortChange($event)"
+          styleClass="p-mb-2 p-mb-md-0"
+        ></p-dropdown>
+        <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+          <i class="pi pi-search"></i>
+          <input
+            type="search"
+            pInputText
+            placeholder="Search by Name"
+            (input)="dv.filter($any($event.target).value)"
+          />
+        </span>
+      </div>
+    </ng-template>
 
-<p>forum-page works!</p>
+    <ng-template let-forum pTemplate="gridItem">
+      <div class="p-col-12 p-md-4">
+        <div class="product-grid-item card">
+          <div class="product-grid-item">
+            <div class="forum-box-user"></div>
+            <div class="forum-box-content">
+              <div class="forum-box-content-maincontent">
+                <span class="forum-title">{{ forum.title }}</span>
+                <div class="forum-content">{{ forum.content }}</div>
+                <div class="forum-timestamp">{{ forum.timestamp }}</div>
+              </div>
+              <div class="forum-box-content-subcontent">
+                <button title = "like" pButton type="button" icon="pi pi-thumbs-up" class="p-button-raised p-button-rounded"></button>
+                <button title = "dislike" pButton type="button" icon="pi pi-thumbs-down" class="p-button-raised p-button-rounded"></button>
+                <button title = "comment" pButton type="button" icon="pi pi-comment" class="p-button-raised p-button-rounded"></button>
+                <button title = "view" pButton type="button" icon="pi pi-search" class="p-button-raised p-button-rounded"></button>
+              </div>
+            </div>
+            <div class="forum-box-action"></div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataView>
+</div>

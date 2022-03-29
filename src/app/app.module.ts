@@ -10,6 +10,11 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { RatingModule } from 'primeng/rating';
 import { MenuModule } from 'primeng/menu';
+import {DataViewModule} from 'primeng/dataview';
+import {DropdownModule} from 'primeng/dropdown';
+import {InputTextModule} from 'primeng/inputtext';
+import {RippleModule} from 'primeng/ripple';
+import { ChipModule } from 'primeng/chip';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +33,7 @@ import { ForumPageComponent } from './pages/forum-page/forum-page.component';
 import { ViewMyOrdersPageComponent } from './pages/view-my-orders-page/view-my-orders-page.component';
 import { SupportPageComponent } from './pages/support-page/support-page.component';
 import { SettingsPageComponent } from './pages/settings-page/settings-page.component';
+
 
 @NgModule({
   declarations: [
@@ -60,6 +66,12 @@ import { SettingsPageComponent } from './pages/settings-page/settings-page.compo
     RatingModule,
     BreadcrumbModule,
     MenuModule,
+    DataViewModule,
+    InputTextModule,
+    RippleModule,
+    HttpClientModule,
+    DropdownModule,
+    ChipModule
   ],
   providers: [],
   bootstrap: [AppComponent],

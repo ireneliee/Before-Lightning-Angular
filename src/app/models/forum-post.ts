@@ -13,15 +13,30 @@ export class ForumPost {
 	replyEntities: Reply[] | undefined;
 	listOfMemberLikes: Member[] | undefined;
 	listOfMemberDislikes: Member[] | undefined;
-    memberAuther : Member | undefined;
+    forumAuthor : Member | undefined;
+	numberOfLikes : number | undefined;
+	numberOfDislikes: number | undefined;
+	numberOfReplies: number | undefined;
 
 
-	constructor(forumPostEntityId?: number, title?: string, content?: string, image?: string, timestamp?: Date, visible?: boolean, banned?: boolean) {
+
+	constructor(forumPostEntityId?: number, forumAuthor?: Member, title?: string, 
+		content?: string, image?: string, timestamp?: Date, 
+		visible?: boolean, banned?: boolean, replyEntities?: Reply[], listOfMemberLikes?: Member[],
+		listOfMemberDislikes?: Member[]) {
 		this.forumPostEntityId = forumPostEntityId;
+		this.forumAuthor = forumAuthor;
 		this.title = title;
 		this.content = content;
 		this.timestamp = timestamp;
 		this.visible = visible;
 		this.banned = banned;
+		this.image = image;
+		this.replyEntities = replyEntities;
+		this.listOfMemberLikes = listOfMemberLikes;
+		this.listOfMemberDislikes = listOfMemberDislikes;
+		this.numberOfLikes = listOfMemberLikes?.length;
+		this.numberOfDislikes = listOfMemberDislikes?.length;
+		this.numberOfReplies = replyEntities?.length;
 	}
 }

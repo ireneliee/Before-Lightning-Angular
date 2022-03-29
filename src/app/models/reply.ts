@@ -10,14 +10,16 @@ export class Reply {
 	banned: boolean | undefined;
 
 	forumPostEntity: ForumPost | undefined;
-	memberEntity: Member | undefined;
+	replyAuthor: Member | undefined;
 
-	constructor(replyEntityId?: number, content?: string, image?: string, timestamp?: Date, visible?: boolean, banned?: boolean) {
+	constructor(replyEntityId?: number, replyAuthor?: Member, content?: string, 
+		image?: string, timestamp?: Date, visible?: boolean, banned?: boolean) {
 		this.replyEntityId = replyEntityId;
 		this.content = content;
 		this.image = image;
 		this.timestamp = timestamp;
 		this.visible = visible;
 		this.banned = banned;
+		this.replyAuthor = replyAuthor;
 	}
 }

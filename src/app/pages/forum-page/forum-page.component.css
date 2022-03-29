@@ -1,0 +1,42 @@
+.p-dropdown {
+    width: 14rem;
+    font-weight: normal;
+}
+
+.product-list-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    width: 100%;
+}
+
+.card {
+    padding: 2rem;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    margin-bottom: 2rem;
+    padding-right: 2em;
+    overflow-wrap: break-word;
+}
+
+.forum-title {
+    font-size: 1.5em;
+}
+
+.forum-timestamp {
+    font-size: small;
+}
+
+.forum-box-content-subcontent {
+    margin-top: 1.5em;
+}
+.forum-box-content-subcontent{
+    margin-top: 1.5em;
+}
+
+.forum-box-content-subcontent button{
+    margin-right: 0.5em;
+}
+
+
+
