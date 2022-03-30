@@ -13,26 +13,46 @@ import { SessionService } from "src/app/services/session.service";
 	providers: [MessageService],
 })
 export class RegisterationComponent implements OnInit {
-	member: Member = new Member();
 	address: Address = new Address();
-	imageLink: String | undefined;
+	username: String = "";
+	password: String = "";
+	firstname: String = "";
+	lastname: String = "";
+	email: String = "";
+	contact: String = "";
+	imageLink: String = "";
+
 	resultSuccess: Boolean | undefined;
 	resultError: Boolean | undefined;
+	submitted: boolean;
 
 	constructor(private memberService: MemberService, private sessionService: SessionService, private messageService: MessageService) {
-		this.member = new Member();
 		this.address = new Address();
+		this.username = "";
+		this.password = "";
+		this.firstname = "";
+		this.lastname = "";
+		this.email = "";
+		this.contact = "";
 		this.imageLink = "";
 		this.resultSuccess = false;
 		this.resultError = false;
+		this.submitted = false;
 	}
 
 	initializeState(): void {
-		this.member = new Member();
 		this.address = new Address();
+		this.username = "";
+		this.password = "";
+		this.firstname = "";
+		this.lastname = "";
+		this.email = "";
+		this.contact = "";
 		this.imageLink = "";
+
 		this.resultSuccess = false;
 		this.resultError = false;
+		this.submitted = false;
 	}
 
 	ngOnInit(): void {
@@ -40,11 +60,10 @@ export class RegisterationComponent implements OnInit {
 	}
 
 	createNewMember(createNewMemberForm: NgForm) {
-		console.log(this.member);
 		console.log(this.address);
 		console.log("result error: " + this.resultError);
 
-		this.memberService.RegisterNewMember(this.member, this.address).subscribe({
+		this.memberService.RegisterNewMember(this.address, this.username, this.password, this.firstname, this.lastname, this.email, this.contact, this.imageLink).subscribe({
 			next: (response) => {
 				let newMember: Member = response;
 				this.resultSuccess = true;
@@ -57,7 +76,7 @@ export class RegisterationComponent implements OnInit {
 			error: (error) => {
 				this.resultError = true;
 				this.resultSuccess = false;
-				this.messageService.add({ severity: "error", summary: "Service Message", detail: "Error occured when registering member"});
+				this.messageService.add({ severity: "error", summary: "Service Message", detail: "Error occured when registering member" });
 				console.log("********** REGISTERATION.ts: " + error);
 			},
 		});

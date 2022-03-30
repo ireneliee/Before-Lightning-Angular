@@ -23,12 +23,11 @@ export class MemberService {
 		return this.httpClient.get<Member>(this.baseUrl + "/memberLogin?username=" + username + "&password=" + password).pipe(catchError(this.handleError));
 	}
 
-	RegisterNewMember(newMember: Member, newAddress: Address): Observable<Member> {
+	RegisterNewMember(newAddress: Address ,username: String, password: String, firstname: String, lastname: String, email: String, contact: String, imageLink: String): Observable<Member> {
 		console.log("======HERE IN MEMBER SERVICE =====");
-		console.log(newMember);
 		console.log(newAddress);
 
-		let createNewMemberReq = new CreateNewMemberReq(newMember, newAddress);
+		let createNewMemberReq = new CreateNewMemberReq(newAddress, username, password, firstname, lastname, email, contact, imageLink);
 		console.log(createNewMemberReq);
 
 		return this.httpClient.put<Member>(this.baseUrl, createNewMemberReq, httpOptions).pipe(catchError(this.handleError));

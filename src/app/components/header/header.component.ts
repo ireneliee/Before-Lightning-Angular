@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { MessageService } from "primeng/api";
 import { Member } from "../../models/member";
 import { MemberService } from "../../services/member.service";
 import { SessionService } from "../../services/session.service";
@@ -15,7 +16,7 @@ export class HeaderComponent implements OnInit {
 	loginError: boolean;
 	errorMessage: string | undefined;
 
-	constructor(private router: Router, private activatedRoute: ActivatedRoute, public sessionService: SessionService, private memberService: MemberService) {
+	constructor(private router: Router, private activatedRoute: ActivatedRoute, public sessionService: SessionService, private memberService: MemberService, private messageService: MessageService) {
 		this.loginError = false;
 	}
 
@@ -34,6 +35,7 @@ export class HeaderComponent implements OnInit {
 					this.sessionService.setIsLogin(true);
 					this.sessionService.setCurrentMember(member);
 					this.loginError = false;
+					this.router.navigate(["/index"]);
 					window.location.reload();
 				} else {
 					this.loginError = true;
@@ -48,7 +50,9 @@ export class HeaderComponent implements OnInit {
 
 	memberLogout(): void {
 		this.sessionService.setIsLogin(false);
+		this.messageService.add({ severity: "success", summary: "Log Out Successful!", detail: "Good Bye! " + this.sessionService.getCurrentMember().firstname + " " + this.sessionService.getCurrentMember().lastname });
 		this.sessionService.setCurrentMember(null);
 		this.router.navigate(["/index"]);
+		window.location.reload();
 	}
 }

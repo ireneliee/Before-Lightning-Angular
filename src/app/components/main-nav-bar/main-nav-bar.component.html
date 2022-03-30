@@ -1,8 +1,12 @@
 <section id="mainmenu" class="mainmenu">
 	<h3>Main Menu</h3>
 	<nav>
-		<ng-template [ngIf]="sessionService.getIsLogin() == true || sessionService.getIsLogin() == false">
+		<!-- <ng-template [ngIf]="sessionService.getIsLogin() == true || sessionService.getIsLogin() == false">
 			<p-menu [model]="items"></p-menu>
-		</ng-template>
+		</ng-template> -->
+
+		<div *ngIf="sessionService.getIsLogin() == false"><p-menu [model]="items"></p-menu></div>
+
+		<div *ngIf="sessionService.getIsLogin() == true"><p-menu [model]="items"></p-menu></div>
 	</nav>
 </section>

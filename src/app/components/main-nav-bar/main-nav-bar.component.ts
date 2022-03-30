@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { MenuItem } from "primeng/api";
+import { MenuItem, MessageService } from "primeng/api";
 
 import { SessionService } from "../../services/session.service";
 
@@ -12,7 +12,7 @@ import { SessionService } from "../../services/session.service";
 export class MainNavBarComponent implements OnInit {
 	items: MenuItem[];
 
-	constructor(private router: Router, public sessionService: SessionService) {
+	constructor(private router: Router, public sessionService: SessionService, private messageService : MessageService) {
 		if (this.sessionService.getIsLogin() == true) {
 			this.items = [
 				{
@@ -55,6 +55,13 @@ export class MainNavBarComponent implements OnInit {
 					icon: "pi pi-qrcode",
 					command: () => {
 						this.router.navigate(["/forumPage"]);
+					},
+				},
+				{
+					label: "Support",
+					icon: "pi pi-flag",
+					command: () => {
+						this.router.navigate(["/supportPage"]);
 					},
 				},
 				{
@@ -120,13 +127,13 @@ export class MainNavBarComponent implements OnInit {
 		}
 	}
 
-	ngOnInit() {
-		
-	}
+	ngOnInit() {}
 
 	memberLogout(): void {
 		this.sessionService.setIsLogin(false);
+		this.messageService.add({ severity: "success", summary: "Log Out Successful!", detail: "Good Bye! " + this.sessionService.getCurrentMember().firstname + " " + this.sessionService.getCurrentMember().lastname });
 		this.sessionService.setCurrentMember(null);
 		this.router.navigate(["/index"]);
+		window.location.reload();
 	}
 }
