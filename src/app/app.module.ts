@@ -4,22 +4,23 @@ import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-import { PanelModule } from 'primeng/panel';
-import { TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
-import { RatingModule } from 'primeng/rating';
-import { MenuModule } from 'primeng/menu';
-import {DataViewModule} from 'primeng/dataview';
-import {DropdownModule} from 'primeng/dropdown';
-import {InputTextModule} from 'primeng/inputtext';
-import {RippleModule} from 'primeng/ripple';
-import { ChipModule } from 'primeng/chip';
+import { PanelModule } from "primeng/panel";
+import { TableModule } from "primeng/table";
+import { ButtonModule } from "primeng/button";
+import { DialogModule } from "primeng/dialog";
+import { RatingModule } from "primeng/rating";
+import { MenuModule } from "primeng/menu";
+import { DataViewModule } from "primeng/dataview";
+import { DropdownModule } from "primeng/dropdown";
+import { InputTextModule } from "primeng/inputtext";
+import { RippleModule } from "primeng/ripple";
+import { ChipModule } from "primeng/chip";
 import { PasswordModule } from "primeng/password";
 import { CardModule } from "primeng/card";
 import { MessagesModule } from "primeng/messages";
 import { MessageModule } from "primeng/message";
 import { ToastModule } from "primeng/toast";
+import { FileUploadModule } from "primeng/fileupload";
 
 import { MessageService } from "primeng/api";
 
@@ -40,7 +41,6 @@ import { ForumPageComponent } from "./pages/forum-page/forum-page.component";
 import { ViewMyOrdersPageComponent } from "./pages/view-my-orders-page/view-my-orders-page.component";
 import { SupportPageComponent } from "./pages/support-page/support-page.component";
 import { SettingsPageComponent } from "./pages/settings-page/settings-page.component";
-import { RegisterationAddressComponent } from "./pages/registerationOperations/registeration-address/registeration-address.component";
 import { CreateNewForumPostComponent } from './pages/create-new-forum-post/create-new-forum-post.component';
 
 
@@ -61,8 +61,7 @@ import { CreateNewForumPostComponent } from './pages/create-new-forum-post/creat
 		ViewMyOrdersPageComponent,
 		SupportPageComponent,
 		SettingsPageComponent,
-		RegisterationAddressComponent,
-  CreateNewForumPostComponent,
+  		CreateNewForumPostComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -84,11 +83,12 @@ import { CreateNewForumPostComponent } from './pages/create-new-forum-post/creat
 		MessageModule,
 		ToastModule,
 		DataViewModule,
-    	InputTextModule,
-    	RippleModule,
-    	HttpClientModule,
-    	DropdownModule,
-    	ChipModule
+		InputTextModule,
+		RippleModule,
+		HttpClientModule,
+		DropdownModule,
+		ChipModule,
+		FileUploadModule,
 	],
 	providers: [MessageService],
 	bootstrap: [AppComponent],

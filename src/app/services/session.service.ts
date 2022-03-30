@@ -1,90 +1,78 @@
-import { Injectable } from '@angular/core';
-import { Member } from '../models/member';
+import { Injectable } from "@angular/core";
+import { Member } from "../models/member";
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: "root",
 })
-export class SessionService
-{
-  constructor()
-  {
-  }
+export class SessionService {
+	constructor() {}
 
+	getIsLogin(): boolean {
+		if (sessionStorage["isLogin"] == "true") {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
+	setIsLogin(isLogin: boolean): void {
+		sessionStorage["isLogin"] = isLogin;
+	}
 
-  getIsLogin(): boolean
-  {
-    if(sessionStorage['isLogin'] == "true")
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-  }
+	getCurrentMember(): Member {
+		return JSON.parse(sessionStorage["currentMember"]);
+	}
 
+	setCurrentMember(currentMember: Member | null): void {
+		sessionStorage["currentMember"] = JSON.stringify(currentMember);
+	}
 
+	getUsername(): string {
+		return sessionStorage["username"];
+	}
 
-  setIsLogin(isLogin: boolean): void
-  {
-    sessionStorage['isLogin'] = isLogin;
-  }
+	setUsername(username: string | undefined): void {
+		sessionStorage["username"] = username;
+	}
 
+	getPassword(): string {
+		return sessionStorage["password"];
+	}
 
+	setPassword(password: string | undefined): void {
+		sessionStorage["password"] = password;
+	}
 
-  getCurrentMember(): Member
-  {
-    return JSON.parse(sessionStorage['currentMember']);
-  }
+  //UPDATE THIS WHEN YOU MAKE NEW PAGES
+	checkAccessRight(path: string): boolean {
+		console.log("********** path: " + path);
+    console.log(this.getIsLogin());
 
-
-
-  setCurrentMember(currentMember: Member | null): void
-  {		 
-    sessionStorage['currentMember'] = JSON.stringify(currentMember);
-  }
-
-
-
-  getUsername(): string
-  {
-    return sessionStorage['username'];
-  }
-
-
-
-  setUsername(username: string | undefined): void
-  {
-    sessionStorage['username'] = username;
-  }
-  
-  
-  
-  getPassword(): string
-  {
-    return sessionStorage['password'];
-  }
-
-
-
-  setPassword(password: string | undefined): void
-  {
-    sessionStorage['password'] = password;
-  }
-  
-  
-  
-  checkAccessRight(path : string): boolean
-  {
-    console.log("********** path: " + path);
-
-    if(this.getIsLogin())
-    {
-      return true;
-    } else {
-      return false;
-    }
-
-  }
+		if (this.getIsLogin()) {
+			if (path == "/index" || 
+      path == "/productsHomePage" || 
+      path == "/accessoryHomePage" || 
+      path == "/viewMyCartPage" || 
+      path == "/viewMyOrdersPage" || 
+      path == "/forumPage" || 
+      path == "/supportPage" || 
+      path == "/settingsPage") {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			if (path == "/index" || 
+      path == "/productsHomePage" || 
+      path == "/registeration" || 
+      path == "/accessoryHomePage" || 
+      path == "/viewMyCartPage" || 
+      path == "/forumPage") {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
 }
+
