@@ -14,10 +14,6 @@ export class ForumPost {
 	listOfMemberLikes: Member[] | undefined;
 	listOfMemberDislikes: Member[] | undefined;
     forumAuthor : Member | undefined;
-	numberOfLikes : number | undefined;
-	numberOfDislikes: number | undefined;
-	numberOfReplies: number | undefined;
-
 
 
 	constructor(forumPostEntityId?: number, forumAuthor?: Member, title?: string, 
@@ -35,8 +31,6 @@ export class ForumPost {
 		this.replyEntities = replyEntities;
 		this.listOfMemberLikes = listOfMemberLikes;
 		this.listOfMemberDislikes = listOfMemberDislikes;
-		this.numberOfLikes = listOfMemberLikes?.length;
-		this.numberOfDislikes = listOfMemberDislikes?.length;
-		this.numberOfReplies = replyEntities?.length;
+
 	}
 }

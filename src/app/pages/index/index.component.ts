@@ -8,6 +8,7 @@ import { SessionService } from '../../services/session.service';
   styleUrls: ['./index.component.css'],
 })
 export class IndexComponent implements OnInit {
+ 
   constructor(public sessionService: SessionService) {}
 
   ngOnInit(): void {

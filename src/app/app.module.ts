@@ -41,6 +41,7 @@ import { ViewMyOrdersPageComponent } from "./pages/view-my-orders-page/view-my-o
 import { SupportPageComponent } from "./pages/support-page/support-page.component";
 import { SettingsPageComponent } from "./pages/settings-page/settings-page.component";
 import { RegisterationAddressComponent } from "./pages/registerationOperations/registeration-address/registeration-address.component";
+import { CreateNewForumPostComponent } from './pages/create-new-forum-post/create-new-forum-post.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { RegisterationAddressComponent } from "./pages/registerationOperations/r
 		SupportPageComponent,
 		SettingsPageComponent,
 		RegisterationAddressComponent,
+  CreateNewForumPostComponent,
 	],
 	imports: [
 		BrowserModule,

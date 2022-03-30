@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
+import { CreateForumReq } from '../models/create-forum-req';
 import { ForumPost } from '../models/forum-post';
 import { SessionService } from './session.service';
 
@@ -23,6 +24,14 @@ export class ForumService {
       catchError(this.handleError)
     );
     
+  }
+
+  createNewForum(newForum: ForumPost): Observable<number> {
+    let createNewForumReq: CreateForumReq = new CreateForumReq(this.sessionService.getUsername(), this.sessionService.getPassword(), newForum);
+
+    return this.httpClient.put<number>(this.baseUrl, createNewForumReq, httpOptions).pipe (
+      catchError(this.handleError)
+    );
   }
 
   private handleError(error: HttpErrorResponse) {

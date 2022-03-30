@@ -5,6 +5,7 @@ import { ForumService } from 'src/app/services/forum.service';
 import { SessionService } from 'src/app/services/session.service';
 import {SelectItem} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-forum-page',
@@ -46,6 +47,10 @@ export class ForumPageComponent implements OnInit {
       {label: 'Oldest First', value: 'timestamp'},
     ];
     this.primengConfig.ripple = true;
+  }
+
+  create(createForumPostForm: NgForm) {
+
   }
 
   onSortChange(event: { value: any; }) {

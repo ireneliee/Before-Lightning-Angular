@@ -1,0 +1,44 @@
+<p-button
+  (click)="showMaximizableDialog()"
+  icon="pi pi-external-link"
+  label="Create new forum"
+></p-button>
+<form #createForumPostForm="ngForm" (ngSubmit)="create(createForumPostForm)">
+  <p-dialog
+    header="Create New Forum Post"
+    [(visible)]="displayMaximizable"
+    [modal]="true"
+    [style]="{ width: '50vw' }"
+    [maximizable]="true"
+    [baseZIndex]="10000"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <div class="forum-title-entry">
+      <h5>Title</h5>
+      <br />
+      <input type="text" pInputText [(ngModel)]="newForum.title" />
+      <span class="p-ml-2">{{ newForum.title }}</span>
+    </div>
+    <div class="content-section implementation">
+        <div class="card">
+            <h5>Content</h5>
+            <p-editor [(ngModel)]="newForum.content" [style]="{'height':'320px'}"></p-editor>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button
+        icon="pi pi-check"
+        (click)="displayMaximizable = false"
+        label="Post forum"
+        class="p-button-text"
+      ></p-button>
+      <p-button
+        icon="pi pi-times"
+        (click)="displayMaximizable = false"
+        label="Clear"
+      ></p-button>
+    </ng-template>
+
+  </p-dialog>
+</form>

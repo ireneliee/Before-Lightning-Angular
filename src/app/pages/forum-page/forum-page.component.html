@@ -1,3 +1,5 @@
+<app-breadcrumb></app-breadcrumb>
+
 <div class="card">
   <p-dataView
     #dv
@@ -8,7 +10,7 @@
     [sortField]="sortField"
     [sortOrder]="sortOrder"
     layout="grid"
-  >
+  > 
     <ng-template pTemplate="header">
       <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
         <p-dropdown
@@ -27,6 +29,7 @@
             (input)="dv.filter($any($event.target).value)"
           />
         </span>
+        <app-create-new-forum-post></app-create-new-forum-post>
       </div>
     </ng-template>
 
