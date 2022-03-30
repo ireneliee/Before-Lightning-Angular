@@ -3,8 +3,10 @@ import { NgForm } from "@angular/forms";
 import { MessageService } from "primeng/api";
 import { Address } from "src/app/models/address";
 import { Member } from "src/app/models/member";
+import { FileUploadService } from "src/app/services/file-upload.service";
 import { MemberService } from "src/app/services/member.service";
 import { SessionService } from "src/app/services/session.service";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
 	selector: "app-registeration",
@@ -26,7 +28,7 @@ export class RegisterationComponent implements OnInit {
 	resultError: Boolean | undefined;
 	submitted: boolean;
 
-	constructor(private memberService: MemberService, private sessionService: SessionService, private messageService: MessageService) {
+	constructor(private memberService: MemberService, private sessionService: SessionService, private messageService: MessageService, private fileUploadService: FileUploadService, private router: Router) {
 		this.address = new Address();
 		this.username = "";
 		this.password = "";
@@ -41,6 +43,8 @@ export class RegisterationComponent implements OnInit {
 	}
 
 	initializeState(): void {
+		this.checkAccessRight();
+
 		this.address = new Address();
 		this.username = "";
 		this.password = "";
@@ -56,6 +60,8 @@ export class RegisterationComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.checkAccessRight();
+
 		this.initializeState();
 	}
 
@@ -80,5 +86,19 @@ export class RegisterationComponent implements OnInit {
 				console.log("********** REGISTERATION.ts: " + error);
 			},
 		});
+	}
+
+	// onUpload(event : any) {
+	// 	for (let file of event.files) {
+	// 		this.fileUploadService.upload(file, file.name);
+	// 	}
+
+	// 	this.messageService.add({ severity: "info", summary: "File Uploaded", detail: "" });
+	// }
+
+	checkAccessRight() {
+		if (!this.sessionService.checkAccessRight(this.router.url)) {
+			this.router.navigate(["/accessRightError"]);
+		}
 	}
 }
