@@ -121,9 +121,14 @@
 					</tr>
 					<tr></tr>
 				</table>
-				<!-- <label for="inputImage">Display Picture</label>
+				<!-- <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload />
 
-				<p-fileUpload mode="basic" name="image[]" url="./upload.php" accept="image/*" (onUpload)="onUpload($event)" [auto]="true"></p-fileUpload> -->
+				<div class="file-upload">
+					{{ fileName || "No file uploaded yet." }}
+
+					<button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+					</button>
+				</div> -->
 			</div>
 			<div style="margin: auto">
 				<button pButton type="submit" label="Register Account"></button>

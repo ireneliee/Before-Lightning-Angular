@@ -3,10 +3,12 @@ import { NgForm } from "@angular/forms";
 import { MessageService } from "primeng/api";
 import { Address } from "src/app/models/address";
 import { Member } from "src/app/models/member";
-import { FileUploadService } from "src/app/services/file-upload.service";
 import { MemberService } from "src/app/services/member.service";
 import { SessionService } from "src/app/services/session.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { HttpEventType, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpRequest, HttpEvent } from "@angular/common/http";
 
 @Component({
 	selector: "app-registeration",
@@ -28,7 +30,7 @@ export class RegisterationComponent implements OnInit {
 	resultError: Boolean | undefined;
 	submitted: boolean;
 
-	constructor(private memberService: MemberService, private sessionService: SessionService, private messageService: MessageService, private fileUploadService: FileUploadService, private router: Router) {
+	constructor(private memberService: MemberService, private sessionService: SessionService, private messageService: MessageService, private router: Router) {
 		this.address = new Address();
 		this.username = "";
 		this.password = "";
@@ -87,6 +89,26 @@ export class RegisterationComponent implements OnInit {
 			},
 		});
 	}
+
+	//===========FOR UPLOADING IMAGE=================
+	// fileName = "";
+
+	// onFileSelected(event : any) {
+	// 	const file: File = event.target.files[0];
+
+	// 	if (file) {
+	// 		this.fileName = file.name;
+
+	// 		const formData = new FormData();
+
+	// 		formData.append("image", file);
+
+	// 		const upload$ = this.fileUploadService.uploadFile(formData);
+
+	// 		upload$.subscribe();
+	// 	}
+	// }
+	//===============================================
 
 	// onUpload(event : any) {
 	// 	for (let file of event.files) {

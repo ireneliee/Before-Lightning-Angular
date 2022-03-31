@@ -12,9 +12,9 @@ export class PartChoice {
 	imageLink: string | undefined;
 	isDisabled: boolean | undefined;
 
-	listOfPromotionEntities: Promotion[] | undefined;
-	listOfCompatibleChassisPartChoiceEntities: PartChoice[] | undefined;
-	listOfCompatiblePartsPartChoiceEntities: PartChoice[] | undefined;
+	promotionEntities: Promotion[] | undefined;
+	compatibleChassisPartChoiceEntities: PartChoice[] | undefined;
+	compatiblePartsPartChoiceEntities: PartChoice[] | undefined;
 
 	constructor(partChoiceEntityId?: number, partChoiceName?: string, partOverview?: string, partDescription?: string, brand?: string, quantityOnHand?: number, reorderQuantity?: number, price?: number, imageLink?: string, isDisabled?: boolean) {
 		this.partChoiceEntityId = partChoiceEntityId;
