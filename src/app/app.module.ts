@@ -42,7 +42,7 @@ import { ViewMyOrdersPageComponent } from "./pages/view-my-orders-page/view-my-o
 import { SupportPageComponent } from "./pages/support-page/support-page.component";
 import { SettingsPageComponent } from "./pages/settings-page/settings-page.component";
 import { CreateNewForumPostComponent } from './pages/create-new-forum-post/create-new-forum-post.component';
-
+import {EditorModule} from 'primeng/editor';
 
 @NgModule({
 	declarations: [
@@ -89,6 +89,8 @@ import { CreateNewForumPostComponent } from './pages/create-new-forum-post/creat
 		DropdownModule,
 		ChipModule,
 		FileUploadModule,
+		EditorModule,
+
 	],
 	providers: [MessageService],
 	bootstrap: [AppComponent],

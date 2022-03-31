@@ -26,10 +26,10 @@ export class ForumService {
     
   }
 
-  createNewForum(newForum: ForumPost): Observable<number> {
-    let createNewForumReq: CreateForumReq = new CreateForumReq(this.sessionService.getUsername(), this.sessionService.getPassword(), newForum);
+  createNewForum(title: string, content: string): Observable<number> {
 
-    return this.httpClient.put<number>(this.baseUrl, createNewForumReq, httpOptions).pipe (
+    return this.httpClient.put<number>(this.baseUrl, "/?username=" + this.sessionService.getUsername
+     + "&password=" + this.sessionService.getPassword + "&title=" + title + "&content=" + content).pipe (
       catchError(this.handleError)
     );
   }

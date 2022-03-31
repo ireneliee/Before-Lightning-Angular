@@ -7,30 +7,30 @@ export class ForumPost {
 	content: string | undefined;
 	image: string | undefined;
 	timestamp: Date | undefined;
-	visible: boolean | undefined;
-	banned: boolean | undefined;
+	isVisible: boolean | undefined;
+	isBanned: boolean | undefined;
 
-	replyEntities: Reply[] | undefined;
-	listOfMemberLikes: Member[] | undefined;
-	listOfMemberDislikes: Member[] | undefined;
-    forumAuthor : Member | undefined;
+	replies: Reply[] | undefined;
+	userWhoLikes: Member[] | undefined;
+	userWhoDislikes: Member[] | undefined;
+    author : Member | undefined;
 
 
-	constructor(forumPostEntityId?: number, forumAuthor?: Member, title?: string, 
+	constructor(forumPostEntityId?: number, author?: Member, title?: string, 
 		content?: string, image?: string, timestamp?: Date, 
-		visible?: boolean, banned?: boolean, replyEntities?: Reply[], listOfMemberLikes?: Member[],
-		listOfMemberDislikes?: Member[]) {
+		isVisible?: boolean, isBanned?: boolean, replies?: Reply[], userWhoLikes?: Member[],
+		userWhoDislikes?: Member[]) {
 		this.forumPostEntityId = forumPostEntityId;
-		this.forumAuthor = forumAuthor;
+		this.author = author
 		this.title = title;
 		this.content = content;
 		this.timestamp = timestamp;
-		this.visible = visible;
-		this.banned = banned;
+		this.isVisible = isVisible;
+		this.isBanned = isBanned;
 		this.image = image;
-		this.replyEntities = replyEntities;
-		this.listOfMemberLikes = listOfMemberLikes;
-		this.listOfMemberDislikes = listOfMemberDislikes;
+		this.replies = replies;
+		this.userWhoLikes = userWhoLikes;
+		this.userWhoDislikes = userWhoDislikes;
 
 	}
 }

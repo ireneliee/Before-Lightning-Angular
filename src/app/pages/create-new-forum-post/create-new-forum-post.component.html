@@ -17,14 +17,19 @@
     <div class="forum-title-entry">
       <h5>Title</h5>
       <br />
-      <input type="text" pInputText [(ngModel)]="newForum.title" />
-      <span class="p-ml-2">{{ newForum.title }}</span>
+      <input name = "forum-title" type="text" pInputText [(ngModel)]="title" />
+      
     </div>
-    <div class="content-section implementation">
-        <div class="card">
-            <h5>Content</h5>
-            <p-editor [(ngModel)]="newForum.content" [style]="{'height':'320px'}"></p-editor>
-        </div>
+    <div class="content-section implementation forum-content-entry">
+      <div class="card">
+        <h5>Content</h5>
+        <br/>
+        <p-editor
+          [(ngModel)]="content"
+          [style]="{ height: '320px' }"
+          name = "forum-content"
+        ></p-editor>
+      </div>
     </div>
     <ng-template pTemplate="footer">
       <p-button
@@ -32,13 +37,13 @@
         (click)="displayMaximizable = false"
         label="Post forum"
         class="p-button-text"
+        type = "submit"
       ></p-button>
       <p-button
         icon="pi pi-times"
-        (click)="displayMaximizable = false"
+        (click)="clear()"
         label="Clear"
       ></p-button>
     </ng-template>
-
   </p-dialog>
 </form>

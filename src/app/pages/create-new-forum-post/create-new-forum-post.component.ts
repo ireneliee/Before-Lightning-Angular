@@ -1,25 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { PrimeNGConfig } from 'primeng/api';
-import {DialogModule} from 'primeng/dialog';
-import {InputTextModule} from 'primeng/inputtext';
+import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { NgForm } from '@angular/forms';
 import { ForumPost } from 'src/app/models/forum-post';
 import { ForumService } from 'src/app/services/forum.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/services/session.service';
-import {EditorModule} from 'primeng/editor';
+
 
 @Component({
   selector: 'app-create-new-forum-post',
   templateUrl: './create-new-forum-post.component.html',
-  styleUrls: ['./create-new-forum-post.component.css']
+  styleUrls: ['./create-new-forum-post.component.css'],
+  providers: [MessageService],
 })
 export class CreateNewForumPostComponent implements OnInit {
   submitted: boolean;
-  newForum: ForumPost;
+  title: string;
+  content: string;
   resultSuccess: boolean;
   resultError: boolean;
   message: string | undefined;
+  messageService: any;
 
 
   constructor(private router: Router,
@@ -28,13 +29,24 @@ export class CreateNewForumPostComponent implements OnInit {
     private forumService: ForumService,
     private primengConfig: PrimeNGConfig) { 
       this.submitted = false;
-      this.newForum = new ForumPost();
+      this.title = "";
+      this.content = "";
       this.resultSuccess = false;
       this.resultError = false;
     }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
+    this.clear();
+  }
+
+  clear() {
+    this.submitted = false;
+    this.resultError  = false;
+    this.resultSuccess = false;
+
+    this.title = "";
+    this.content = "";
   }
 
   displayMaximizable?: boolean;
@@ -44,9 +56,29 @@ export class CreateNewForumPostComponent implements OnInit {
 }
 
 create(createForumPostForm: NgForm) {
+  console.log("reach here");
+  console.log("Title received: " + this.title);
+  console.log("Content received: " + this.content);
 
+  this.submitted = true;
+  if(createForumPostForm.valid) {
+    this.forumService.createNewForum(this.title, this.content).subscribe({
+        next: (response) => {
+          let postId: Number = response;
+          this.resultSuccess = true;
+          this.resultError = false;
+          this.clear();
+          this.messageService.add({ severity: "success", summary: "Successfuly posted a forum post entry", detail: "Please visit the forum page to view your entry" });
+          createForumPostForm.resetForm();
+          createForumPostForm.reset();
+        },
+        error: (error) => {
+          this.resultError = true;
+          this.resultSuccess = false;
+          this.messageService.add({ severity: "error", summary: "Error", detail: "An error has occured while posting the entry" });
+          console.log("********** Create new forum post.ts: " + error);
+        },
+      });
 }
-
-  
-
+}
 }
