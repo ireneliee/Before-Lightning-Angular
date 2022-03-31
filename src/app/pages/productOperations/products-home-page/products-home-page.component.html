@@ -5,6 +5,8 @@
 		<ng-template pTemplate="header">
 			<div class="flex flex-column md:flex-row md:justify-content-between">
 				<h2>Bespoke Customizable Goods</h2>
+				<p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+				<p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)" [style]="{ 'min-width': '15em' }"></p-dropdown>
 			</div>
 		</ng-template>
 		<ng-template let-product pTemplate="listItem">

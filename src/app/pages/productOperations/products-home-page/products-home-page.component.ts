@@ -36,6 +36,12 @@ export class ProductsHomePageComponent implements OnInit {
 				console.log("***********ProductPageComponent.ts: " + error);
 			},
 		});
+
+		this.sortOptions = [
+			{ label: "Name", value: "productName" },
+			{ label: "Rating", value: "rating" },
+			{ label: "Brand", value: "brand" },
+		];
 	}
 
 	onSortChange(event: { value: any }) {

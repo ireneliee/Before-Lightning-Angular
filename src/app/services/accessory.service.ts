@@ -1,23 +1,24 @@
 import { HttpClient, HttpErrorResponse, HttpHeaderResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, Observable, throwError } from "rxjs";
+import { Accessory } from "../models/accessory";
 import { Product } from "../models/product";
 import { SessionService } from "./session.service";
-
-const httpOptions = {
-	headers: new HttpHeaders({ "Content-Type": "application/json" }),
-};
 
 @Injectable({
 	providedIn: "root",
 })
-export class ProductService {
-	baseUrl: string = "/api/Products";
+export class AccessoryService {
+	httpOptions = {
+		headers: new HttpHeaders({ "Content-Type": "application/json" }),
+	};
+
+	baseUrl: string = "/api/Accessory";
 
 	constructor(private httpClient: HttpClient, private sessionService: SessionService) {}
 
-	getProducts(): Observable<Product[]> {
-		return this.httpClient.get<Product[]>(this.baseUrl + "/retrieveAllProductsToSell").pipe(catchError(this.handleError));
+	getAccessories(): Observable<Accessory[]> {
+		return this.httpClient.get<Accessory[]>(this.baseUrl + "/retrieveAllAccessoryToSell").pipe(catchError(this.handleError));
 	}
 
 	private handleError(error: HttpErrorResponse) {

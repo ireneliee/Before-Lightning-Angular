@@ -4,7 +4,7 @@ export class Review {
 	rating: number | undefined;
 	description: string | undefined;
 
-	constructor(reviewEntityId?: number, customerUsername?: string, rating?: number, description?: string, visible?: boolean, banned?: boolean) {
+	constructor(reviewEntityId?: number, customerUsername?: string, rating?: number, description?: string) {
 		this.reviewEntityId = reviewEntityId;
 		this.customerUsername = customerUsername;
 		this.rating = rating;
