@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { MessageService, Message, PrimeNGConfig } from 'primeng/api';
 import { NgForm } from '@angular/forms';
 import { ForumPost } from 'src/app/models/forum-post';
 import { ForumService } from 'src/app/services/forum.service';
@@ -19,11 +19,11 @@ export class CreateNewForumPostComponent implements OnInit {
   content: string;
   resultSuccess: boolean;
   resultError: boolean;
-  message: string | undefined;
-  messageService: any;
+  msgs : Message[];
 
 
-  constructor(private router: Router,
+  constructor(private messageService: MessageService, 
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     public sessionService: SessionService,
     private forumService: ForumService,
@@ -33,6 +33,7 @@ export class CreateNewForumPostComponent implements OnInit {
       this.content = "";
       this.resultSuccess = false;
       this.resultError = false;
+      this.msgs = [];
     }
 
   ngOnInit(): void {
@@ -68,7 +69,7 @@ create(createForumPostForm: NgForm) {
           this.resultSuccess = true;
           this.resultError = false;
           this.clear();
-          this.messageService.add({ severity: "success", summary: "Successfuly posted a forum post entry", detail: "Please visit the forum page to view your entry" });
+          this.messageService.add({ severity: 'info', summary: "Successfuly posted a forum post entry", detail: "Please visit the forum page to view your entry" });
           createForumPostForm.resetForm();
           createForumPostForm.reset();
         },
