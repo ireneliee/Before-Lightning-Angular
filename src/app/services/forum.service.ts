@@ -26,6 +26,12 @@ export class ForumService {
     
   }
 
+  getMyForumPosts():Observable<ForumPost[]> {
+    return this.httpClient.get<ForumPost[]>(this.baseUrl + "/retrieveMyForumPosts/?username=" + this.sessionService.getUsername()).pipe(
+      catchError(this.handleError)
+    )
+  }
+
   createNewForum(title: string, content: string): Observable<number> {
     console.log(this.sessionService.getUsername())
     return this.httpClient.get<number>(this.baseUrl + "/createNewForum/?username=" + this.sessionService.getUsername()

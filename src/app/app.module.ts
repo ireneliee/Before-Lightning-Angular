@@ -18,9 +18,12 @@ import { ChipModule } from "primeng/chip";
 import { PasswordModule } from "primeng/password";
 import { CardModule } from "primeng/card";
 import { MessagesModule } from "primeng/messages";
-import { MessageModule } from "primeng/message";
 import { ToastModule } from "primeng/toast";
 import { FileUploadModule } from "primeng/fileupload";
+import {RouterModule} from '@angular/router';
+import { MessageModule } from 'primeng/message';
+import { TabMenuModule } from 'primeng/tabmenu';
+
 
 import { MessageService } from "primeng/api";
 
@@ -43,7 +46,7 @@ import { SupportPageComponent } from "./pages/support-page/support-page.componen
 import { SettingsPageComponent } from "./pages/settings-page/settings-page.component";
 import { CreateNewForumPostComponent } from './pages/create-new-forum-post/create-new-forum-post.component';
 import {EditorModule} from 'primeng/editor';
-
+import { ViewMyForumPostComponent } from './pages/view-my-forum-post/view-my-forum-post.component';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -62,6 +65,8 @@ import {EditorModule} from 'primeng/editor';
 		SupportPageComponent,
 		SettingsPageComponent,
   		CreateNewForumPostComponent,
+    	ViewMyForumPostComponent
+		
 	],
 	imports: [
 		BrowserModule,
@@ -90,6 +95,8 @@ import {EditorModule} from 'primeng/editor';
 		ChipModule,
 		FileUploadModule,
 		EditorModule,
+		TabMenuModule,
+		
 
 	],
 	providers: [MessageService],

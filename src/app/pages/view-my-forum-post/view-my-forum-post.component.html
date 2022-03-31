@@ -1,0 +1,104 @@
+<p-messages></p-messages>
+<p-button
+  (click)="showMaximizableDialog()"
+  icon="pi pi-book"
+  label="View my forum posts"
+></p-button>
+<p-dialog
+  header="Create New Forum Post"
+  [(visible)]="displayMaximizable"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [maximizable]="true"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="card">
+    <p-dataView
+      #dv
+      [value]="forumPosts"
+      [paginator]="true"
+      [rows]="9"
+      filterBy="name"
+      [sortField]="sortField"
+      [sortOrder]="sortOrder"
+      layout="grid"
+    >
+      <ng-template pTemplate="header">
+        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+          <p-dropdown
+            [options]="sortOptions"
+            [(ngModel)]="sortKey"
+            placeholder="Sort By Date"
+            (onChange)="onSortChange($event)"
+            styleClass="p-mb-2 p-mb-md-0"
+          ></p-dropdown>
+          <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+            <i class="pi pi-search"></i>
+            <input
+              type="search"
+              pInputText
+              placeholder="Search by Name"
+              (input)="dv.filter($any($event.target).value)"
+            />
+          </span>
+          <div class="extra-forum-function">
+            <div class="create-forum-button">
+              <app-create-new-forum-post></app-create-new-forum-post>
+            </div>
+            
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template let-forum pTemplate="gridItem">
+        <div class="p-col-12 p-md-4">
+          <div class="product-grid-item card">
+            <div class="product-grid-item">
+              <div class="forum-box-user"></div>
+              <div class="forum-box-content">
+                <div class="forum-box-content-maincontent">
+                  <span class="forum-title">{{ forum.title }}</span>
+                  <div class="forum-content">{{ forum.content }}</div>
+                  <div class="forum-timestamp">{{ forum.timestamp }}</div>
+                </div>
+                <div class="forum-box-content-subcontent">
+                  <button
+                    title="Like this post"
+                    pButton
+                    type="button"
+                    icon="pi pi-thumbs-up"
+                    class="p-button-raised p-button-rounded"
+                  ></button>
+                  <button
+                    title="Dislike this post"
+                    pButton
+                    type="button"
+                    icon="pi pi-thumbs-down"
+                    class="p-button-raised p-button-rounded"
+                  ></button>
+                  <button
+                    title="Comment on this post"
+                    pButton
+                    type="button"
+                    icon="pi pi-comment"
+                    class="p-button-raised p-button-rounded"
+                  ></button>
+                  <button
+                    title="view"
+                    pButton
+                    type="button"
+                    icon="pi pi-search"
+                    class="p-button-raised p-button-rounded"
+                  ></button>
+                </div>
+              </div>
+              <div class="forum-box-action"></div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-dataView>
+  </div>
+</p-dialog>

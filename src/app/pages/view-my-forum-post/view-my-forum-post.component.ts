@@ -1,23 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { SelectItem, PrimeNGConfig } from 'primeng/api';
 import { ForumPost } from 'src/app/models/forum-post';
 import { ForumService } from 'src/app/services/forum.service';
 import { SessionService } from 'src/app/services/session.service';
-import {SelectItem} from 'primeng/api';
-import { PrimeNGConfig } from 'primeng/api';
-import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-forum-page',
-  templateUrl: './forum-page.component.html',
-  styleUrls: ['./forum-page.component.css'],
+  selector: 'app-view-my-forum-post',
+  templateUrl: './view-my-forum-post.component.html',
+  styleUrls: ['./view-my-forum-post.component.css'],
 })
-export class ForumPageComponent implements OnInit {
+export class ViewMyForumPostComponent implements OnInit {
   forumPosts: ForumPost[];
   sortOptions: SelectItem[];
   sortField: string;
   sortOrder: number;
   sortKey: string;
+  displayMaximizable?: boolean;
 
   constructor(
     private router: Router,
@@ -28,20 +27,25 @@ export class ForumPageComponent implements OnInit {
   ) {
     this.forumPosts = new Array();
     this.sortOptions = new Array();
-    this.sortField = "";
-    this.sortKey = "";
+    this.sortField = '';
+    this.sortKey = '';
     this.sortOrder = 0;
   }
 
+  showMaximizableDialog() {
+    this.displayMaximizable = true;
+}
+
   ngOnInit(): void {
-    this.forumService.getForumPosts().subscribe({
+    this.forumService.getMyForumPosts().subscribe({
       next:(response) => {
         this.forumPosts = response;
       },
       error: (error) => {
-        console.log("***********ForumPageComponent.ts: " + error);
+        console.log("***********ViewForumPageComponent.ts: " + error);
       }
     });
+
     this.sortOptions = [
       {label: 'Recent First', value: '!timestamp'},
       {label: 'Oldest First', value: 'timestamp'},

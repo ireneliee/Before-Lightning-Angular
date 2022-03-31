@@ -1,6 +1,5 @@
 <app-breadcrumb></app-breadcrumb>
 
-
 <div class="card">
   <p-dataView
     #dv
@@ -11,7 +10,7 @@
     [sortField]="sortField"
     [sortOrder]="sortOrder"
     layout="grid"
-  > 
+  >
     <ng-template pTemplate="header">
       <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
         <p-dropdown
@@ -30,7 +29,9 @@
             (input)="dv.filter($any($event.target).value)"
           />
         </span>
+
         <app-create-new-forum-post></app-create-new-forum-post>
+        <app-view-my-forum-post></app-view-my-forum-post>
       </div>
     </ng-template>
 
@@ -46,10 +47,34 @@
                 <div class="forum-timestamp">{{ forum.timestamp }}</div>
               </div>
               <div class="forum-box-content-subcontent">
-                <button title = "like" pButton type="button" icon="pi pi-thumbs-up" class="p-button-raised p-button-rounded"></button>
-                <button title = "dislike" pButton type="button" icon="pi pi-thumbs-down" class="p-button-raised p-button-rounded"></button>
-                <button title = "comment" pButton type="button" icon="pi pi-comment" class="p-button-raised p-button-rounded"></button>
-                <button title = "view" pButton type="button" icon="pi pi-search" class="p-button-raised p-button-rounded"></button>
+                <button
+                  title="Like this post"
+                  pButton
+                  type="button"
+                  icon="pi pi-thumbs-up"
+                  class="p-button-raised p-button-rounded"
+                ></button>
+                <button
+                  title="Dislike this post"
+                  pButton
+                  type="button"
+                  icon="pi pi-thumbs-down"
+                  class="p-button-raised p-button-rounded"
+                ></button>
+                <button
+                  title="Comment on this post"
+                  pButton
+                  type="button"
+                  icon="pi pi-comment"
+                  class="p-button-raised p-button-rounded"
+                ></button>
+                <button
+                  title="view"
+                  pButton
+                  type="button"
+                  icon="pi pi-search"
+                  class="p-button-raised p-button-rounded"
+                ></button>
               </div>
             </div>
             <div class="forum-box-action"></div>
