@@ -1,3 +1,4 @@
+<p-messages></p-messages>
 <p-button
   (click)="showMaximizableDialog()"
   icon="pi pi-external-link"
@@ -32,13 +33,8 @@
       </div>
     </div>
     <ng-template pTemplate="footer">
-      <p-button
-        icon="pi pi-check"
-        (click)="displayMaximizable = false"
-        label="Post forum"
-        class="p-button-text"
-        type = "submit"
-      ></p-button>
+      <input type = "submit" value = "Create new post"/>
+      
       <p-button
         icon="pi pi-times"
         (click)="clear()"
