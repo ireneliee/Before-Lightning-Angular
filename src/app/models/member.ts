@@ -7,15 +7,15 @@ import { ShoppingCart } from "./shopping-cart";
 
 export class Member {
 	memberId: number | undefined;
-	username: string | undefined;
-	password: string | undefined;
-	firstname: string | undefined;
-	lastname: string | undefined;
-	email: String | undefined;
-	contact: String | undefined;
-	imageLink: String | undefined;
-	salt: String | undefined;
-	isActive: Boolean | undefined;
+	username: string;
+	password: string;
+	firstname: string;
+	lastname: string;
+	email: string;
+	contact: string;
+	imageLink: string;
+	salt: string;
+	isActive: boolean;
 
 	creditCardEntities: CreditCard[] | undefined;
 	addressEntities: Address[] | undefined;
@@ -26,7 +26,7 @@ export class Member {
 	listOfDislikedForumPost: ForumPost[] | undefined;
 	listOfReplyEntities: Reply[] | undefined;
 
-	constructor(memberId?: number, username?: string, password?: string, firstname?: string, lastname?: string, email?: String, contact?: String, imageLink?: String, salt?: String, isActive?: Boolean) {
+	constructor(username: string, password: string, firstname: string, lastname: string, email: string, contact: string, imageLink: string, salt: string, isActive: boolean, memberId?: number) {
 		this.memberId = memberId;
 		this.username = username;
 		this.password = password;
