@@ -5,50 +5,47 @@
 		<ng-template pTemplate="header">
 			<div class="flex flex-column md:flex-row md:justify-content-between">
 				<h2>Bespoke Customizable Goods</h2>
-				<p-dataViewLayoutOptions></p-dataViewLayoutOptions>
-				<p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)" [style]="{ 'min-width': '15em' }"></p-dropdown>
+				<br />
+				<span style="width: 25%; float: left">
+					<p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+				</span>
+				<span style="width: 75%">
+					<p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)" [style]="{ 'min-width': '15em' }"></p-dropdown>
+				</span>
 			</div>
 		</ng-template>
 		<ng-template let-product pTemplate="listItem">
 			<div class="col-12">
-				<div class="product-list-detail">
-					<div class="product-name">{{ product.productName }}</div>
-					<div class="product-description">{{ product.description }}</div>
-					<p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
+				<div class="product-list-item">
+					<img alt="Card" src="assets/images/sampleLaptop.png" style="width: 20%" />
+					<div class="product-list-detail" style="width: 60%">
+						<div class="product-name">{{ product.productName }}</div>
+						<div class="product-description">{{ product.productOverview }}</div>
+
+						<p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
+					</div>
+					<div class="product-list-action" style="width: 20%; float: left">
+						<div class="product-description">{{ product.description }}</div>
+						<p-button label="Customize Now" icon="pi pi-check"></p-button>
+					</div>
 				</div>
 			</div>
+			<div class="col-12"><br /></div>
 		</ng-template>
 		<ng-template let-product pTemplate="gridItem">
-			<div class="col-12">
-				<div class="product-list-detail">
-					<div class="product-name">{{ product.productName }}</div>
-					<div class="product-description">{{ product.description }}</div>
+			<div class="col-12" style="border: 10px; margin-top: 20px; margin-bottom: 20px; border-width: 20px">
+				<p-card header="{{ product.productName }}" subheader="{{ product.description }}" [style]="{ width: '100%' }" styleClass="p-card-shadow">
+					<ng-template pTemplate="header">
+						<img alt="Card" src="assets/images/sampleLaptop.png" style="width: 600px; height: 500px" />
+					</ng-template>
+					<div class="product-description">{{ product.productOverview }}</div>
 					<p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
-				</div>
+
+					<ng-template pTemplate="footer">
+						<p-button label="Customize Now" icon="pi pi-check"></p-button>
+					</ng-template>
+				</p-card>
 			</div>
 		</ng-template>
-		<!-- <ng-template let-product pTemplate="gridItem">
-            <div class="col-12 md:col-4">
-                <div class="product-grid-item card">
-                    <div class="product-grid-item-top">
-                        <div>
-                            <i class="pi pi-tag product-category-icon"></i>
-                            <span class="product-category">{{product.category}}</span>
-                        </div>
-                        <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
-                    </div>
-                    <div class="product-grid-item-content">
-                        <img [src]="'assets/showcase/images/demo/product/' + product.image" [alt]="product.name"/>
-                        <div class="product-name">{{product.name}}</div>
-                        <div class="product-description">{{product.description}}</div>
-                        <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
-                    </div>
-                    <div class="product-grid-item-bottom">
-                        <span class="product-price">${{product.price}}</span>
-                        <p-button icon="pi pi-shopping-cart" [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"></p-button>
-                    </div>
-                </div>
-            </div>
-        </ng-template> -->
 	</p-dataView>
 </div>

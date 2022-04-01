@@ -9,6 +9,8 @@ body {
   display: block;
   width: 99%;
   margin: 0.5% 0.5% 0.5% 0.5%;
+    background-color: #eff3f8;
+
 }
 
 p {
@@ -42,7 +44,7 @@ a:hover {
   display: block;
   padding: 3px 3px 3px 3px;
   clear: both;
-  background-color: whitesmoke;
+    background-color: #eff3f8;
 }
 
 .loginbox {
@@ -57,7 +59,7 @@ a:hover {
   margin: 0.5% 0% 0.5% 0%;
   padding: 3px 3px 3px 3px;
   float: left;
-  background-color: whitesmoke;
+    background-color: #eff3f8;
 }
 
 .content {
@@ -74,7 +76,7 @@ a:hover {
   margin: 0.5% 0% 0.5% 0%;
   padding: 3px 3px 3px 3px;
   float: right;
-  background-color: silver;
+    background-color: #eff3f8;
   text-align: center;
 }
 
@@ -83,7 +85,7 @@ a:hover {
   margin: 0.5% 0% 0% 0%;
   padding: 3px 3px 3px 3px;
   clear: both;
-  background-color: whitesmoke;
+    background-color: #eff3f8;
 }
 
 .advertisement {
