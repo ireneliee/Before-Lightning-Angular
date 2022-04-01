@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { SelectItem, PrimeNGConfig } from 'primeng/api';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ForumPost } from 'src/app/models/forum-post';
 import { ForumService } from 'src/app/services/forum.service';
 import { SessionService } from 'src/app/services/session.service';
+import {SelectItem} from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
+import { NgForm } from '@angular/forms';
+import { Reply } from 'src/app/models/reply';
 
 @Component({
   selector: 'app-view-my-forum-post',
@@ -12,11 +15,13 @@ import { SessionService } from 'src/app/services/session.service';
 })
 export class ViewMyForumPostComponent implements OnInit {
   forumPosts: ForumPost[];
+  forumToView: ForumPost;
+  forumToViewReplies : Reply[] = [];
+  display: boolean;
   sortOptions: SelectItem[];
   sortField: string;
   sortOrder: number;
   sortKey: string;
-  displayMaximizable?: boolean;
 
   constructor(
     private router: Router,
@@ -27,14 +32,17 @@ export class ViewMyForumPostComponent implements OnInit {
   ) {
     this.forumPosts = new Array();
     this.sortOptions = new Array();
-    this.sortField = '';
-    this.sortKey = '';
+    this.forumToViewReplies = new Array();
+    this.forumToView = new ForumPost();
+    this.display = false;
+    this.sortField = "";
+    this.sortKey = "";
     this.sortOrder = 0;
   }
 
-  showMaximizableDialog() {
-    this.displayMaximizable = true;
-}
+  testtest():void {
+    console.log("this is testing method");
+  }
 
   ngOnInit(): void {
     this.forumService.getMyForumPosts().subscribe({
@@ -42,10 +50,9 @@ export class ViewMyForumPostComponent implements OnInit {
         this.forumPosts = response;
       },
       error: (error) => {
-        console.log("***********ViewForumPageComponent.ts: " + error);
+        console.log("***********ForumPageComponent.ts: " + error);
       }
     });
-
     this.sortOptions = [
       {label: 'Recent First', value: '!timestamp'},
       {label: 'Oldest First', value: 'timestamp'},
@@ -64,5 +71,12 @@ export class ViewMyForumPostComponent implements OnInit {
         this.sortOrder = 1;
         this.sortField = value;
     }
+}
+
+showDialog(forumToView: ForumPost) {
+  console.log(forumToView.forumPostEntityId);
+  this.display = true;
+  this.forumToView = forumToView;
+  this.forumToViewReplies = forumToView.replies!;
 }
 }
