@@ -1,25 +1,20 @@
 import { HttpClient, HttpErrorResponse, HttpHeaderResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, Observable, throwError } from "rxjs";
-import { Accessory } from "../models/accessory";
+import { SupportTicket } from "../models/support-ticket";
 import { SessionService } from "./session.service";
 
 @Injectable({
 	providedIn: "root",
 })
-export class AccessoryService {
-	httpOptions = {
-		headers: new HttpHeaders({ "Content-Type": "application/json" }),
-	};
-
-	baseUrl: string = "/api/Accessory";
+export class SupportService {
+	baseUrl: string = "/api/Support";
 
 	constructor(private httpClient: HttpClient, private sessionService: SessionService) {}
 
-	getAccessories(): Observable<Accessory[]> {
-		return this.httpClient.get<Accessory[]>(this.baseUrl + "/retrieveAllAccessoryToSell").pipe(catchError(this.handleError));
+	retrieveSupportTickets(email: string): Observable<SupportTicket[]> {
+		return this.httpClient.get<SupportTicket[]>(this.baseUrl + "/retrieveSupportTickets?email=" + email).pipe(catchError(this.handleError));
 	}
-
 	private handleError(error: HttpErrorResponse) {
 		let errorMessage: string = "";
 		if (error.error instanceof ErrorEvent) {

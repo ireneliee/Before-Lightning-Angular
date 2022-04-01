@@ -2,15 +2,15 @@ import { Address } from "./address";
 
 export class CreateNewMemberReq {
 	address: Address | undefined;
-	username: String | undefined;
-	password: String | undefined;
-	firstname: String | undefined;
-	lastname: String | undefined;
-	email: String | undefined;
-	contact: String | undefined;
-	imageLink: String | undefined;
+	username: string | undefined;
+	password: string | undefined;
+	firstname: string | undefined;
+	lastname: string | undefined;
+	email: string | undefined;
+	contact: string | undefined;
+	imageLink: string | undefined;
 
-	constructor(address: Address, username: String, password: String, firstname: String, lastname: String, email: String, contact: String, imageLink: String) {
+	constructor(address: Address, username: string, password: string, firstname: string, lastname: string, email: string, contact: string, imageLink: string) {
 		this.address = address;
 		this.username = username;
 		this.password = password;

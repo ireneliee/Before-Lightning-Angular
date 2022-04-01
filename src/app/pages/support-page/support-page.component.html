@@ -1,3 +1,56 @@
 <app-breadcrumb pageName="Support"></app-breadcrumb>
 
-<p>support-page works!</p>
+<div class="card">
+	<p-dataView #dv [value]="supportTicketEntities" [paginator]="true" [rows]="9" layout="grid">
+		<ng-template pTemplate="header">
+			<div class="flex flex-column md:flex-row md:justify-content-between">
+				<h2>Premium Accessories</h2>
+				<p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+				<p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)" [style]="{ 'min-width': '15em' }"></p-dropdown>
+			</div>
+		</ng-template>
+		<ng-template let-supportTicket pTemplate="listItem">
+			<div class="col-12">
+				<div class="supportTicket-list-detail">
+					<div class="supportTicket-name">{{ supportTicket.supportTicketId }}</div>
+					<div class="supportTicket-issue">{{ supportTicket.issue }}</div>
+					<div class="supportTicket-email">{{ supportTicket.email }}</div>
+					<div class="supportTicket-status">{{ supportTicket. supportTicketStatus}}</div>
+				</div>
+			</div>
+		</ng-template>
+		<ng-template let-supportTicket pTemplate="gridItem">
+			<div class="col-12">
+				<div class="supportTicket-list-detail">
+					<div class="supportTicket-name">{{ supportTicket.supportTicketId }}</div>
+					<div class="supportTicket-issue">{{ supportTicket.issue }}</div>
+					<div class="supportTicket-email">{{ supportTicket.email }}</div>
+					<div class="supportTicket-status">{{ supportTicket. supportTicketStatus}}</div>
+				</div>
+			</div>
+		</ng-template>
+		<!-- <ng-template let-supportTicket pTemplate="gridItem">
+            <div class="col-12 md:col-4">
+                <div class="supportTicket-grid-item card">
+                    <div class="supportTicket-grid-item-top">
+                        <div>
+                            <i class="pi pi-tag supportTicket-category-icon"></i>
+                            <span class="supportTicket-category">{{supportTicket.category}}</span>
+                        </div>
+                        <span [class]="'supportTicket-badge status-' + supportTicket.inventoryStatus.toLowerCase()">{{supportTicket.inventoryStatus}}</span>
+                    </div>
+                    <div class="supportTicket-grid-item-content">
+                        <img [src]="'assets/showcase/images/demo/supportTicket/' + supportTicket.image" [alt]="supportTicket.name"/>
+                        <div class="supportTicket-name">{{supportTicket.name}}</div>
+                        <div class="supportTicket-description">{{supportTicket.description}}</div>
+                        <p-rating [ngModel]="supportTicket.rating" [readonly]="true" [cancel]="false"></p-rating>
+                    </div>
+                    <div class="supportTicket-grid-item-bottom">
+                        <span class="supportTicket-price">${{supportTicket.price}}</span>
+                        <p-button icon="pi pi-shopping-cart" [disabled]="supportTicket.inventoryStatus === 'OUTOFSTOCK'"></p-button>
+                    </div>
+                </div>
+            </div>
+        </ng-template> -->
+	</p-dataView>
+</div>

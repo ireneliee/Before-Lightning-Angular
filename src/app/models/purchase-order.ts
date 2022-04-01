@@ -4,7 +4,7 @@ import { PurchaseOrderLineItem } from "./purchase-order-line-item";
 
 export class PurchaseOrder {
 	purchaseOrderEntityId: number | undefined;
-	referenceNumber: String | undefined;
+	referenceNumber: string | undefined;
 	totalPrice: number | undefined;
 	dateCreated: Date | undefined;
 	purchaseOrderStatusEnum: PurchaseOrderStatusEnum | undefined;
