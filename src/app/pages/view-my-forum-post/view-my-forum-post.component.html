@@ -1,5 +1,7 @@
 <p-messages></p-messages>
-<p-button
+<app-breadcrumb></app-breadcrumb>
+<app-forum-menu></app-forum-menu>
+<!-- <p-button
   (click)="showMaximizableDialog()"
   icon="pi pi-book"
   label="View my forum posts"
@@ -13,7 +15,7 @@
   [baseZIndex]="10000"
   [draggable]="false"
   [resizable]="false"
->
+> -->
   <div class="card">
     <p-dataView
       #dv
@@ -25,6 +27,7 @@
       [sortOrder]="sortOrder"
       layout="grid"
     >
+    <app-create-new-forum-post></app-create-new-forum-post>
       <ng-template pTemplate="header">
         <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
           <p-dropdown
@@ -47,7 +50,6 @@
             <div class="create-forum-button">
               <app-create-new-forum-post></app-create-new-forum-post>
             </div>
-            
           </div>
         </div>
       </ng-template>
@@ -101,4 +103,4 @@
       </ng-template>
     </p-dataView>
   </div>
-</p-dialog>
+<!-- </p-dialog> -->

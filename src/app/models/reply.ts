@@ -4,22 +4,22 @@ import { Member } from "./member";
 export class Reply {
 	replyEntityId: number | undefined;
 	content: string | undefined;
-	image: string | undefined;
+	imageLink: string | undefined;
 	timestamp: Date | undefined;
-	visible: boolean | undefined;
-	banned: boolean | undefined;
+	isVisible: boolean | undefined;
+	isBanned: boolean | undefined;
 
-	forumPostEntity: ForumPost | undefined;
-	replyAuthor: Member | undefined;
+	forumPost: ForumPost | undefined;
+	author: Member | undefined;
 
-	constructor(replyEntityId?: number, replyAuthor?: Member, content?: string, 
-		image?: string, timestamp?: Date, visible?: boolean, banned?: boolean) {
+	constructor(replyEntityId?: number, author?: Member, content?: string, 
+		imageLink?: string, timestamp?: Date, isVisible?: boolean, isBanned?: boolean) {
 		this.replyEntityId = replyEntityId;
 		this.content = content;
-		this.image = image;
+		this.imageLink = imageLink;
 		this.timestamp = timestamp;
-		this.visible = visible;
-		this.banned = banned;
-		this.replyAuthor = replyAuthor;
+		this.isVisible = isVisible;
+		this.isBanned = isBanned;
+		this.author = author;
 	}
 }

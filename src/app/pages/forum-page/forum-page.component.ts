@@ -6,6 +6,7 @@ import { SessionService } from 'src/app/services/session.service';
 import {SelectItem} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
 import { NgForm } from '@angular/forms';
+import { Reply } from 'src/app/models/reply';
 
 @Component({
   selector: 'app-forum-page',
@@ -14,6 +15,9 @@ import { NgForm } from '@angular/forms';
 })
 export class ForumPageComponent implements OnInit {
   forumPosts: ForumPost[];
+  forumToView: ForumPost;
+  forumToViewReplies : Reply[] = [];
+  display: boolean;
   sortOptions: SelectItem[];
   sortField: string;
   sortOrder: number;
@@ -28,9 +32,16 @@ export class ForumPageComponent implements OnInit {
   ) {
     this.forumPosts = new Array();
     this.sortOptions = new Array();
+    this.forumToViewReplies = new Array();
+    this.forumToView = new ForumPost();
+    this.display = false;
     this.sortField = "";
     this.sortKey = "";
     this.sortOrder = 0;
+  }
+
+  testtest():void {
+    console.log("this is testing method");
   }
 
   ngOnInit(): void {
@@ -60,5 +71,12 @@ export class ForumPageComponent implements OnInit {
         this.sortOrder = 1;
         this.sortField = value;
     }
+}
+
+showDialog(forumToView: ForumPost) {
+  console.log(forumToView.forumPostEntityId);
+  this.display = true;
+  this.forumToView = forumToView;
+  this.forumToViewReplies = forumToView.replies!;
 }
 }

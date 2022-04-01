@@ -47,6 +47,7 @@ import { SettingsPageComponent } from "./pages/settings-page/settings-page.compo
 import { CreateNewForumPostComponent } from './pages/create-new-forum-post/create-new-forum-post.component';
 import {EditorModule} from 'primeng/editor';
 import { ViewMyForumPostComponent } from './pages/view-my-forum-post/view-my-forum-post.component';
+import { ForumMenuComponent } from './components/forum-menu/forum-menu.component';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -65,7 +66,8 @@ import { ViewMyForumPostComponent } from './pages/view-my-forum-post/view-my-for
 		SupportPageComponent,
 		SettingsPageComponent,
   		CreateNewForumPostComponent,
-    	ViewMyForumPostComponent
+    	ViewMyForumPostComponent,
+     	ForumMenuComponent
 		
 	],
 	imports: [

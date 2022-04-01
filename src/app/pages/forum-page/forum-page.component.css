@@ -42,5 +42,9 @@
     float: left;
 }
 
+p-panel {
+    overflow-wrap: break-word;
+
+}
 
 

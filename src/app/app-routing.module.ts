@@ -11,6 +11,8 @@ import { ViewMyOrdersPageComponent } from './pages/view-my-orders-page/view-my-o
 import { SupportPageComponent } from './pages/support-page/support-page.component';
 import { SettingsPageComponent } from './pages/settings-page/settings-page.component';
 import { ForumPageComponent } from './pages/forum-page/forum-page.component';
+import { ViewMyForumPostComponent } from './pages/view-my-forum-post/view-my-forum-post.component';
+import { CreateNewForumPostComponent } from './pages/create-new-forum-post/create-new-forum-post.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -24,6 +26,8 @@ const routes: Routes = [
   { path: 'forumPage', component: ForumPageComponent },
   { path: 'supportPage', component: SupportPageComponent },
   { path: 'settingsPage', component: SettingsPageComponent },
+  { path: 'viewMyForumPage', component: ViewMyForumPostComponent },
+  { path: 'createNewForumPage', component: CreateNewForumPostComponent },
 ];
 
 @NgModule({
