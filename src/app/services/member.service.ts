@@ -23,7 +23,7 @@ export class MemberService {
 		return this.httpClient.get<Member>(this.baseUrl + "/memberLogin?username=" + username + "&password=" + password).pipe(catchError(this.handleError));
 	}
 
-	RegisterNewMember(newAddress: Address ,username: String, password: String, firstname: String, lastname: String, email: String, contact: String, imageLink: String): Observable<Member> {
+	RegisterNewMember(newAddress: Address ,username: string, password: string, firstname: string, lastname: string, email: string, contact: string, imageLink: string): Observable<Member> {
 		console.log("======HERE IN MEMBER SERVICE =====");
 		console.log(newAddress);
 

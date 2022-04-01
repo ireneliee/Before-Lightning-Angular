@@ -18,13 +18,13 @@ import { HttpClient, HttpRequest, HttpEvent } from "@angular/common/http";
 })
 export class RegisterationComponent implements OnInit {
 	address: Address = new Address();
-	username: String = "";
-	password: String = "";
-	firstname: String = "";
-	lastname: String = "";
-	email: String = "";
-	contact: String = "";
-	imageLink: String = "";
+	username: string = "";
+	password: string = "";
+	firstname: string = "";
+	lastname: string = "";
+	email: string = "";
+	contact: string = "";
+	imageLink: string = "";
 
 	resultSuccess: Boolean | undefined;
 	resultError: Boolean | undefined;
