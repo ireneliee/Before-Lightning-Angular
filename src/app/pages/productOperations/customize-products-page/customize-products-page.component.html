@@ -1,0 +1,43 @@
+<app-breadcrumb pageName="Customize Products"></app-breadcrumb>
+
+<p-panel header="{{ productToCustomize.productName }}">
+	<div *ngIf="productToCustomize.imageLink; else elseBlock">
+		<img alt="Card" src="assets/images/sampleLaptop.png" style="width: 400px; height: 300px; margin: 20px" />
+	</div>
+	<ng-template #elseBlock>
+		<img alt="Card" src="assets/images/sampleLaptop.png" style="width: 400px; height: 300px; margin: 20px" />
+	</ng-template>
+	<div class="product-description">{{ productToCustomize.productOverview }}</div>
+	<br />
+	<div class="product-description">{{ productToCustomize.description }}</div>
+	<br />
+	<br />
+	<h4>Please Select An Option For Each Part Category:</h4>
+	<div class="product-description">
+		<h3>Current Price: ${{ buildPrice }}</h3>
+	</div>
+</p-panel>
+<form #addBuildToCartForm="ngForm" (ngSubmit)="addBuildToCart(addBuildToCartForm)">
+	<p-accordion *ngFor="let part of productToCustomize.partEntities">
+		<p-accordionTab header="{{ part.partName }}" style="margin-top: 15px">
+			<div class="product-description">
+				{{ part.description }}
+			</div>
+			<p-divider></p-divider>
+			<img alt="Please Select a Part Choice" src="assets/images/samplePartChoice.png" style="width: 400px; height: 300px; margin: 20px" />
+			<p-divider></p-divider>
+			<div *ngFor="let partChoice of part.partChoiceEntities" class="field-checkbox">
+				<div *ngIf="partChoice.quantityOnHand != 0">
+					<p-radioButton name="{{ partChoice.partChoiceEntityId }}" value="{{ partChoice }}"></p-radioButton>
+					<label for="partChoice.partChoiceEntityId"> {{ partChoice.partChoiceName }} (${{ partChoice.price }}) </label>
+				</div>
+				<div *ngIf="partChoice.quantityOnHand == 0">
+					<p-radioButton name="{{ partChoice.partChoiceEntityId }}" value="{{ partChoice }}" disable="true"></p-radioButton>
+					<label for="partChoice.partChoiceEntityId"> {{ partChoice.partChoiceName }} (${{ partChoice.price }}) </label>
+				</div>
+			</div>
+		</p-accordionTab>
+	</p-accordion>
+
+	<button pButton type="submit" label="Add Build To Cart" icon="pi pi-shopping-cart"></button>
+</form>

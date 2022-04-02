@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 
 import { AccessRightErrorComponent } from './pages/access-right-error/access-right-error.component';
 import { IndexComponent } from './pages/index/index.component';
@@ -14,6 +14,7 @@ import { ForumPageComponent } from './pages/forum-page/forum-page.component';
 import { ViewMyForumPostComponent } from './pages/view-my-forum-post/view-my-forum-post.component';
 import { CreateNewForumPostComponent } from './pages/create-new-forum-post/create-new-forum-post.component';
 import { UpdateForumComponent } from './pages/update-forum/update-forum.component';
+import { CustomizeProductsPageComponent } from "./pages/productOperations/customize-products-page/customize-products-page.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -33,7 +34,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+	imports: [RouterModule.forRoot(routes)],
+	exports: [RouterModule],
 })
 export class AppRoutingModule {}

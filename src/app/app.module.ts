@@ -24,7 +24,11 @@ import {RouterModule} from '@angular/router';
 import { MessageModule } from 'primeng/message';
 import { TabMenuModule } from 'primeng/tabmenu';
 import {FieldsetModule} from 'primeng/fieldset';
-
+import { AccordionModule } from "primeng/accordion";
+import { DividerModule } from "primeng/divider";
+import { SplitterModule } from "primeng/splitter";
+import { CheckboxModule } from "primeng/checkbox";
+import { RadioButtonModule } from "primeng/radiobutton";
 
 import { MessageService } from "primeng/api";
 
@@ -52,6 +56,7 @@ import { ForumMenuComponent } from './components/forum-menu/forum-menu.component
 import { UpdateForumComponent } from './pages/update-forum/update-forum.component';
 import { TooltipModule } from "primeng/tooltip";
 import {SelectButtonModule} from 'primeng/selectbutton';
+import { CustomizeProductsPageComponent } from "./pages/productOperations/customize-products-page/customize-products-page.component";
 
 @NgModule({
 	declarations: [
@@ -73,8 +78,8 @@ import {SelectButtonModule} from 'primeng/selectbutton';
   		CreateNewForumPostComponent,
     	ViewMyForumPostComponent,
      	ForumMenuComponent,
-      	UpdateForumComponent
-		
+      	UpdateForumComponent,
+		CustomizeProductsPageComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -107,8 +112,12 @@ import {SelectButtonModule} from 'primeng/selectbutton';
 		TooltipModule,
 		FieldsetModule,
 		SelectButtonModule,
-		
-
+		AccordionModule,
+		FieldsetModule,
+		DividerModule,
+		SplitterModule,
+		CheckboxModule,
+		RadioButtonModule,
 	],
 	providers: [MessageService],
 	bootstrap: [AppComponent],

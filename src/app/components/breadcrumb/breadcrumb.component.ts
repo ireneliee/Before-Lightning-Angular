@@ -23,6 +23,10 @@ export class BreadcrumbComponent implements OnInit {
 		if (this.pageName == "Products") {
 			this.items.push({ label: "Products", routerLink: "/productsHomePage" });
 		}
+		if (this.pageName == "Customize Products") {
+			this.items.push({ label: "Products", routerLink: "/productsHomePage" });
+			this.items.push({ label: "Customize Products" });
+		}
 		if (this.pageName == "Registeration") {
 			this.items.push({ label: "Registeration", routerLink: "/registeration" });
 		}

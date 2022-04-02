@@ -2,21 +2,21 @@ import { Promotion } from "./promotion";
 
 export class PartChoice {
 	partChoiceEntityId: number | undefined;
-	partChoiceName: string | undefined;
-	partOverview: string | undefined;
-	partDescription: string | undefined;
-	brand: string | undefined;
-	quantityOnHand: number | undefined;
-	reorderQuantity: number | undefined;
-	price: number | undefined;
-	imageLink: string | undefined;
-	isDisabled: boolean | undefined;
+	partChoiceName: string;
+	partOverview: string;
+	partDescription: string;
+	brand: string;
+	quantityOnHand: number;
+	reorderQuantity: number;
+	price: number;
+	imageLink: string;
+	isDisabled: boolean;
 
 	promotionEntities: Promotion[] | undefined;
 	compatibleChassisPartChoiceEntities: PartChoice[] | undefined;
 	compatiblePartsPartChoiceEntities: PartChoice[] | undefined;
 
-	constructor(partChoiceEntityId?: number, partChoiceName?: string, partOverview?: string, partDescription?: string, brand?: string, quantityOnHand?: number, reorderQuantity?: number, price?: number, imageLink?: string, isDisabled?: boolean) {
+	constructor(partChoiceName: string, partOverview: string, partDescription: string, brand: string, quantityOnHand: number, reorderQuantity: number, price: number, imageLink: string, isDisabled: boolean, partChoiceEntityId?: number) {
 		this.partChoiceEntityId = partChoiceEntityId;
 		this.partChoiceName = partChoiceName;
 		this.partOverview = partOverview;
