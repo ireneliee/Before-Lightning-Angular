@@ -37,8 +37,8 @@ export class UpdateForumComponent implements OnInit {
           this.retrieveForumError = false;
           this.forumToUpdate = new ForumPost();
           this.visibilityOptions = [
-            {label: 'Visible', values: true},
-            {label: 'Not visible', values: false}
+            {label: 'Visible', value: true},
+            {label: 'Not visible', value: false}
           ];
          }
 
@@ -65,9 +65,12 @@ export class UpdateForumComponent implements OnInit {
     this.forumToUpdate = new ForumPost();
   }
 
+  dummydummyfunc(): void {
+    console.log
+  }
+
   update(updateForumForm: NgForm) {
     this.submitted = true;
-
     if(updateForumForm.valid) {
       this.forumService.updateForum(this.forumToUpdate.forumPostEntityId!, this.forumToUpdate.content!, this.forumToUpdate.isVisible!).subscribe({
         next: (response) => {

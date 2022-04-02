@@ -21,6 +21,8 @@ export class ForumService {
   }
 
   updateForum(forumPostId: number, content: string, visibility: boolean): Observable<ForumPost[]> {
+    console.log("updating the current forum");
+    console.log(visibility);
     let updateForumPost: UpdateForumPost = new UpdateForumPost(this.sessionService.getUsername(), content, visibility, forumPostId);
     return this.httpClient.post<any>(this.baseUrl, updateForumPost, httpOptions).pipe (
       catchError(this.handleError)
@@ -31,7 +33,6 @@ export class ForumService {
     return this.httpClient.get<ForumPost[]>(this.baseUrl + "/retrieveAllForumPosts").pipe(
       catchError(this.handleError)
     );
-    
   }
 
   getMyForumPosts():Observable<ForumPost[]> {
@@ -39,7 +40,6 @@ export class ForumService {
       catchError(this.handleError)
     )
   }
-
   createNewForum(title: string, content: string): Observable<number> {
     console.log(this.sessionService.getUsername())
     return this.httpClient.get<number>(this.baseUrl + "/createNewForum/?username=" + this.sessionService.getUsername()
