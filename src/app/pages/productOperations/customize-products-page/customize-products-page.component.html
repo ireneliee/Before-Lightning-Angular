@@ -1,0 +1,27 @@
+<app-breadcrumb pageName="Customize Products"></app-breadcrumb>
+
+<p-panel header="{{ productToCustomize.productName }}">
+	<div *ngIf="productToCustomize.imageLink; else elseBlock">
+		<img alt="Card" src="assets/images/sampleLaptop.png" style="width: 400px; height: 300px; margin: 20px" />
+	</div>
+	<ng-template #elseBlock>
+		<img alt="Card" src="assets/images/sampleLaptop.png" style="width: 400px; height: 300px; margin: 20px" />
+	</ng-template>
+	<div class="product-description">{{ productToCustomize.productOverview }}</div>
+	<div class="product-description">{{ productToCustomize.description }}</div>
+</p-panel>
+
+<p-accordion *ngFor="let part of productToCustomize.partEntities">
+	<p-accordionTab header="{{ part.partName }}">
+		<div class="product-description">
+			{{ part.description }}
+		</div>
+		<p-divider></p-divider>
+		<img alt="Please Select a Product" src="assets/images/sampleLaptop.png" style="width: 400px; height: 300px; margin: 20px" />
+		<p-divider></p-divider>
+		<div *ngFor="let partChoice of part.partChoiceEntities" class="field-checkbox">
+			<p-checkbox name="{{ partChoice.partChoiceName }}"></p-checkbox>
+			<label [for]="partChoice.partChoiceEntityId">{{ partChoice.partChoiceName }}</label>
+		</div>
+	</p-accordionTab>
+</p-accordion>

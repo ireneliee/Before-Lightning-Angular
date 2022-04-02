@@ -20,6 +20,14 @@ export class ProductService {
 		return this.httpClient.get<Product[]>(this.baseUrl + "/retrieveAllProductsToSell").pipe(catchError(this.handleError));
 	}
 
+	getProductById(productId: number) {
+		// console.log("======  PRODUCT SERVICE GETTING PRODUCT WITH ID ======");
+		// console.log(productId);
+		// console.log("======================================================");
+
+		return this.httpClient.get<Product>(this.baseUrl + "/retrieveProductToSellById/" + productId).pipe(catchError(this.handleError));
+	}
+
 	private handleError(error: HttpErrorResponse) {
 		let errorMessage: string = "";
 		if (error.error instanceof ErrorEvent) {

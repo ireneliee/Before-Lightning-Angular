@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Member } from "../models/member";
+import { PurchaseOrderLineItem } from "../models/purchase-order-line-item";
 
 @Injectable({
 	providedIn: "root",
@@ -43,31 +44,53 @@ export class SessionService {
 		sessionStorage["password"] = password;
 	}
 
-  //UPDATE THIS WHEN YOU MAKE NEW PAGES
+	//THIS IS FOR THE SHOPPING CART
+	//===================================================================
+	getCart(): PurchaseOrderLineItem[] | undefined {
+		const cart = sessionStorage.getItem("cart");
+
+		if (typeof cart === "string") {
+			return JSON.parse(cart);
+		} else {
+			return [];
+		}
+	}
+
+	setCart(lineItems: PurchaseOrderLineItem[]): void {
+		sessionStorage.setItem("cart", JSON.stringify(lineItems));
+	}
+	//===================================================================
+
+	//UPDATE THIS WHEN YOU MAKE NEW PAGES
 	checkAccessRight(path: string): boolean {
 		console.log("********** path: " + path);
-    console.log(this.getIsLogin());
+		console.log(this.getIsLogin());
 
 		if (this.getIsLogin()) {
-			if (path == "/index" || 
-      path == "/productsHomePage" || 
-      path == "/accessoryHomePage" || 
-      path == "/viewMyCartPage" || 
-      path == "/viewMyOrdersPage" || 
-      path == "/forumPage" || 
-      path == "/supportPage" || 
-      path == "/settingsPage") {
+			if (
+				path == "/index" ||
+				path == "/productsHomePage" ||
+				path.startsWith("/customizeProductsPage") ||
+				path == "/accessoryHomePage" ||
+				path == "/viewMyCartPage" ||
+				path == "/viewMyOrdersPage" ||
+				path == "/forumPage" ||
+				path == "/supportPage" ||
+				path == "/settingsPage"
+			) {
 				return true;
 			} else {
 				return false;
 			}
 		} else {
-			if (path == "/index" || 
-      path == "/productsHomePage" || 
-      path == "/registeration" || 
-      path == "/accessoryHomePage" || 
-      path == "/viewMyCartPage" || 
-      path == "/forumPage") {
+			if (
+				path == "/index" || 
+				path == "/productsHomePage" || 
+				path.startsWith("/customizeProductsPage") ||
+				path == "/registeration" || 
+				path == "/accessoryHomePage" || 
+				path == "/viewMyCartPage" || 
+				path == "/forumPage") {
 				return true;
 			} else {
 				return false;
@@ -75,4 +98,3 @@ export class SessionService {
 		}
 	}
 }
-

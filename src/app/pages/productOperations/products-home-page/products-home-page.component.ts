@@ -56,6 +56,10 @@ export class ProductsHomePageComponent implements OnInit {
 		}
 	}
 
+	customizeProduct(product: Product) {
+      this.router.navigate(["/customizeProductsPage/" + product.productEntityId]);
+	}
+
 	checkAccessRight() {
 		if (!this.sessionService.checkAccessRight(this.router.url)) {
 			this.router.navigate(["/accessRightError"]);

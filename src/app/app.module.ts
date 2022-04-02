@@ -20,10 +20,14 @@ import { CardModule } from "primeng/card";
 import { MessagesModule } from "primeng/messages";
 import { ToastModule } from "primeng/toast";
 import { FileUploadModule } from "primeng/fileupload";
-import {RouterModule} from '@angular/router';
-import { MessageModule } from 'primeng/message';
-import { TabMenuModule } from 'primeng/tabmenu';
-
+import { RouterModule } from "@angular/router";
+import { MessageModule } from "primeng/message";
+import { TabMenuModule } from "primeng/tabmenu";
+import { AccordionModule } from "primeng/accordion";
+import { FieldsetModule } from "primeng/fieldset";
+import { DividerModule } from "primeng/divider";
+import { SplitterModule } from "primeng/splitter";
+import { CheckboxModule } from "primeng/checkbox";
 
 import { MessageService } from "primeng/api";
 
@@ -44,10 +48,12 @@ import { ForumPageComponent } from "./pages/forum-page/forum-page.component";
 import { ViewMyOrdersPageComponent } from "./pages/view-my-orders-page/view-my-orders-page.component";
 import { SupportPageComponent } from "./pages/support-page/support-page.component";
 import { SettingsPageComponent } from "./pages/settings-page/settings-page.component";
-import { CreateNewForumPostComponent } from './pages/create-new-forum-post/create-new-forum-post.component';
-import {EditorModule} from 'primeng/editor';
-import { ViewMyForumPostComponent } from './pages/view-my-forum-post/view-my-forum-post.component';
-import { ForumMenuComponent } from './components/forum-menu/forum-menu.component';
+import { CreateNewForumPostComponent } from "./pages/create-new-forum-post/create-new-forum-post.component";
+import { EditorModule } from "primeng/editor";
+import { ViewMyForumPostComponent } from "./pages/view-my-forum-post/view-my-forum-post.component";
+import { ForumMenuComponent } from "./components/forum-menu/forum-menu.component";
+import { CustomizeProductsPageComponent } from "./pages/productOperations/customize-products-page/customize-products-page.component";
+
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -65,10 +71,10 @@ import { ForumMenuComponent } from './components/forum-menu/forum-menu.component
 		ViewMyOrdersPageComponent,
 		SupportPageComponent,
 		SettingsPageComponent,
-  		CreateNewForumPostComponent,
-    	ViewMyForumPostComponent,
-     	ForumMenuComponent
-		
+		CreateNewForumPostComponent,
+		ViewMyForumPostComponent,
+		ForumMenuComponent,
+		CustomizeProductsPageComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -98,8 +104,11 @@ import { ForumMenuComponent } from './components/forum-menu/forum-menu.component
 		FileUploadModule,
 		EditorModule,
 		TabMenuModule,
-		
-
+		AccordionModule,
+		FieldsetModule,
+		DividerModule,
+		SplitterModule,
+		CheckboxModule,
 	],
 	providers: [MessageService],
 	bootstrap: [AppComponent],
