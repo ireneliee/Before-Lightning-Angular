@@ -79,4 +79,10 @@ showDialog(forumToView: ForumPost) {
   this.forumToView = forumToView;
   this.forumToViewReplies = forumToView.replies!;
 }
+
+redirectToUpdate(forumToUpdate: ForumPost) {
+  console.log(forumToUpdate.forumPostEntityId);
+  this.router.navigate(["/updateForumComponent/" + forumToUpdate.forumPostEntityId?.toString()]);
+
+}
 }

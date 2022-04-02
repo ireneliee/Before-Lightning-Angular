@@ -94,6 +94,14 @@
                   icon = "pi pi-search" 
                   (onClick)="showDialog(forum)">
                 </p-button>
+                <p-button 
+                  title = "Edit forum details"
+                  pButton
+                  class="p-button-raised p-button-rounded"
+                  icon = "pi pi-pencil" 
+                  (onClick)="redirectToUpdate(forum)">
+                </p-button>
+                
                 </div>
               </div>
               <div class="forum-box-action"></div>
@@ -103,7 +111,7 @@
       </ng-template>
     </p-dataView>
   </div>
-  <p-dialog  class = "view-forum-dialog" *ngIf="display" header="View Forum Details" [(visible)]="display" [style]="{width: '50vw'}">
+  <p-dialog  class = "view-forum-dialog" [modal]="true" *ngIf="display" header="View Forum Details" [(visible)]="display" [style]="{width: '50vw'}">
     <p-panel class = "view-forum-header" header="Title">
       <span>{{ forumToView.title }}</span>
     </p-panel>

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { CreateForumReq } from '../models/create-forum-req';
 import { ForumPost } from '../models/forum-post';
+import { UpdateForumPost } from '../models/update-forum-post';
 import { SessionService } from './session.service';
 
 const httpOptions = {
@@ -17,6 +18,13 @@ export class ForumService {
 
   constructor(private httpClient: HttpClient, private sessionService: SessionService) { 
 
+  }
+
+  updateForum(forumPostId: number, content: string, visibility: boolean): Observable<ForumPost[]> {
+    let updateForumPost: UpdateForumPost = new UpdateForumPost(this.sessionService.getUsername(), content, visibility, forumPostId);
+    return this.httpClient.post<any>(this.baseUrl, updateForumPost, httpOptions).pipe (
+      catchError(this.handleError)
+    );
   }
 
   getForumPosts():Observable<ForumPost[]> {
@@ -36,6 +44,12 @@ export class ForumService {
     console.log(this.sessionService.getUsername())
     return this.httpClient.get<number>(this.baseUrl + "/createNewForum/?username=" + this.sessionService.getUsername()
      + "&title=" + title + "&content=" + content).pipe (
+      catchError(this.handleError)
+    );
+  }
+
+  getForumByForumId(forumId: number): Observable<ForumPost> {
+    return this.httpClient.get<ForumPost>(this.baseUrl + "/retrieveForumPostById?forumId=" + forumId.toString()).pipe(
       catchError(this.handleError)
     );
   }

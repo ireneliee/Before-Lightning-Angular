@@ -19,8 +19,8 @@ export class ForumMenuComponent implements OnInit {
     private messageService: MessageService
   ) {
     this.items = [
-      { label: 'View all forum posts', icon: 'pi pi-plus', command : () => {this.router.navigate(["/forumPage"])}},
-      { label: 'View my forum posts', icon: 'pi pi-book', command: () => {this.router.navigate(["/viewMyForumPage"])}},
+      { label: 'All posts', icon: 'pi pi-table', command : () => {this.router.navigate(["/forumPage"])}},
+      { label: 'My posts', icon: 'pi pi-book', command: () => {this.router.navigate(["/viewMyForumPage"])}},
     ];
     this.activeItem = this.items[0];
   }

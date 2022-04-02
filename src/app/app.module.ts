@@ -23,6 +23,7 @@ import { FileUploadModule } from "primeng/fileupload";
 import {RouterModule} from '@angular/router';
 import { MessageModule } from 'primeng/message';
 import { TabMenuModule } from 'primeng/tabmenu';
+import {FieldsetModule} from 'primeng/fieldset';
 
 
 import { MessageService } from "primeng/api";
@@ -48,6 +49,10 @@ import { CreateNewForumPostComponent } from './pages/create-new-forum-post/creat
 import {EditorModule} from 'primeng/editor';
 import { ViewMyForumPostComponent } from './pages/view-my-forum-post/view-my-forum-post.component';
 import { ForumMenuComponent } from './components/forum-menu/forum-menu.component';
+import { UpdateForumComponent } from './pages/update-forum/update-forum.component';
+import { TooltipModule } from "primeng/tooltip";
+import {SelectButtonModule} from 'primeng/selectbutton';
+
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -67,7 +72,8 @@ import { ForumMenuComponent } from './components/forum-menu/forum-menu.component
 		SettingsPageComponent,
   		CreateNewForumPostComponent,
     	ViewMyForumPostComponent,
-     	ForumMenuComponent
+     	ForumMenuComponent,
+      	UpdateForumComponent
 		
 	],
 	imports: [
@@ -98,6 +104,9 @@ import { ForumMenuComponent } from './components/forum-menu/forum-menu.component
 		FileUploadModule,
 		EditorModule,
 		TabMenuModule,
+		TooltipModule,
+		FieldsetModule,
+		SelectButtonModule,
 		
 
 	],
