@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { NgForm } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Part } from "src/app/models/part";
 import { PartChoice } from "src/app/models/part-choice";
@@ -12,19 +13,19 @@ import { SessionService } from "src/app/services/session.service";
 	templateUrl: "./customize-products-page.component.html",
 	styleUrls: ["./customize-products-page.component.css"],
 })
-
-
 export class CustomizeProductsPageComponent implements OnInit {
 	productId: string | null;
 	productToCustomize: Product;
 	listOfSelectedPartChoices: SelectedPartChoicePair[] = [];
 	retrieveProductError: boolean;
+	buildPrice: number;
 
 	constructor(private router: Router, private activatedRoute: ActivatedRoute, public sessionService: SessionService, private productService: ProductService) {
 		this.productId = null;
 		this.productToCustomize = new Product();
 		this.listOfSelectedPartChoices = [];
 		this.retrieveProductError = false;
+		this.buildPrice = 0;
 	}
 
 	ngOnInit(): void {
@@ -46,6 +47,13 @@ export class CustomizeProductsPageComponent implements OnInit {
 				},
 			});
 		}
+	}
+
+	addBuildToCart(addBuildToCartForm: NgForm) {}
+
+	addPairToList(part: Part, partChoice: PartChoice) {
+
+		
 	}
 
 	checkAccessRight() {

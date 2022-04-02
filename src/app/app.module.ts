@@ -28,6 +28,7 @@ import { FieldsetModule } from "primeng/fieldset";
 import { DividerModule } from "primeng/divider";
 import { SplitterModule } from "primeng/splitter";
 import { CheckboxModule } from "primeng/checkbox";
+import { RadioButtonModule } from "primeng/radiobutton";
 
 import { MessageService } from "primeng/api";
 
@@ -109,6 +110,7 @@ import { CustomizeProductsPageComponent } from "./pages/productOperations/custom
 		DividerModule,
 		SplitterModule,
 		CheckboxModule,
+		RadioButtonModule,
 	],
 	providers: [MessageService],
 	bootstrap: [AppComponent],
