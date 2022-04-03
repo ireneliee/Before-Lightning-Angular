@@ -10,8 +10,8 @@ export class Product {
 	imageLink: string | undefined;
 	isDisabled: boolean | undefined;
 
-	reviewEntities: Review[] | undefined;
-	partEntities: Part[] | undefined;
+	reviewEntities: Review[] = [];
+	partEntities: Part[] = [];
 
 	constructor(productEntityId?: number, productName?: string, skuCode?: string, productOverview?: string, description?: string, imageLink?: string, isDisabled?: boolean) {
 		this.productEntityId = productEntityId;

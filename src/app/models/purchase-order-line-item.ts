@@ -5,17 +5,17 @@ import { Product } from "./product";
 
 export class PurchaseOrderLineItem {
 	purchaseOrderLineItemEntityId: number | undefined;
-	serialNumber: number | undefined;
-	quantity: number | undefined;
-	subtotalPrice: number | undefined;
-	cosmeticImageLink: string | undefined;
-	purchaseOrderLineItemTypeEnum: PurchaseOrderLineItemTypeEnum | undefined;
+	serialNumber: number;
+	quantity: number;
+	subtotalPrice: number;
+	cosmeticImageLink: string;
+	purchaseOrderLineItemTypeEnum: PurchaseOrderLineItemTypeEnum;
 
-	accessoryItemEntity: AccessoryItem | undefined;
-	partChoiceEntities: PartChoice[] | undefined;
-	productEntity: Product | undefined;
+	accessoryItemEntity: AccessoryItem = new AccessoryItem();
+	partChoiceEntities: PartChoice[] = [];
+	productEntity: Product = new Product();
 
-	constructor(purchaseOrderLineItemEntityId?: number, serialNumber?: number, quantity?: number, subtotalPrice?: number, cosmeticImageLink?: string, purchaseOrderLineItemTypeEnum?: PurchaseOrderLineItemTypeEnum) {
+	constructor(serialNumber: number, quantity: number, subtotalPrice: number, cosmeticImageLink: string, purchaseOrderLineItemTypeEnum: PurchaseOrderLineItemTypeEnum, purchaseOrderLineItemEntityId?: number) {
 		this.purchaseOrderLineItemEntityId = purchaseOrderLineItemEntityId;
 		this.serialNumber = serialNumber;
 		this.quantity = quantity;

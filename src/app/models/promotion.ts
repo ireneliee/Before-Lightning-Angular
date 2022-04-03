@@ -2,17 +2,17 @@ import { AccessoryItem } from "./accessory-item";
 import { PartChoice } from "./part-choice";
 
 export class Promotion {
-	promotionEntityId: number | undefined;
-	promotionName: string | undefined;
-	startDate: Date | undefined;
-	endDate: Date | undefined;
-	discount: number | undefined;
-	discountedPrice: number | undefined;
+	promotionEntityId: number;
+	promotionName: string;
+	startDate: Date;
+	endDate: Date;
+	discount: number;
+	discountedPrice: number;
 
-	partChoiceEntities: PartChoice[] | undefined;
-	accessoryItemEntities: AccessoryItem[] | undefined;
+	partChoiceEntities: PartChoice[] = [];
+	accessoryItemEntities: AccessoryItem[] = [];
 
-	constructor(promotionEntityId?: number, promotionName?: string, startDate?: Date, endDate?: Date, discount?: number, discountedPrice?: number) {
+	constructor(promotionEntityId: number, promotionName: string, startDate: Date, endDate: Date, discount: number, discountedPrice: number) {
 		this.promotionEntityId = promotionEntityId;
 		this.promotionName = promotionName;
 		this.startDate = startDate;
