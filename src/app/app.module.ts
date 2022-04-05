@@ -57,6 +57,8 @@ import { UpdateForumComponent } from './pages/update-forum/update-forum.componen
 import { TooltipModule } from "primeng/tooltip";
 import {SelectButtonModule} from 'primeng/selectbutton';
 import { CustomizeProductsPageComponent } from "./pages/productOperations/customize-products-page/customize-products-page.component";
+import { UploadFileComponent } from './components/upload-file/upload-file.component';
+
 
 @NgModule({
 	declarations: [
@@ -80,6 +82,7 @@ import { CustomizeProductsPageComponent } from "./pages/productOperations/custom
      	ForumMenuComponent,
       	UpdateForumComponent,
 		CustomizeProductsPageComponent,
+  UploadFileComponent,
 	],
 	imports: [
 		BrowserModule,
