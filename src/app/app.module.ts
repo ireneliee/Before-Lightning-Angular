@@ -29,8 +29,9 @@ import { DividerModule } from "primeng/divider";
 import { SplitterModule } from "primeng/splitter";
 import { CheckboxModule } from "primeng/checkbox";
 import { RadioButtonModule } from "primeng/radiobutton";
-
+import {InputTextareaModule} from 'primeng/inputtextarea';
 import { MessageService } from "primeng/api";
+import {AvatarModule} from 'primeng/avatar';
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -121,6 +122,8 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
 		SplitterModule,
 		CheckboxModule,
 		RadioButtonModule,
+		InputTextareaModule,
+		AvatarModule
 	],
 	providers: [MessageService],
 	bootstrap: [AppComponent],

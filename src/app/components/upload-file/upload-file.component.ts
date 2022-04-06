@@ -11,6 +11,7 @@ import { FileUploadService } from 'src/app/services/file-upload.service';
 })
 export class UploadFileComponent implements OnInit {
   uploadedFiles: any[] = [];
+  fileName?: string;
 
   constructor(
     private messageService: MessageService,
@@ -19,23 +20,15 @@ export class UploadFileComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onUpload(event: { files: any }) {
-    for (let file of event.files) {
-      this.uploadedFiles.push(file);
+  myUploader(event: Event) {
+    console.log("reach");
+    console.log(event.target);
+    const target = event.target as HTMLInputElement;
+    if(target.files == null) console.log("Is null");
+    console.log(target?.files?.length);
+
+    if (target.files && target.files.length > 0) {
+      console.log(target.files[0].name);
     }
-
-    this.messageService.add({
-      severity: 'info',
-      summary: 'File Uploaded',
-      detail: '',
-    });
-
-    this.messageService.add({
-      severity: 'info',
-      summary: 'File Uploaded',
-      detail: '',
-    });
-
-    this.fileUploadService.uploadFile(this.uploadedFiles);
   }
 }

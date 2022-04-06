@@ -5,7 +5,7 @@ export class ForumPost {
 	forumPostEntityId: number | undefined;
 	title: string | undefined;
 	content: string | undefined;
-	image: string | undefined;
+	imageLink: string | undefined;
 	timestamp: Date | undefined;
 	isVisible: boolean | undefined;
 	isBanned: boolean | undefined;
@@ -17,7 +17,7 @@ export class ForumPost {
 
 
 	constructor(forumPostEntityId?: number, author?: Member, title?: string, 
-		content?: string, image?: string, timestamp?: Date, 
+		content?: string, imageLink?: string, timestamp?: Date, 
 		isVisible?: boolean, isBanned?: boolean, replies?: Reply[], userWhoLikes?: Member[],
 		userWhoDislikes?: Member[]) {
 		this.forumPostEntityId = forumPostEntityId;
@@ -27,7 +27,7 @@ export class ForumPost {
 		this.timestamp = timestamp;
 		this.isVisible = isVisible;
 		this.isBanned = isBanned;
-		this.image = image;
+		this.imageLink = imageLink;
 		this.replies = replies;
 		this.userWhoLikes = userWhoLikes;
 		this.userWhoDislikes = userWhoDislikes;

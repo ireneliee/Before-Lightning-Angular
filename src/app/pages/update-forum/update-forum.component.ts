@@ -8,6 +8,7 @@ import { MessageService } from "primeng/api";
 import { TooltipModule } from 'primeng/tooltip';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import {ButtonModule} from 'primeng/button';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 @Component({
   selector: 'app-update-forum',

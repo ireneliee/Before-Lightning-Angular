@@ -3,7 +3,7 @@
 
 <div class="card">
     <h5>Basic</h5>
-    <p-fileUpload method = "post" mode="basic" name="file" url="http://localhost:8080/beforeLightningRWS/Resources/File/upload" accept="image/*"></p-fileUpload>
+    <p-fileUpload method = "post" mode="advanced" (onUpload)="myUploader($event)" name="file" url="http://localhost:8080/beforeLightningRWS/Resources/File/upload" accept="image/*"></p-fileUpload>
 
 
 </div>
