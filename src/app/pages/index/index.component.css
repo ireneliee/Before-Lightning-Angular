@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Fredoka+One");
 
 .store-container {
-  line-height:0;
+  line-height: 0;
   margin: 50px auto;
   width: 50%;
 }
@@ -258,4 +258,16 @@
 }
 .sky-circle3 {
   animation: fadeInOut 8s 40s ease-in infinite;
+}
+
+.big-container {
+  display: flex;
+}
+.store-container {
+  flex-basis: 120%;
+}
+
+.testimony {
+  margin-left: 2em;
+  margin-top: 3em;
 }
