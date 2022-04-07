@@ -52,13 +52,15 @@
                   icon="pi pi-thumbs-up"
                   class="p-button-raised p-button-rounded"
                 ></button>
-                <button
+                <p-button
                   title="Comment on this post"
                   pButton
                   type="button"
                   icon="pi pi-comment"
                   class="p-button-raised p-button-rounded"
-                ></button>
+                  (onClick)="showCreateReplyDialog(forum)"
+                  style = "margin-right: 0.7em;"
+                ></p-button>
                 <p-button
                   title="View forum details"
                   pButton
@@ -97,9 +99,15 @@
       {{ forumToView.content }}
     </div>
     <ng-template pTemplate="footer">
-      <p-chip label="{{ forumToView.userWhoLikes?.length }}" icon="pi pi-thumbs-up" style = "padding-right: 1em;"></p-chip>
-      <p-chip label="{{ forumToView.userWhoDislikes?.length }}" icon="pi pi-thumbs-down"></p-chip>
-     
+      <p-chip
+        label="{{ forumToView.userWhoLikes?.length }}"
+        icon="pi pi-thumbs-up"
+        style="padding-right: 1em"
+      ></p-chip>
+      <p-chip
+        label="{{ forumToView.userWhoDislikes?.length }}"
+        icon="pi pi-thumbs-down"
+      ></p-chip>
     </ng-template>
   </p-card>
   <p-panel header="Replies" [toggleable]="true">
@@ -121,4 +129,50 @@
       </ng-template>
     </p-table>
   </p-panel>
+</p-dialog>
+
+<p-dialog
+  class="add-new-comment"
+  *ngIf="createReplyDisplay"
+  [modal]="true"
+  header="Create new comment"
+  [(visible)]="createReplyDisplay"
+  [style]="{ width: '50vw' }"
+> <p-toast></p-toast>
+  <div class="reply-form-container">
+    
+    <div class="reply-profile">
+      <p-avatar label="P" shape="circle" size = "large"></p-avatar>
+      <div>{{ currentMember }}</div>
+    </div>
+    <form>
+      <div class="reply-content-form">
+        <span class="p-float-label">
+          <textarea
+            inputId="textarea"
+            rows="3"
+            style="resize: none"
+            cols="30"
+            name="reply-text-area"
+            [(ngModel)]="replyContent"
+            pInputTextarea
+            style = "width: 180%;"
+          ></textarea>
+          <label for="textarea">Write your comment here!</label>
+        </span>
+      </div>
+      <div class="reply-action">
+        <div class = "submit-button">
+        <button icon = "pi pi-comment" (click) = "createNewReply()" pButton label="Post comment"></button>
+      </div>
+      <div class = "clear-button">
+        <p-button
+          icon="pi pi-times"
+          (click)="clearReplyForm()"
+          label="Clear"
+        ></p-button>
+      </div>
+    </div>
+    </form>
+  </div>
 </p-dialog>

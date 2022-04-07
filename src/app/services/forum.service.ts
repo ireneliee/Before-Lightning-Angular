@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaderResponse, HttpHeaders } from '
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { CreateForumReq } from '../models/create-forum-req';
+import { CreateNewReply } from '../models/create-new-reply';
 import { ForumPost } from '../models/forum-post';
 import { UpdateForumPost } from '../models/update-forum-post';
 import { SessionService } from './session.service';
@@ -25,6 +26,14 @@ export class ForumService {
     console.log(visibility);
     let updateForumPost: UpdateForumPost = new UpdateForumPost(this.sessionService.getUsername(), content, visibility, forumPostId);
     return this.httpClient.post<any>(this.baseUrl, updateForumPost, httpOptions).pipe (
+      catchError(this.handleError)
+    );
+  }
+
+  createNewReply(forumId: number, content: string): Observable<number> {
+    console.log("creating new reply");
+    let createNewReply: CreateNewReply = new CreateNewReply(this.sessionService.getUsername(), content, forumId);
+    return this.httpClient.post<any>(this.baseUrl + "/createNewReply", createNewReply, httpOptions).pipe (
       catchError(this.handleError)
     );
   }

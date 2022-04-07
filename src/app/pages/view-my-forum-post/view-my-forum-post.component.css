@@ -41,3 +41,23 @@
 .edit-button {
     margin-left: 0.7em;
 }
+
+.reply-form-container {
+    display: flex;
+}
+
+.reply-profile {
+    margin-top: 1em;
+    flex-basis: 15%;
+}
+
+.reply-action {
+    margin-top: 1em;
+    display: flex;
+}
+
+.submit-button {
+    margin-right: 1em;
+}
+
+

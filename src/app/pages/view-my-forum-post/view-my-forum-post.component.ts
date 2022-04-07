@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ForumPost } from 'src/app/models/forum-post';
 import { ForumService } from 'src/app/services/forum.service';
 import { SessionService } from 'src/app/services/session.service';
-import {SelectItem} from 'primeng/api';
+import {MessageService, SelectItem} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
 import { NgForm } from '@angular/forms';
 import { Reply } from 'src/app/models/reply';
@@ -15,6 +15,8 @@ import { Reply } from 'src/app/models/reply';
 })
 export class ViewMyForumPostComponent implements OnInit {
   forumPosts: ForumPost[];
+
+  // attribute for view forum details
   forumToView: ForumPost;
   forumToViewReplies : Reply[] = [];
   display: boolean;
@@ -24,12 +26,21 @@ export class ViewMyForumPostComponent implements OnInit {
   sortKey: string;
   url: string;
 
+  // attribute for create new reply
+  currentMember: string;
+  replyContent: string;
+  createReplyDisplay:boolean;
+  replySubmitted: boolean;
+  replySuccess: boolean;
+  replyError: boolean;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public sessionService: SessionService,
     private forumService: ForumService,
-    private primengConfig: PrimeNGConfig
+    private primengConfig: PrimeNGConfig,
+    private messageService: MessageService
   ) {
     this.forumPosts = new Array();
     this.sortOptions = new Array();
@@ -40,6 +51,14 @@ export class ViewMyForumPostComponent implements OnInit {
     this.sortKey = "";
     this.sortOrder = 0;
     this.url = "../../../../../../../../../../glassfish-5.1.0-uploadedfiles/uploadedFiles/"
+
+    this.replyContent = "";
+    this.sortOrder = 0;
+    this.currentMember = this.sessionService.getUsername();
+    this.createReplyDisplay = false;
+    this.replySubmitted = false;
+    this.replySuccess = false;
+    this.replyError = false;
   }
 
   testtest():void {
@@ -75,6 +94,7 @@ export class ViewMyForumPostComponent implements OnInit {
     }
 }
 
+// view forum post detailss
 showDialog(forumToView: ForumPost) {
   console.log(forumToView.forumPostEntityId);
   this.display = true;
@@ -86,5 +106,47 @@ redirectToUpdate(forumToUpdate: ForumPost) {
   console.log(forumToUpdate.forumPostEntityId);
   this.router.navigate(["/updateForumComponent/" + forumToUpdate.forumPostEntityId?.toString()]);
 
+}
+
+// method to create new reply
+clearReplyForm() {
+  this.replySubmitted = false;
+  this.replyError = false;
+  this.replySuccess = false;
+  this.replyContent = "";
+}
+
+showCreateReplyDialog(forumToView:ForumPost) {
+  this.createReplyDisplay = true;
+  this.forumToView = forumToView;
+
+}
+
+createNewReply() {
+  console.log("Create new reply here is called");
+  this.replySubmitted = true;
+  if(true) {
+    console.log("Creating the new class");
+    this.forumService.createNewReply(this.forumToView.forumPostEntityId!, this.replyContent).subscribe ({
+      next: (response) => {
+        console.log("Getting response");
+        let postId: Number = response;
+        this.replySuccess = true;
+        this.replyError = false;
+        this.clearReplyForm();
+        this.messageService.add({ severity: 'info', summary: "Successfuly posted a forum reply" });
+        //createNewReplyForm.resetForm();
+        //createNewReplyForm.reset();
+        this.clearReplyForm();
+      },
+      error: (error) => {
+        this.replyError = true;
+        this.replySuccess = false;
+        this.messageService.add({severity: 'error', summary: "Error", detail: "An error has occured while posting the entry"});
+        this.clearReplyForm();
+      },
+    });
+
+  }
 }
 }
