@@ -29,8 +29,9 @@ import { DividerModule } from "primeng/divider";
 import { SplitterModule } from "primeng/splitter";
 import { CheckboxModule } from "primeng/checkbox";
 import { RadioButtonModule } from "primeng/radiobutton";
-
+import {InputTextareaModule} from 'primeng/inputtextarea';
 import { MessageService } from "primeng/api";
+import {AvatarModule} from 'primeng/avatar';
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -57,6 +58,8 @@ import { UpdateForumComponent } from './pages/update-forum/update-forum.componen
 import { TooltipModule } from "primeng/tooltip";
 import {SelectButtonModule} from 'primeng/selectbutton';
 import { CustomizeProductsPageComponent } from "./pages/productOperations/customize-products-page/customize-products-page.component";
+import { UploadFileComponent } from './components/upload-file/upload-file.component';
+
 
 @NgModule({
 	declarations: [
@@ -80,6 +83,7 @@ import { CustomizeProductsPageComponent } from "./pages/productOperations/custom
      	ForumMenuComponent,
       	UpdateForumComponent,
 		CustomizeProductsPageComponent,
+  UploadFileComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -118,6 +122,8 @@ import { CustomizeProductsPageComponent } from "./pages/productOperations/custom
 		SplitterModule,
 		CheckboxModule,
 		RadioButtonModule,
+		InputTextareaModule,
+		AvatarModule
 	],
 	providers: [MessageService],
 	bootstrap: [AppComponent],

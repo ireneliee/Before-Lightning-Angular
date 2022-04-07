@@ -11,8 +11,6 @@
     [sortOrder]="sortOrder"
     layout="grid"
   >
-  
-  
     <ng-template pTemplate="header">
       <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
         <p-dropdown
@@ -32,9 +30,6 @@
           />
         </span>
         <app-create-new-forum-post></app-create-new-forum-post>
-
-        
-        
       </div>
     </ng-template>
 
@@ -58,26 +53,20 @@
                   class="p-button-raised p-button-rounded"
                 ></button>
                 <button
-                  title="Dislike this post"
-                  pButton
-                  type="button"
-                  icon="pi pi-thumbs-down"
-                  class="p-button-raised p-button-rounded"
-                ></button>
-                <button
                   title="Comment on this post"
                   pButton
                   type="button"
                   icon="pi pi-comment"
                   class="p-button-raised p-button-rounded"
                 ></button>
-                <p-button 
-                title = "View forum details"
-                pButton
-                class="p-button-raised p-button-rounded"
-                icon = "pi pi-search" 
-                (onClick)="showDialog(forum)">
-              </p-button>
+                <p-button
+                  title="View forum details"
+                  pButton
+                  class="p-button-raised p-button-rounded"
+                  icon="pi pi-search"
+                  (onClick)="showDialog(forum)"
+                >
+                </p-button>
               </div>
             </div>
           </div>
@@ -87,42 +76,49 @@
   </p-dataView>
 </div>
 
-
-<p-dialog  class = "view-forum-dialog" *ngIf="display" [modal]="true" header="View Forum Details" [(visible)]="display" [style]="{width: '50vw'}">
-  <p-panel class = "view-forum-header" header="Title">
-    <span>{{ forumToView.title }}</span>
-  </p-panel>
-  <p-panel class = "view-forum-header" header="Content">
-    <span>{{ forumToView.content }}</span>
-  </p-panel>
-  <p-panel class = "view-forum-header" header="Author">
-    <span>{{ forumToView.author?.username }}</span>
-  </p-panel>
-  <p-panel class = "view-forum-header" header="Timestamp">
-    <span>{{ forumToView.timestamp }}</span>
-  </p-panel>
-  <p-panel class = "view-forum-header" header="Number of likes">
-    <span>{{ forumToView.userWhoLikes?.length }}</span>
-  </p-panel>
-  <p-panel class = "view-forum-header" header="Number of dislikes">
-    <span>{{ forumToView.userWhoDislikes?.length }}</span>
-  </p-panel>
-  <p-panel header="Replies"  [toggleable]="true">
+<p-dialog
+  class="view-forum-dialog"
+  *ngIf="display"
+  [modal]="true"
+  header="View Forum Details"
+  [(visible)]="display"
+  [style]="{ width: '50vw' }"
+>
+  <p-card
+    header="{{ forumToView.title }}"
+    subheader="{{ forumToView.author?.username }}"
+    [style]="{ width: '100%' }"
+    styleClass="p-card-shadow"
+  >
+    <ng-template pTemplate="header">
+      <img alt="Card" src="assets/images/lake-canada.jpg" />
+    </ng-template>
+    <div style="overflow-wrap: break-word">
+      {{ forumToView.content }}
+    </div>
+    <ng-template pTemplate="footer">
+      <p-chip label="{{ forumToView.userWhoLikes?.length }}" icon="pi pi-thumbs-up" style = "padding-right: 1em;"></p-chip>
+      <p-chip label="{{ forumToView.userWhoDislikes?.length }}" icon="pi pi-thumbs-down"></p-chip>
+     
+    </ng-template>
+  </p-card>
+  <p-panel header="Replies" [toggleable]="true">
     <p-table [value]="forumToViewReplies">
       <ng-template pTemplate="header">
-          <tr>
-              <th>Author</th>
-              <th>Content</th>
-          </tr>
+        <tr>
+          <th>Author</th>
+          <th>Content</th>
+        </tr>
       </ng-template>
       <ng-template pTemplate="body" let-reply>
-          <tr>
-              <td>{{reply.author.username}}</td>
-              <td>{{reply.content}}</td>
-             
-          </tr>
+        <tr>
+          <td>
+            <p-avatar label="P" size="large"></p-avatar>
+            <p>{{ reply.author.username }}</p>
+          </td>
+          <td>{{ reply.content }}</td>
+        </tr>
       </ng-template>
-      
-  </p-table>
+    </p-table>
   </p-panel>
 </p-dialog>

@@ -5,6 +5,7 @@ import { ForumPost } from 'src/app/models/forum-post';
 import { ForumService } from 'src/app/services/forum.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/services/session.service';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class CreateNewForumPostComponent implements OnInit {
   submitted: boolean;
   title: string;
   content: string;
+  fileName: string;
   resultSuccess: boolean;
   resultError: boolean;
   msgs : Message[];
@@ -31,6 +33,7 @@ export class CreateNewForumPostComponent implements OnInit {
       this.submitted = false;
       this.title = "";
       this.content = "";
+      this.fileName = "";
       this.resultSuccess = false;
       this.resultError = false;
       this.msgs = [];
@@ -45,7 +48,8 @@ export class CreateNewForumPostComponent implements OnInit {
     this.submitted = false;
     this.resultError  = false;
     this.resultSuccess = false;
-
+    
+    this.fileName = "";
     this.title = "";
     this.content = "";
   }
@@ -63,7 +67,7 @@ create(createForumPostForm: NgForm) {
 
   this.submitted = true;
   if(createForumPostForm.valid) {
-    this.forumService.createNewForum(this.title, this.content).subscribe({
+    this.forumService.createNewForum(this.title, this.content, this.fileName).subscribe({
         next: (response) => {
           let postId: Number = response;
           this.resultSuccess = true;

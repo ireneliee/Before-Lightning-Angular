@@ -22,13 +22,14 @@
     <br/>
     <br/>
 
-    <h5>Content</h5>
-    <br />
-    <p-editor
-      [(ngModel)]="forumToUpdate.content"
-      [style]="{ height: '320px' }"
-      name="forumUpdateContent"
-    ></p-editor>
+    <div class="content-section implementation forum-content-entry">
+      <div class="card">
+        <h5>Content</h5>
+        <br />
+        <textarea pInputTextarea [(ngModel)]="forumToUpdate.content" [style]="{ height: '320px' }"
+        name="forum-content" style = "width: 95%;"></textarea>
+      </div>
+    </div>
     <br/>
     <br/>
     <h5>Would you like your post to be visible?</h5>

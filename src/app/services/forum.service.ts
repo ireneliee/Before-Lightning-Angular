@@ -40,10 +40,10 @@ export class ForumService {
       catchError(this.handleError)
     )
   }
-  createNewForum(title: string, content: string): Observable<number> {
+  createNewForum(title: string, content: string, filename: string): Observable<number> {
     console.log(this.sessionService.getUsername())
     return this.httpClient.get<number>(this.baseUrl + "/createNewForum/?username=" + this.sessionService.getUsername()
-     + "&title=" + title + "&content=" + content).pipe (
+     + "&title=" + title + "&content=" + content + "&filename=" + filename).pipe (
       catchError(this.handleError)
     );
   }

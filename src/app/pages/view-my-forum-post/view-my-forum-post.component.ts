@@ -22,6 +22,7 @@ export class ViewMyForumPostComponent implements OnInit {
   sortField: string;
   sortOrder: number;
   sortKey: string;
+  url: string;
 
   constructor(
     private router: Router,
@@ -38,6 +39,7 @@ export class ViewMyForumPostComponent implements OnInit {
     this.sortField = "";
     this.sortKey = "";
     this.sortOrder = 0;
+    this.url = "../../../../../../../../../../glassfish-5.1.0-uploadedfiles/uploadedFiles/"
   }
 
   testtest():void {

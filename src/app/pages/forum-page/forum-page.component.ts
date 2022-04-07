@@ -7,6 +7,7 @@ import {SelectItem} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
 import { NgForm } from '@angular/forms';
 import { Reply } from 'src/app/models/reply';
+import { ChipModule } from 'primeng/chip';
 
 @Component({
   selector: 'app-forum-page',

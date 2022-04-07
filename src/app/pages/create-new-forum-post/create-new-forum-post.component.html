@@ -15,31 +15,52 @@
     [draggable]="false"
     [resizable]="false"
   >
+    <p-toast></p-toast>
     <div class="forum-title-entry">
       <h5>Title</h5>
       <br />
-      <input name = "forum-title" type="text" pInputText [(ngModel)]="title" />
-      
+      <input name="forum-title" type="text" pInputText [(ngModel)]="title" style = "width: 100%;" />
     </div>
+    <br/>
+    <br/>
+    <div class="forum-photo-upload card">
+      <br/>
+      <h5>Upload your photo here</h5>
+      <br/>
+      <p-fileUpload
+        method="post"
+        mode="advanced"
+        name="file"
+        url="http://localhost:8080/beforeLightningRWS/Resources/File/upload"
+        accept="image/*"
+      ></p-fileUpload>
+    </div>
+    <br/>
+    <br/>
+    <div class="forum-photo-filename">
+      <h5>Photo name</h5>
+      <br />
+      <input
+        name="forum-photo-name"
+        type="text"
+        pInputText
+        pTooltip="Help us to store your photo nicely by filling in the exact name and extension of your photo!"
+        [(ngModel)]="fileName"
+        style = "width: 100%;"
+      />
+    </div>
+
     <div class="content-section implementation forum-content-entry">
       <div class="card">
         <h5>Content</h5>
-        <br/>
-        <p-editor
-          [(ngModel)]="content"
-          [style]="{ height: '320px' }"
-          name = "forum-content"
-        ></p-editor>
+        <br />
+        <textarea pInputTextarea [(ngModel)]="content" [style]="{ height: '320px' }"
+        name="forum-content" style = "width: 125%;"></textarea>
       </div>
     </div>
     <ng-template pTemplate="footer">
-      
-      <input type = "submit" value = "Create new post"/>
-      <p-button
-        icon="pi pi-times"
-        (click)="clear()"
-        label="Clear"
-      ></p-button>
+      <input type="submit" value="Create new post" />
+      <p-button icon="pi pi-times" (click)="clear()" label="Clear"></p-button>
     </ng-template>
   </p-dialog>
 </form>
