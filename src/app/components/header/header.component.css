@@ -1,0 +1,13 @@
+::ng-deep header {
+  background-image: linear-gradient(to right, #174b80, #c5c6c7);
+}
+
+h1 {
+  font-size: 2em;
+}
+
+.bl-title {
+  color: white;
+  margin-top: 1em;
+  margin-left: 1em;
+}
