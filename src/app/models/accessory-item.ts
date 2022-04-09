@@ -28,7 +28,10 @@ export class AccessoryItem {
 		reorderQuantity?: number,
 		price?: number,
 		imageLink?: string,
-		isDisabled?: boolean
+		isDisabled?: boolean,
+		promotionEntities? : Promotion[],
+		reviewEntities? : Review[]
+
 	) {
 		this.accessoryItemEntityId = accessoryItemEntityId;
 		this.accessoryItemName = accessoryItemName;
@@ -40,5 +43,7 @@ export class AccessoryItem {
 		this.price = price;
 		this.imageLink = imageLink;
 		this.isDisabled = isDisabled;
+		this.promotionEntities = promotionEntities;
+		this.reviewEntities = reviewEntities;
 	}
 }

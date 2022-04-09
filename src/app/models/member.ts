@@ -1,7 +1,7 @@
 import { Address } from "./address";
 import { CreditCard } from "./credit-card";
 import { ForumPost } from "./forum-post";
-import { PurchaseOrder } from "./purchase-order";
+import { PurchaseOrderEntity } from "./purchase-order";
 import { Reply } from "./reply";
 import { ShoppingCart } from "./shopping-cart";
 
@@ -19,7 +19,7 @@ export class Member {
 
 	creditCardEntities: CreditCard[] | undefined;
 	addressEntities: Address[] | undefined;
-	purchaseOrderEntities: PurchaseOrder[] | undefined;
+	purchaseOrderEntities: PurchaseOrderEntity[] | undefined;
 	shoppingCartEntity: ShoppingCart | undefined;
 	listOfAutheredForumPosts: ForumPost[] | undefined;
 	listOfLikedForumPost: ForumPost[] | undefined;

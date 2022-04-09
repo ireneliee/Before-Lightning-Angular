@@ -1,0 +1,55 @@
+.po-number {
+  font-size: large;
+  padding-left: 0.5em;
+  padding-top: 1em;
+  padding-right: 1em;
+  padding-bottom: 1em;
+}
+
+.po-timestamp {
+  font-size: small;
+  padding: 1em;
+}
+
+.po-price {
+  font-size: small;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 1em;
+}
+
+.po-maincontent {
+  margin: 1em;
+}
+
+.product-item .product-item-content {
+  border: 1px solid var(--surface-d);
+  border-radius: 3px;
+  margin: 0.3rem;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.car-buttons {
+  margin: 2em;
+}
+
+::ng-deep .action-button {
+  width: 5px;
+}
+
+.action-button {
+  margin: 0.1em;
+  text-align: center;
+}
+h1 h4 h6 {
+  font-family:'Courier New', Courier, monospace;
+  text-align: center;
+}
+
+.po-container {
+  margin-right: 0.5em;
+
+}
+
+

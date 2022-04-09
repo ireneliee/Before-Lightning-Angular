@@ -3,7 +3,7 @@ import { PurchaseOrderLineItemTypeEnum } from "./enum/purchase-order-line-item-t
 import { PartChoice } from "./part-choice";
 import { Product } from "./product";
 
-export class PurchaseOrderLineItem {
+export class FullPurchaseOrderLineItem {
 	purchaseOrderLineItemEntityId: number | undefined;
 	serialNumber: number;
 	quantity: number;
@@ -15,12 +15,15 @@ export class PurchaseOrderLineItem {
 	partChoiceEntities: PartChoice[] = [];
 	productEntity: Product = new Product();
 
-	constructor(serialNumber: number, quantity: number, subTotalPrice: number, cosmeticImageLink: string, purchaseOrderLineItemTypeEnum: PurchaseOrderLineItemTypeEnum, purchaseOrderLineItemEntityId?: number) {
+	constructor(accessoryItemEntity: AccessoryItem, partChoiceEntities: PartChoice[], productEntity: Product, serialNumber: number, quantity: number, subTotalPrice: number, cosmeticImageLink: string, purchaseOrderLineItemTypeEnum: PurchaseOrderLineItemTypeEnum, purchaseOrderLineItemEntityId?: number) {
 		this.purchaseOrderLineItemEntityId = purchaseOrderLineItemEntityId;
 		this.serialNumber = serialNumber;
 		this.quantity = quantity;
 		this.subTotalPrice = subTotalPrice;
 		this.cosmeticImageLink = cosmeticImageLink;
 		this.purchaseOrderLineItemTypeEnum = purchaseOrderLineItemTypeEnum;
+        this.accessoryItemEntity = accessoryItemEntity;
+        this.partChoiceEntities = partChoiceEntities;
+        this.productEntity = productEntity;
 	}
 }

@@ -1,3 +1,108 @@
 <app-breadcrumb pageName="View My Orders"></app-breadcrumb>
+<p-carousel
+  [value]="listOfPurchaseOrder"
+  [numVisible]="3"
+  [numScroll]="3"
+  [circular]="false"
+>
+  <ng-template pTemplate="header">
+    <br />
+    <h1>Your purchase order</h1>
+    <br />
+  </ng-template>
+  <ng-template let-purchaseOrder pTemplate="item">
+    <div class = "po-container">
+      <p-card>
+        <h4 style="text-align: center">
+          Reference number: {{ purchaseOrder.referenceNumber }}
+        </h4>
+        <br />
+        <h6 style="text-align: center">
+          Timestamp: {{ purchaseOrder.dateCreated }}
+        </h6>
+        <br />
+        <h4 style="text-align: center" severity="danger">
+          Status:
+          <p-badge value="{{ purchaseOrder.purchaseOrderStatus }}"></p-badge>
+        </h4>
 
-<p>view-my-orders-page works!</p>
+        <div class="car-buttons p-mt-5">
+          <p-button
+            class="action-button"
+            type="button"
+            styleClass="p-button p-button-rounded p-mr-2"
+            icon="pi pi-search"
+          ></p-button>
+          <p-button
+            class="action-button"
+            type="button"
+            styleClass="p-button p-button-rounded p-mr-2"
+            icon="pi pi-star"
+          ></p-button>
+          <p-button
+            class="action-button"
+            type="button"
+            styleClass="p-button p-button-rounded"
+            icon="pi pi-cog"
+          ></p-button>
+        </div>
+      </p-card>
+    </div>
+  </ng-template>
+</p-carousel>
+
+<!-- <div class="card">
+    <p-dataView
+    #dv
+    [value]="listOfPurchaseOrder"
+    [paginator]="true"
+    [rows]="9"
+    filterBy="name"
+    [sortField]="sortField"
+    [sortOrder]="sortOrder"
+    layout="grid"
+  >
+    <ng-template pTemplate="header">
+      <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+        <p-dropdown
+          [options]="sortOptions"
+          [(ngModel)]="sortKey"
+          placeholder="Sort By Date"
+          (onChange)="onSortChange($event)"
+          styleClass="p-mb-2 p-mb-md-0"
+        ></p-dropdown>
+        <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+          <i class="pi pi-search"></i>
+          <input
+            type="search"
+            pInputText
+            placeholder="Search by Name"
+            (input)="dv.filter($any($event.target).value)"
+          />
+        </span>
+        <div class="extra-forum-function">
+          <div class="create-forum-button">
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template let-purchaseOrder pTemplate="gridItem">
+      <div class="p-col-12 p-md-4">
+        <div class="product-grid-item card">
+          <div class="product-grid-item">
+            <div class="po-content">
+              <div class="po-maincontent">
+                <span class="po-number">Your reference number: {{ purchaseOrder.referenceNumber }}</span>
+                <div class="po-timestamp">Purchase order timestamp: {{ purchaseOrder.dateCreated }}</div>
+                <div class="po-price">Total payment: SGD{{ purchaseOrder.totalPrice }}</div>
+              </div>
+            </div>
+            <div class="po-action"></div>
+          </div>
+          <p-divider></p-divider>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataView>
+</div> -->

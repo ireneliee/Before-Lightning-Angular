@@ -16,7 +16,9 @@ export class PartChoice {
 	compatibleChassisPartChoiceEntities: PartChoice[] = [];
 	compatiblePartsPartChoiceEntities: PartChoice[] = [];
 
-	constructor(partChoiceName: string, partOverview: string, partDescription: string, brand: string, quantityOnHand: number, reorderQuantity: number, price: number, imageLink: string, isDisabled: boolean, partChoiceEntityId?: number) {
+	constructor(promotionEntities: Promotion[], compatibleChassisPartChoiceEntities: PartChoice[], 
+		partChoiceName: string,
+		compatiblePartsPartChoiceEntities: PartChoice[], partOverview: string, partDescription: string, brand: string, quantityOnHand: number, reorderQuantity: number, price: number, imageLink: string, isDisabled: boolean, partChoiceEntityId?: number) {
 		this.partChoiceEntityId = partChoiceEntityId;
 		this.partChoiceName = partChoiceName;
 		this.partOverview = partOverview;
@@ -27,5 +29,8 @@ export class PartChoice {
 		this.price = price;
 		this.imageLink = imageLink;
 		this.isDisabled = isDisabled;
+		this.promotionEntities = promotionEntities;
+		this.compatibleChassisPartChoiceEntities = compatibleChassisPartChoiceEntities;
+		this.compatiblePartsPartChoiceEntities = compatiblePartsPartChoiceEntities;
 	}
 }

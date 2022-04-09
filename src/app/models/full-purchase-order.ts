@@ -1,8 +1,9 @@
 import { PurchaseOrderStatusEnum } from "./enum/purchase-order-status-enum";
+import { FullPurchaseOrderLineItem } from "./full-purchase-order-lineitems";
 import { Member } from "./member";
 import { PurchaseOrderLineItem } from "./purchase-order-line-item";
 
-export class PurchaseOrderEntity {
+export class FullPurchaseOrderEntity {
 	purchaseOrderEntityId: number | undefined;
 	referenceNumber: string | undefined;
 	totalPrice: number | undefined;
@@ -10,14 +11,15 @@ export class PurchaseOrderEntity {
 	purchaseOrderStatus: PurchaseOrderStatusEnum | undefined;
 
 	member: Member | undefined;
-	purchaseOrderLineItems: PurchaseOrderLineItem[] | undefined;
+	purchaseOrderLineItems: FullPurchaseOrderLineItem[] | undefined;
 
-	constructor(member?: Member, purchaseOrderEntityId?: number, referenceNumber?: string, totalPrice?: number, dateCreated?: Date, purchaseOrderStatus?: PurchaseOrderStatusEnum) {
+	constructor(purchaseOrderLineItems?: FullPurchaseOrderLineItem[], member?: Member, purchaseOrderEntityId?: number, referenceNumber?: string, totalPrice?: number, dateCreated?: Date, purchaseOrderStatus?: PurchaseOrderStatusEnum) {
 		this.purchaseOrderEntityId = purchaseOrderEntityId;
 		this.referenceNumber = referenceNumber;
 		this.totalPrice = totalPrice;
 		this.dateCreated = dateCreated;
 		this.purchaseOrderStatus = purchaseOrderStatus;
 		this.member = member;
+		this.purchaseOrderLineItems = purchaseOrderLineItems;
 	}
 }

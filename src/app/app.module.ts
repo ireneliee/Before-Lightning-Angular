@@ -59,7 +59,8 @@ import { TooltipModule } from 'primeng/tooltip';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { CustomizeProductsPageComponent } from './pages/productOperations/customize-products-page/customize-products-page.component';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
-
+import {CarouselModule} from 'primeng/carousel';
+import {BadgeModule} from 'primeng/badge';
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,7 +83,7 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
     ForumMenuComponent,
     UpdateForumComponent,
     CustomizeProductsPageComponent,
-    UploadFileComponent,
+    UploadFileComponent
   ],
   imports: [
     BrowserModule,
@@ -123,6 +124,8 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
     RadioButtonModule,
     InputTextareaModule,
     AvatarModule,
+    CarouselModule,
+    BadgeModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent],
