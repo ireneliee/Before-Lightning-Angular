@@ -33,6 +33,10 @@ export class BreadcrumbComponent implements OnInit {
 		if (this.pageName == "Accessory") {
 			this.items.push({ label: "Accessory", routerLink: "accessoryHomePage" });
 		}
+		if (this.pageName == "View All Accessory Items") {
+			this.items.push({ label: "Accessory", routerLink: "accessoryHomePage" });
+			this.items.push({ label: "View All Accessories" });
+		}
 		if (this.pageName == "View My Cart") {
 			this.items.push({ label: "View My Cart", routerLink: "/viewMyCartPage" });
 		}

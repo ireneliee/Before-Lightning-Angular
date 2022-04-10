@@ -59,6 +59,10 @@ export class AccessoryHomePageComponent implements OnInit {
 		}
 	}
 
+	viewAllAccessoryItems(accessory: Accessory) {
+		this.router.navigate(["/viewAllAccessoryItemsPage/" + accessory.accessoryEntityId]);
+	}
+
 	checkAccessRight() {
 		if (!this.sessionService.checkAccessRight(this.router.url)) {
 			this.router.navigate(["/accessRightError"]);

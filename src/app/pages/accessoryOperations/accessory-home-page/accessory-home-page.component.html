@@ -1,6 +1,6 @@
 <app-breadcrumb pageName="Accessory"></app-breadcrumb>
 
-<!-- <div class="card">
+<div class="card">
 	<p-dataView #dv [value]="listOfAccessoryEntities" [paginator]="true" [rows]="9" layout="grid">
 		<ng-template pTemplate="header">
 			<div class="flex flex-column md:flex-row md:justify-content-between">
@@ -14,38 +14,38 @@
 				</span>
 			</div>
 		</ng-template>
-		<ng-template let-product pTemplate="listItem">
+		<ng-template let-accessory pTemplate="listItem">
 			<div class="col-12">
-				<div class="product-list-item">
-					<img alt="Card" src="assets/images/sampleAccessory.png" style="width: 20%" />
-					<div class="product-list-detail" style="width: 60%">
-						<div class="product-name">{{ product.productName }}</div>
-						<div class="product-description">{{ product.description }}</div>
+				<div class="accessory-list-item">
+					<!-- <img alt="Card" src="assets/images/sampleAccessory.png" style="width: 20%" /> -->
+					<div class="accessory-list-detail" style="width: 60%">
+						<div class="accessory-name">{{ accessory.accessoryName }}</div>
+						<div class="accessory-description">{{ accessory.description }}</div>
 
-						<p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
+						<!-- <p-rating [ngModel]="accessory.rating" [readonly]="true" [cancel]="false"></p-rating> -->
 					</div>
-					<div class="product-list-action" style="width: 20%; float: left">
-						<div class="product-description">{{ product.productOverview }}</div>
-						<p-button label="Customize Now" icon="pi pi-check" (onClick)="customizeAccessory(product)"> </p-button>
+					<div class="accessory-list-action" style="width: 20%; float: left">
+						<div class="accessory-description">{{ accessory.accessoryOverview }}</div>
+						<p-button label="View All" (onClick)="viewAllAccessoryItems(accessory)"> </p-button>
 					</div>
 				</div>
 			</div>
 			<div class="col-12"><br /></div>
 		</ng-template>
-		<ng-template let-product pTemplate="gridItem">
+		<ng-template let-accessory pTemplate="gridItem">
 			<div class="col-12" style="border: 10px; margin-top: 20px; margin-bottom: 20px; border-width: 20px">
-				<p-card header="{{ product.productName }}" subheader="{{ product.productOverview }}" [style]="{ width: '100%' }" styleClass="p-card-shadow">
+				<p-card header="{{ accessory.accessoryName }}" subheader="{{ accessory.accessoryOverview }}" [style]="{ width: '100%' }" styleClass="p-card-shadow">
 					<ng-template pTemplate="header">
-						<img alt="Card" src="assets/images/sampleAccessory.png" style="width: 600px; height: 500px" />
+						<!-- <img alt="Card" src="assets/images/sampleAccessory.png" style="width: 600px; height: 500px" /> -->
 					</ng-template>
-					<div class="product-description">{{ product.description }}</div>
-					<p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
+					<div class="accessory-description">{{ accessory.description }}</div>
+					<!-- <p-rating [ngModel]="accessory.rating" [readonly]="true" [cancel]="false"></p-rating> -->
 
 					<ng-template pTemplate="footer">
-						<p-button label="Customize Now" icon="pi pi-check" (onClick)="customizeAccessory(product)"></p-button>
+						<p-button label="View All" (onClick)="viewAllAccessoryItems(accessory)"></p-button>
 					</ng-template>
 				</p-card>
 			</div>
 		</ng-template>
 	</p-dataView>
-</div> -->
+</div>

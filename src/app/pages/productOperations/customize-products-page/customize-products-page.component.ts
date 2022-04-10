@@ -14,7 +14,7 @@ import { SessionService } from "src/app/services/session.service";
 @Component({
 	selector: "app-customize-products-page",
 	templateUrl: "./customize-products-page.component.html",
-	styleUrls: ["./customize-products-page.component.css"],
+	styleUrls: ["./customize-products-page.component.scss"],
 	providers: [MessageService],
 })
 export class CustomizeProductsPageComponent implements OnInit {

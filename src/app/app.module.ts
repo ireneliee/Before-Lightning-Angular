@@ -61,6 +61,7 @@ import { CustomizeProductsPageComponent } from './pages/productOperations/custom
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 import {CarouselModule} from 'primeng/carousel';
 import {BadgeModule} from 'primeng/badge';
+import { ViewAllAccessoryItemsPageComponent } from './pages/accessoryOperations/view-all-accessory-items-page/view-all-accessory-items-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,7 +84,8 @@ import {BadgeModule} from 'primeng/badge';
     ForumMenuComponent,
     UpdateForumComponent,
     CustomizeProductsPageComponent,
-    UploadFileComponent
+    UploadFileComponent,
+    ViewAllAccessoryItemsPageComponent
   ],
   imports: [
     BrowserModule,

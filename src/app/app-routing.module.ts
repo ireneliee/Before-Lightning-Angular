@@ -15,6 +15,7 @@ import { ViewMyForumPostComponent } from "./pages/view-my-forum-post/view-my-for
 import { CreateNewForumPostComponent } from "./pages/create-new-forum-post/create-new-forum-post.component";
 import { UpdateForumComponent } from "./pages/update-forum/update-forum.component";
 import { CustomizeProductsPageComponent } from "./pages/productOperations/customize-products-page/customize-products-page.component";
+import { ViewAllAccessoryItemsPageComponent } from "./pages/accessoryOperations/view-all-accessory-items-page/view-all-accessory-items-page.component";
 
 const routes: Routes = [
 	{ path: "", redirectTo: "/index", pathMatch: "full" },
@@ -25,6 +26,8 @@ const routes: Routes = [
 	{ path: "customizeProductsPage", component: CustomizeProductsPageComponent },
 	{ path: "customizeProductsPage/:productId", component: CustomizeProductsPageComponent },
 	{ path: "accessoryHomePage", component: AccessoryHomePageComponent },
+	{ path: "viewAllAccessoryItemsPage", component: ViewAllAccessoryItemsPageComponent },
+	{ path: "viewAllAccessoryItemsPage/:accessoryId", component: ViewAllAccessoryItemsPageComponent },
 	{ path: "viewMyCartPage", component: ViewMyCartPageComponent },
 	{ path: "viewMyOrdersPage", component: ViewMyOrdersPageComponent },
 	{ path: "forumPage", component: ForumPageComponent },
