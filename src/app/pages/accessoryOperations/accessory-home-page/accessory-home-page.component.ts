@@ -11,7 +11,7 @@ import { catchError, Observable, throwError } from "rxjs";
 @Component({
 	selector: "app-accessory-home-page",
 	templateUrl: "./accessory-home-page.component.html",
-	styleUrls: ["./accessory-home-page.component.css"],
+	styleUrls: ["./accessory-home-page.component.scss"],
 })
 export class AccessoryHomePageComponent implements OnInit {
 	listOfAccessoryEntities: Accessory[] = [];

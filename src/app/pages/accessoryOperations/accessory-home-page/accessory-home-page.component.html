@@ -16,16 +16,16 @@
 		</ng-template>
 		<ng-template let-accessory pTemplate="listItem">
 			<div class="col-12">
-				<div class="accessory-list-item">
+				<div class="product-list-item">
 					<!-- <img alt="Card" src="assets/images/sampleAccessory.png" style="width: 20%" /> -->
-					<div class="accessory-list-detail" style="width: 60%">
-						<div class="accessory-name">{{ accessory.accessoryName }}</div>
-						<div class="accessory-description">{{ accessory.description }}</div>
+					<div class="product-list-detail" style="width: 60%">
+						<div class="product-name">{{ accessory.accessoryName }}</div>
+						<div class="product-description">{{ accessory.description }}</div>
 
 						<!-- <p-rating [ngModel]="accessory.rating" [readonly]="true" [cancel]="false"></p-rating> -->
 					</div>
-					<div class="accessory-list-action" style="width: 20%; float: left">
-						<div class="accessory-description">{{ accessory.accessoryOverview }}</div>
+					<div class="product-list-action" style="width: 20%; float: left">
+						<div class="product-description">{{ accessory.accessoryOverview }}</div>
 						<p-button label="View All" (onClick)="viewAllAccessoryItems(accessory)"> </p-button>
 					</div>
 				</div>

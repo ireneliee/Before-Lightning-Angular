@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { MessageService, SelectItem } from "primeng/api";
 import { Accessory } from "src/app/models/accessory";
 import { AccessoryItem } from "src/app/models/accessory-item";
+import { PurchaseOrderLineItemTypeEnum } from "src/app/models/enum/purchase-order-line-item-type-enum";
+import { PurchaseOrderLineItem } from "src/app/models/purchase-order-line-item";
 import { AccessoryService } from "src/app/services/accessory.service";
 import { SessionService } from "src/app/services/session.service";
 
@@ -20,6 +22,10 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 	accessory: Accessory | null;
 	listOfAccessoryItems: AccessoryItem[] = [];
 	retrieveAccessoryError: boolean;
+	displayDialog: boolean = false;
+	selectedAccessoryItem: AccessoryItem | null = null;
+	selectedQuantity: number = 1;
+	selectedAccessoryItemQuantityOnHand: number = 0;
 
 	constructor(private router: Router, private activatedRoute: ActivatedRoute, public sessionService: SessionService, private messageService: MessageService, private accessoryService: AccessoryService) {
 		this.retrieveAccessoryError = false;
@@ -49,7 +55,69 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 		}
 	}
 
-	addToCart(accessoryItem: AccessoryItem) {}
+	doDisplayDialog(accessoryItem: AccessoryItem) {
+		this.displayDialog = true;
+		this.selectedAccessoryItem = accessoryItem;
+		this.selectedAccessoryItemQuantityOnHand = this.selectedAccessoryItem.quantityOnHand!;
+	}
+
+	addToCart() {
+		let cart: PurchaseOrderLineItem[] | undefined = this.sessionService.getCart();
+		//check if cart has accessory item alr
+		console.log("ADD TO CART CALLED");
+
+		if (cart) {
+			console.log("CART EXISTS");
+
+			let checkExist = false;
+			cart.forEach((item) => {
+				if (item.purchaseOrderLineItemTypeEnum == PurchaseOrderLineItemTypeEnum.ACCESSORY) {
+					if (item.accessoryItemEntity.accessoryItemEntityId == this.selectedAccessoryItem?.accessoryItemEntityId) {
+						console.log("EXISTING LINE ITEM WITH SAME ACCESSORY ITEM");
+
+						checkExist = true;
+						item.quantity += this.selectedQuantity;
+						if (item.quantity > this.selectedAccessoryItem?.quantityOnHand!) {
+							console.log("QUANTITY MORE THAN STOCK");
+
+							item.quantity = this.selectedAccessoryItem?.quantityOnHand!;
+							this.triggerMessage("Quantity selected has exceeded maximum stock available!", "info", "Exceeded Quantity Available");
+						}
+						item.subTotalPrice = item.quantity * this.selectedAccessoryItem?.price!;
+					}
+				}
+			});
+
+			if (checkExist == false) {
+				console.log("NO EXISTING ACCESSORY LINE ITEM");
+
+				let poli: PurchaseOrderLineItem = new PurchaseOrderLineItem(0, this.selectedQuantity, this.selectedQuantity * this.selectedAccessoryItem?.price!, "", PurchaseOrderLineItemTypeEnum.ACCESSORY);
+				poli.accessoryItemEntity = this.selectedAccessoryItem!;
+				cart.push(poli);
+				this.triggerMessage("Successfully added Accessory to Cart!", "success", "Success");
+
+				this.messageService.add({ severity: "success", summary: "Success", detail: "Successfully added Accessory to Cart!" });
+			}
+			console.log("CURRENT CART CONTENTS: ");
+			console.log(cart);
+			console.log("SETTING CART");
+			this.sessionService.setCart(cart);
+		} else {
+			console.log("CART DOES NOT EXIST");
+
+			let poli: PurchaseOrderLineItem = new PurchaseOrderLineItem(0, this.selectedQuantity, this.selectedQuantity * this.selectedAccessoryItem?.price!, "", PurchaseOrderLineItemTypeEnum.ACCESSORY);
+			poli.accessoryItemEntity = this.selectedAccessoryItem!;
+			cart = [poli];
+			this.sessionService.setCart(cart);
+			console.log("THIS IS THE CART :");
+			console.log(cart);
+			this.triggerMessage("Successfully added Accessory to Cart!", "success", "Success");
+		}
+
+		this.displayDialog = false;
+		this.selectedAccessoryItem = null;
+		this.selectedQuantity = 1;
+	}
 
 	onSortChange(event: { value: any }) {
 		let value = event.value;
@@ -61,6 +129,11 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 			this.sortOrder = 1;
 			this.sortField = value;
 		}
+	}
+
+	triggerMessage(message: string, severity: string, summary: string) {
+		this.messageService.add({ severity: severity, summary: summary, detail: message });
+		console.log("called trigger message");
 	}
 
 	checkAccessRight() {
