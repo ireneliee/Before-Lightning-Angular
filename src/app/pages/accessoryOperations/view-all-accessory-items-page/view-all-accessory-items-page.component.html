@@ -20,10 +20,13 @@
 				<div class="product-list-item">
 					<img alt="Card" src="assets/images/sampleAccessoryItem.png" style="width: 20%" />
 					<div class="product-list-detail" style="width: 60%">
-						<div class="product-name">{{ accessoryItem.accessoryName }}</div>
+						<div class="product-name">{{ accessoryItem.accessoryItemName }}</div>
+						<div class="product-description">{{ accessoryItem.brand }} - {{ accessoryItem.skuCode }}</div>
+						<div class="product-description"></div>
 						<div class="product-description">{{ accessoryItem.description }}</div>
 
 						<p-rating [ngModel]="accessoryItem.rating" [readonly]="true" [cancel]="false"></p-rating>
+						<div class="product-name">${{ getBestPrice(accessoryItem) }}</div>
 					</div>
 					<div class="product-list-action" style="width: 20%; float: left">
 						<div class="product-description">{{ accessoryItem.accessoryOverview }}</div>
@@ -35,12 +38,13 @@
 		</ng-template>
 		<ng-template let-accessoryItem pTemplate="gridItem">
 			<div class="col-12" style="border: 10px; margin-top: 20px; margin-bottom: 20px; border-width: 20px">
-				<p-card header="{{ accessoryItem.accessoryName }}" subheader="{{ accessoryItem.accessoryOverview }}" [style]="{ width: '100%' }" styleClass="p-card-shadow">
+				<p-card header="{{ accessoryItem.accessoryItemName }}" subheader="{{ accessoryItem.brand }}  -  {{ accessoryItem.skuCode }}" [style]="{ width: '100%' }" styleClass="p-card-shadow">
 					<ng-template pTemplate="header">
 						<img alt="Card" src="assets/images/sampleAccessoryItem.png" style="width: 600px; height: 500px" />
 					</ng-template>
 					<div class="product-description">{{ accessoryItem.description }}</div>
 					<p-rating [ngModel]="accessoryItem.rating" [readonly]="true" [cancel]="false"></p-rating>
+					<div class="product-name">${{ getBestPrice(accessoryItem) }}</div>
 
 					<ng-template pTemplate="footer">
 						<p-button label="Add To Cart" (onClick)="doDisplayDialog(accessoryItem)"></p-button>

@@ -83,7 +83,8 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 							item.quantity = this.selectedAccessoryItem?.quantityOnHand!;
 							this.triggerMessage("Quantity selected has exceeded maximum stock available!", "info", "Exceeded Quantity Available");
 						}
-						item.subTotalPrice = item.quantity * this.selectedAccessoryItem?.price!;
+						item.subTotalPrice = item.quantity * this.getBestPrice(this.selectedAccessoryItem!);
+						this.triggerMessage("Successfully added Accessory to Cart!", "success", "Success");
 					}
 				}
 			});
@@ -95,8 +96,6 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 				poli.accessoryItemEntity = this.selectedAccessoryItem!;
 				cart.push(poli);
 				this.triggerMessage("Successfully added Accessory to Cart!", "success", "Success");
-
-				this.messageService.add({ severity: "success", summary: "Success", detail: "Successfully added Accessory to Cart!" });
 			}
 			console.log("CURRENT CART CONTENTS: ");
 			console.log(cart);
@@ -119,6 +118,34 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 		this.selectedQuantity = 1;
 	}
 
+		getBestPrice(accessoryItem: AccessoryItem): number {
+		//check if partchoice has promotions first
+		let originalPrice = accessoryItem.price!;
+		let bestPrice = accessoryItem.price!;
+		if (accessoryItem.promotionEntities!.length > 0) {
+			accessoryItem.promotionEntities!.forEach((promotion) => {
+				let currentDate = new Date();
+				// console.log(promotion.endDate, currentDate);
+				if (promotion.endDate > currentDate && promotion.startDate <= currentDate) {
+					if (promotion.discount != 0) {
+						let newPrice = promotion.discount * originalPrice;
+						if (newPrice < bestPrice) {
+							bestPrice = newPrice;
+						}
+					} else {
+						let newPrice = promotion.discountedPrice;
+						if (newPrice < bestPrice) {
+							bestPrice = newPrice;
+						}
+					}
+				}
+			});
+			return bestPrice;
+		} else {
+			return accessoryItem.price!;
+		}
+	}
+
 	onSortChange(event: { value: any }) {
 		let value = event.value;
 
@@ -132,6 +159,8 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 	}
 
 	triggerMessage(message: string, severity: string, summary: string) {
+		console.log("called trigger message");
+
 		this.messageService.add({ severity: severity, summary: summary, detail: message });
 		console.log("called trigger message");
 	}
