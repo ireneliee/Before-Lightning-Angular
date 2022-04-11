@@ -33,6 +33,7 @@ import { InputTextareaModule } from "primeng/inputtextarea";
 import { MessageService } from "primeng/api";
 import { AvatarModule } from "primeng/avatar";
 import { InputNumberModule } from "primeng/inputnumber";
+import { CalendarModule } from "primeng/calendar";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -63,7 +64,7 @@ import { UploadFileComponent } from "./components/upload-file/upload-file.compon
 import { CarouselModule } from "primeng/carousel";
 import { BadgeModule } from "primeng/badge";
 import { ViewAllAccessoryItemsPageComponent } from "./pages/accessoryOperations/view-all-accessory-items-page/view-all-accessory-items-page.component";
-import {TimelineModule} from 'primeng/timeline';
+import { TimelineModule } from "primeng/timeline";
 
 @NgModule({
 	declarations: [
@@ -132,7 +133,8 @@ import {TimelineModule} from 'primeng/timeline';
 		CarouselModule,
 		BadgeModule,
 		InputNumberModule,
-    TimelineModule
+		TimelineModule,
+		CalendarModule,
 	],
 	providers: [MessageService],
 	bootstrap: [AppComponent],
