@@ -118,7 +118,7 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 		this.selectedQuantity = 1;
 	}
 
-		getBestPrice(accessoryItem: AccessoryItem): number {
+	getBestPrice(accessoryItem: AccessoryItem): number {
 		//check if partchoice has promotions first
 		let originalPrice = accessoryItem.price!;
 		let bestPrice = accessoryItem.price!;
