@@ -72,6 +72,7 @@ export class SessionService {
 				path == "/productsHomePage" ||
 				path.startsWith("/customizeProductsPage") ||
 				path == "/accessoryHomePage" ||
+				path.startsWith("/viewAllAccessoryItemsPage") ||
 				path == "/viewMyCartPage" ||
 				path == "/viewMyOrdersPage" ||
 				path == "/forumPage" ||
@@ -84,13 +85,15 @@ export class SessionService {
 			}
 		} else {
 			if (
-				path == "/index" || 
-				path == "/productsHomePage" || 
+				path == "/index" ||
+				path == "/productsHomePage" ||
 				path.startsWith("/customizeProductsPage") ||
-				path == "/registeration" || 
-				path == "/accessoryHomePage" || 
-				path == "/viewMyCartPage" || 
-				path == "/forumPage") {
+				path == "/registeration" ||
+				path == "/accessoryHomePage" ||
+				path.startsWith("/viewAllAccessoryItemsPage") ||
+				path == "/viewMyCartPage" ||
+				path == "/forumPage"
+			) {
 				return true;
 			} else {
 				return false;

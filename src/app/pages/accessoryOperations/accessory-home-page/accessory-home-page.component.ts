@@ -11,7 +11,7 @@ import { catchError, Observable, throwError } from "rxjs";
 @Component({
 	selector: "app-accessory-home-page",
 	templateUrl: "./accessory-home-page.component.html",
-	styleUrls: ["./accessory-home-page.component.css"],
+	styleUrls: ["./accessory-home-page.component.scss"],
 })
 export class AccessoryHomePageComponent implements OnInit {
 	listOfAccessoryEntities: Accessory[] = [];
@@ -57,6 +57,10 @@ export class AccessoryHomePageComponent implements OnInit {
 			this.sortOrder = 1;
 			this.sortField = value;
 		}
+	}
+
+	viewAllAccessoryItems(accessory: Accessory) {
+		this.router.navigate(["/viewAllAccessoryItemsPage/" + accessory.accessoryEntityId]);
 	}
 
 	checkAccessRight() {

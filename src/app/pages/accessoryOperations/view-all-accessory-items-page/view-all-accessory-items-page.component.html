@@ -1,0 +1,65 @@
+<app-breadcrumb pageName="View All Accessory Items"></app-breadcrumb>
+<p-toast></p-toast>
+
+<div class="card">
+	<p-dataView #dv [value]="listOfAccessoryItems" [paginator]="true" [rows]="9" layout="grid">
+		<ng-template pTemplate="header">
+			<div class="flex flex-column md:flex-row md:justify-content-between">
+				<h2>Accessories ({{ accessory?.accessoryName }})</h2>
+				<br />
+				<span style="width: 25%; float: left">
+					<p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+				</span>
+				<span style="width: 75%">
+					<p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)" [style]="{ 'min-width': '15em' }"></p-dropdown>
+				</span>
+			</div>
+		</ng-template>
+		<ng-template let-accessoryItem pTemplate="listItem">
+			<div class="col-12">
+				<div class="product-list-item">
+					<img alt="Card" src="assets/images/sampleAccessoryItem.png" style="width: 20%" />
+					<div class="product-list-detail" style="width: 60%">
+						<div class="product-name">{{ accessoryItem.accessoryItemName }}</div>
+						<div class="product-description">{{ accessoryItem.brand }} - {{ accessoryItem.skuCode }}</div>
+						<div class="product-description"></div>
+						<div class="product-description">{{ accessoryItem.description }}</div>
+
+						<p-rating [ngModel]="accessoryItem.rating" [readonly]="true" [cancel]="false"></p-rating>
+						<div class="product-name">${{ getBestPrice(accessoryItem) }}</div>
+					</div>
+					<div class="product-list-action" style="width: 20%; float: left">
+						<div class="product-description">{{ accessoryItem.accessoryOverview }}</div>
+						<p-button label="Add To Cart" (onClick)="doDisplayDialog(accessoryItem)"> </p-button>
+					</div>
+				</div>
+			</div>
+			<div class="col-12"><br /></div>
+		</ng-template>
+		<ng-template let-accessoryItem pTemplate="gridItem">
+			<div class="col-12" style="border: 10px; margin-top: 20px; margin-bottom: 20px; border-width: 20px">
+				<p-card header="{{ accessoryItem.accessoryItemName }}" subheader="{{ accessoryItem.brand }}  -  {{ accessoryItem.skuCode }}" [style]="{ width: '100%' }" styleClass="p-card-shadow">
+					<ng-template pTemplate="header">
+						<img alt="Card" src="assets/images/sampleAccessoryItem.png" style="width: 600px; height: 500px" />
+					</ng-template>
+					<div class="product-description">{{ accessoryItem.description }}</div>
+					<p-rating [ngModel]="accessoryItem.rating" [readonly]="true" [cancel]="false"></p-rating>
+					<div class="product-name">${{ getBestPrice(accessoryItem) }}</div>
+
+					<ng-template pTemplate="footer">
+						<p-button label="Add To Cart" (onClick)="doDisplayDialog(accessoryItem)"></p-button>
+					</ng-template>
+				</p-card>
+			</div>
+		</ng-template>
+	</p-dataView>
+</div>
+
+<p-dialog header="Add To Cart" [(visible)]="displayDialog" [style]="{ width: '50vw' }">
+	<label for="minmax-buttons">Please select quantity: </label>
+	<p-inputNumber inputId="minmax-buttons" [showButtons]="true" mode="decimal" [(ngModel)]="selectedQuantity" [min]="1" [max]="selectedAccessoryItemQuantityOnHand"></p-inputNumber>
+
+	<ng-template pTemplate="footer">
+		<p-button icon="pi pi-check" (click)="addToCart()" label="Confirm" styleClass="p-button-text"></p-button>
+	</ng-template>
+</p-dialog>

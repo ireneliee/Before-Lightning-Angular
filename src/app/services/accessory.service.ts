@@ -20,6 +20,10 @@ export class AccessoryService {
 		return this.httpClient.get<Accessory[]>(this.baseUrl + "/retrieveAllAccessoryToSell").pipe(catchError(this.handleError));
 	}
 
+	getAccessoryById(accessoryId : number) {
+		return this.httpClient.get<Accessory>(this.baseUrl + "/retrieveAccessoryToSellById/" + accessoryId).pipe(catchError(this.handleError));
+	}
+
 	private handleError(error: HttpErrorResponse) {
 		let errorMessage: string = "";
 		if (error.error instanceof ErrorEvent) {
