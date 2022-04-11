@@ -21,11 +21,36 @@
           Timestamp: {{ purchaseOrder.dateCreated }}
         </h6>
         <br />
-        <h4 style="text-align: center" severity="danger">
-          Status:
-          <p-badge value="{{ purchaseOrder.purchaseOrderStatus }}"></p-badge>
-        </h4>
-        
+        <div class="status-badges">
+          <p *ngIf="isComplete(purchaseOrder)">
+            Status:
+            <p-badge
+              value="{{ purchaseOrder.purchaseOrderStatus }}"
+              severity="success"
+            ></p-badge>
+          </p>
+          <p *ngIf="inProgress(purchaseOrder)">
+            Status:
+            <p-badge
+              value="{{ purchaseOrder.purchaseOrderStatus }}"
+              severity="info"
+            ></p-badge>
+          </p>
+          <p *ngIf="readyForShipment(purchaseOrder)">
+            Status:
+            <p-badge
+              value="{{ purchaseOrder.purchaseOrderStatus }}"
+              severity="warning"
+            ></p-badge>
+          </p>
+          <p *ngIf="isRefunded(purchaseOrder)">
+            Status:
+            <p-badge
+              value="{{ purchaseOrder.purchaseOrderStatus }}"
+              severity="danger"
+            ></p-badge>
+          </p>
+        </div>
 
         <div class="car-buttons p-mt-5">
           <p-button
@@ -68,44 +93,43 @@
     [style]="{ width: '100%' }"
     styleClass="p-card-shadow"
   >
-    
-    <br/>
-        <h4>How is your purchase order processed? </h4>
-        <p-timeline [value]="events1" layout="horizontal">
-            <ng-template pTemplate="content" let-event>
-                {{event.status}}
-            </ng-template>
-        </p-timeline>
-    <br/>
+    <br />
+    <h4>How is your purchase order processed?</h4>
+    <p-timeline [value]="events1" layout="horizontal">
+      <ng-template pTemplate="content" let-event>
+        {{ event.status }}
+      </ng-template>
+    </p-timeline>
+    <br />
     <p *ngIf="isComplete(purchaseOrderToView)">
-        Status:
-        <p-badge
-          value="{{ purchaseOrderToView.purchaseOrderStatus }}"
-          severity="success"
-        ></p-badge>
-      </p>
-      <p *ngIf="inProgress(purchaseOrderToView)">
-        Status:
-        <p-badge
-          value="{{ purchaseOrderToView.purchaseOrderStatus }}"
-          severity="info"
-        ></p-badge>
-      </p>
-      <p *ngIf="readyForShipment(purchaseOrderToView)">
-        Status:
-        <p-badge
-          value="{{ purchaseOrderToView.purchaseOrderStatus }}"
-          severity="warning"
-        ></p-badge>
-      </p>
-      <p *ngIf="isRefunded(purchaseOrderToView)">
-        Status:
-        <p-badge
-          value="{{ purchaseOrderToView.purchaseOrderStatus }}"
-          severity="danger"
-        ></p-badge>
-      </p>
-    <br/>
+      Status:
+      <p-badge
+        value="{{ purchaseOrderToView.purchaseOrderStatus }}"
+        severity="success"
+      ></p-badge>
+    </p>
+    <p *ngIf="inProgress(purchaseOrderToView)">
+      Status:
+      <p-badge
+        value="{{ purchaseOrderToView.purchaseOrderStatus }}"
+        severity="info"
+      ></p-badge>
+    </p>
+    <p *ngIf="readyForShipment(purchaseOrderToView)">
+      Status:
+      <p-badge
+        value="{{ purchaseOrderToView.purchaseOrderStatus }}"
+        severity="warning"
+      ></p-badge>
+    </p>
+    <p *ngIf="isRefunded(purchaseOrderToView)">
+      Status:
+      <p-badge
+        value="{{ purchaseOrderToView.purchaseOrderStatus }}"
+        severity="danger"
+      ></p-badge>
+    </p>
+    <br />
     <p>Total spending: ${{ purchaseOrderToView.totalPrice }}</p>
     <!-- <p> Status: <p-badge value="{{purchaseOrderToView.purchaseOrderStatus}}" severity = "success"></p-badge></p>   -->
     <p>List of items:</p>
@@ -179,7 +203,7 @@
     class="action-button"
     type="button"
     styleClass="p-button pp-mr-2"
-    icon = "pi pi-comments"
+    icon="pi pi-comments"
     label="Write review"
     (onClick)="showForumPostDialog()"
   ></p-button>

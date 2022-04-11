@@ -64,4 +64,8 @@ h1 h4 h6 {
   line-height: 1;
 }
 
+.status-badges {
+  text-align: center;
+}
+
 
