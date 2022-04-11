@@ -1,7 +1,7 @@
 import { Member } from "./member";
 
 export class CreditCard {
-	creditCardId: number | undefined;
+	creditCardEntityId: number | undefined;
 	creditCardNumber: number | undefined;
 	nameOnCard: string | undefined;
 	expiryDate: string | undefined;
@@ -9,7 +9,7 @@ export class CreditCard {
 	memberEntity: Member | undefined;
 
 	constructor(creditCardId?: number, creditCardNumber?: number, nameOnCard?: string, expiryDate?: string) {
-		this.creditCardId = creditCardId;
+		this.creditCardEntityId = creditCardId;
 		this.creditCardNumber = creditCardNumber;
 		this.nameOnCard = nameOnCard;
 		this.expiryDate = expiryDate;
