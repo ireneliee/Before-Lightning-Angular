@@ -17,6 +17,11 @@ import { TimelineModule } from 'primeng/timeline';
 import { FullPurchaseOrderLineItem } from 'src/app/models/full-purchase-order-lineitems';
 import { PurchaseOrderLineItemTypeEnum } from 'src/app/models/enum/purchase-order-line-item-type-enum';
 import { PurchaseOrderService } from 'src/app/services/purchase-order.service';
+import { AccessoryItem } from 'src/app/models/accessory-item';
+import { Product } from 'src/app/models/product';
+import { ListboxModule } from 'primeng/listbox';
+import { PartChoice } from 'src/app/models/part-choice';
+import { ReviewService } from 'src/app/services/review.service';
 
 @Component({
   selector: 'app-view-my-orders-page',
@@ -31,7 +36,6 @@ export class ViewMyOrdersPageComponent implements OnInit {
   sortField: string;
   sortOrder: number;
   sortKey: string;
-  
 
   // tracking information
   events1: any[];
@@ -47,13 +51,30 @@ export class ViewMyOrdersPageComponent implements OnInit {
   //submit forum dialog
   submitForumDisplay: boolean;
 
+  //create review
+  createReviewDisplay: boolean;
+  productChoices: Product[];
+  accessoryChoices: AccessoryItem[];
+  reviewFormSubmitted: boolean;
+  rating?: number;
+  description: string;
+  //itemId?: number;
+  prodId?: number;
+  accId?: number;
+  chooseAcc: boolean;
+  chooseProd: boolean;
+  purchaseOrderToReview: FullPurchaseOrderEntity;
+  resultSuccess: boolean;
+  resultError: boolean;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public sessionService: SessionService,
     private primengConfig: PrimeNGConfig,
     private messageService: MessageService,
-    private purchaseOrderService: PurchaseOrderService
+    private purchaseOrderService: PurchaseOrderService,
+    private reviewService: ReviewService
   ) {
     this.listOfPurchaseOrder = new Array();
     this.purchaseOrderToView = new FullPurchaseOrderEntity();
@@ -65,15 +86,31 @@ export class ViewMyOrdersPageComponent implements OnInit {
     this.sortOptions = new Array();
 
     //view order details dialog
-    this.viewOrderDisplay =  false;
+    this.viewOrderDisplay = false;
     this.purchaseOrderToView = new FullPurchaseOrderEntity();
     this.purchaseOrderLineItemToView = new Array();
 
     //submit support ticket dialog
     this.submitSupportTicketDisplay = false;
-  
+
     //submit forum dialog
-    this.submitForumDisplay =  false;
+    this.submitForumDisplay = false;
+
+    //create review
+    this.createReviewDisplay = false;
+    this.productChoices = new Array();
+    this.accessoryChoices = new Array();
+    this.reviewFormSubmitted = false;
+    //this.itemId = 0;
+    this.prodId = 0;
+    this.accId = 0;
+    this.rating = 0;
+    this.description = '';
+    this.chooseProd = false;
+    this.chooseAcc = true;
+    this.purchaseOrderToReview = new FullPurchaseOrderEntity();
+    this.resultSuccess = false;
+    this.resultError = false;
 
     this.events1 = [
       {
@@ -100,16 +137,16 @@ export class ViewMyOrdersPageComponent implements OnInit {
     this.purchaseOrderService.getMyPurchaseOrder().subscribe({
       next: (response) => {
         this.listOfPurchaseOrder = response;
-        console.log(response);
+        //console.log(response);
         // for (let i = 0; i < this.listOfPurchaseOrder.length; i++) {
         //   console.log ("Purchase order id" + this.listOfPurchaseOrder[i].purchaseOrderEntityId);
         // }
       },
       error: (error) => {
-        console.log('***********ForumPageComponent.ts: ' + error);
+        //console.log('***********ForumPageComponent.ts: ' + error);
       },
     });
-    console.log(this.listOfPurchaseOrder.length);
+    //console.log(this.listOfPurchaseOrder.length);
     this.sortOptions = [
       { label: 'Recent First', value: '!timestamp' },
       { label: 'Oldest First', value: 'timestamp' },
@@ -124,25 +161,33 @@ export class ViewMyOrdersPageComponent implements OnInit {
   }
 
   showViewPurchaseOrderDialog(purchaseOrderToView: FullPurchaseOrderEntity) {
+    this.submitSupportTicketDisplay = false;
+    this.submitForumDisplay = false;
+    this.createReviewDisplay = false;
     this.viewOrderDisplay = true;
     this.purchaseOrderToView = purchaseOrderToView;
-    this.purchaseOrderLineItemToView = this.purchaseOrderToView.purchaseOrderLineItems!;
+    this.purchaseOrderLineItemToView =
+      this.purchaseOrderToView.purchaseOrderLineItems!;
   }
 
-  showForumPostDialog() {
-    this.submitForumDisplay =  true;
+  showForumPostDialog(pol: FullPurchaseOrderEntity) {
+    this.submitSupportTicketDisplay = false;
+    this.createReviewDisplay = false;
+    this.viewOrderDisplay = false;
+    this.purchaseOrderToReview = pol;
+    this.submitForumDisplay = true;
   }
 
   directToForumPage() {
-    this.router.navigate(["/forumPage"]);
+    this.router.navigate(['/forumPage']);
   }
 
   showSupportTicketDialog() {
+    this.submitForumDisplay = false;
+    this.createReviewDisplay = false;
+    this.viewOrderDisplay = false;
     this.submitSupportTicketDisplay = true;
   }
-
-  
-
 
   onSortChange(event: { value: any }) {
     let value = event.value;
@@ -158,7 +203,7 @@ export class ViewMyOrdersPageComponent implements OnInit {
 
   // badge-related
   inProgress(po: FullPurchaseOrderEntity) {
-    if(po.purchaseOrderStatus == PurchaseOrderStatusEnum.IN_PROGRESS) {
+    if (po.purchaseOrderStatus == PurchaseOrderStatusEnum.IN_PROGRESS) {
       return true;
     } else {
       return false;
@@ -166,8 +211,7 @@ export class ViewMyOrdersPageComponent implements OnInit {
   }
 
   readyForShipment(po: FullPurchaseOrderEntity) {
-
-    if(po.purchaseOrderStatus == PurchaseOrderStatusEnum.READY_FOR_SHIPMENT) {
+    if (po.purchaseOrderStatus == PurchaseOrderStatusEnum.READY_FOR_SHIPMENT) {
       return true;
     } else {
       return false;
@@ -175,17 +219,17 @@ export class ViewMyOrdersPageComponent implements OnInit {
   }
 
   isComplete(po: FullPurchaseOrderEntity) {
-    if(po.purchaseOrderStatus == PurchaseOrderStatusEnum.COMPLETE ) {
+    if (po.purchaseOrderStatus == PurchaseOrderStatusEnum.COMPLETE) {
       //console.log("isComplete true");
       return true;
     } else {
-      console.log("isComplete false");
+      //console.log("isComplete false");
       return false;
     }
   }
 
   isRefunded(po: FullPurchaseOrderEntity) {
-    if(po.purchaseOrderStatus == PurchaseOrderStatusEnum.REFUNDED) {
+    if (po.purchaseOrderStatus == PurchaseOrderStatusEnum.REFUNDED) {
       return true;
     } else {
       return false;
@@ -194,7 +238,9 @@ export class ViewMyOrdersPageComponent implements OnInit {
 
   // decide if it's accessory or built
   isBuilt(po: FullPurchaseOrderLineItem) {
-    if(po.purchaseOrderLineItemTypeEnum == PurchaseOrderLineItemTypeEnum.BUILD) {
+    if (
+      po.purchaseOrderLineItemTypeEnum == PurchaseOrderLineItemTypeEnum.BUILD
+    ) {
       return true;
     } else {
       return false;
@@ -202,7 +248,10 @@ export class ViewMyOrdersPageComponent implements OnInit {
   }
 
   isAccessory(po: FullPurchaseOrderLineItem) {
-    if(po.purchaseOrderLineItemTypeEnum == PurchaseOrderLineItemTypeEnum.ACCESSORY) {
+    if (
+      po.purchaseOrderLineItemTypeEnum ==
+      PurchaseOrderLineItemTypeEnum.ACCESSORY
+    ) {
       return true;
     } else {
       return false;
@@ -211,9 +260,12 @@ export class ViewMyOrdersPageComponent implements OnInit {
 
   // check if there's at least one record
   atLeastOneBuild(po: FullPurchaseOrderEntity) {
-    let listOfPols: FullPurchaseOrderLineItem[] =  po.purchaseOrderLineItems!;
-    for(let i = 0; i < listOfPols?.length; i++) {
-      if(listOfPols[i].purchaseOrderLineItemTypeEnum == PurchaseOrderLineItemTypeEnum.BUILD) {
+    let listOfPols: FullPurchaseOrderLineItem[] = po.purchaseOrderLineItems!;
+    for (let i = 0; i < listOfPols?.length; i++) {
+      if (
+        listOfPols[i].purchaseOrderLineItemTypeEnum ==
+        PurchaseOrderLineItemTypeEnum.BUILD
+      ) {
         return true;
       }
     }
@@ -222,13 +274,166 @@ export class ViewMyOrdersPageComponent implements OnInit {
   }
 
   atLeastOneAcc(po: FullPurchaseOrderEntity) {
-    let listOfPols: FullPurchaseOrderLineItem[] =  po.purchaseOrderLineItems!;
-    for(let i = 0; i < listOfPols?.length; i++) {
-      if(listOfPols[i].purchaseOrderLineItemTypeEnum == PurchaseOrderLineItemTypeEnum.ACCESSORY) {
+    let listOfPols: FullPurchaseOrderLineItem[] = po.purchaseOrderLineItems!;
+    for (let i = 0; i < listOfPols?.length; i++) {
+      if (
+        listOfPols[i].purchaseOrderLineItemTypeEnum ==
+        PurchaseOrderLineItemTypeEnum.ACCESSORY
+      ) {
         return true;
       }
     }
 
     return false;
+  }
+
+  // handle create review
+  showCreateReviewDialog(pol: FullPurchaseOrderEntity) {
+    this.submitSupportTicketDisplay = false;
+    this.submitForumDisplay = false;
+    this.viewOrderDisplay = false;
+    this.purchaseOrderToReview = pol;
+    this.createReviewDisplay = true;
+  }
+
+  chooseProduct() {
+    this.chooseAcc = false;
+    this.chooseProd = true;
+    let listOfPols: FullPurchaseOrderLineItem[] =
+      this.purchaseOrderToReview.purchaseOrderLineItems!;
+    console.log(listOfPols.length);
+    this.productChoices = [];
+    for (let i = 0; i < listOfPols?.length; i++) {
+      if (
+        listOfPols[i].purchaseOrderLineItemTypeEnum ==
+        PurchaseOrderLineItemTypeEnum.BUILD
+      ) {
+        console.log(listOfPols[i].productEntity.productName);
+        this.productChoices.push(listOfPols[i].productEntity);
+      }
+    }
+  }
+
+  chooseAccessory() {
+    this.chooseAcc = true;
+    this.chooseProd = false;
+    let listOfPols: FullPurchaseOrderLineItem[] =
+      this.purchaseOrderToReview.purchaseOrderLineItems!;
+    this.accessoryChoices = [];
+    for (let i = 0; i < listOfPols?.length; i++) {
+      if (
+        listOfPols[i].purchaseOrderLineItemTypeEnum ==
+        PurchaseOrderLineItemTypeEnum.ACCESSORY
+      ) {
+        this.accessoryChoices.push(listOfPols[i].accessoryItemEntity);
+      }
+    }
+  }
+
+  // clearing without closing the dialog box
+  initializeReviewFormWithoutClosing() {
+    this.accessoryChoices = [];
+    this.productChoices = [];
+    this.reviewFormSubmitted = false;
+    this.rating = 0;
+    this.description = '';
+    this.accId = 0;
+    this.prodId = 0;
+    this.chooseAcc = false;
+    this.chooseProd = false;
+  }
+
+  clear() {
+    this.initializeReviewFormWithoutClosing();
+  }
+
+  createNewReviewForProduct(createNewReviewForProduct: NgForm) {
+    // console.log("rating: " + this.rating);
+    // console.log("description: " + this.description);
+    // console.log("itemId: " + this.prodId);
+    // console.log('reach here: product');
+    this.reviewFormSubmitted = true;
+
+    this.reviewService
+      .createNewReviewForProduct(this.prodId!, this.description, this.rating!)
+      .subscribe({
+        next: (response) => {
+          let reviewId: Number = response;
+          this.resultSuccess = true;
+          this.resultError = false;
+          this.clear();
+          this.createReviewDisplay = false;
+          this.viewOrderDisplay = false;
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Successfuly posted a review',
+            detail: 'Your review will greatly help the community!',
+          });
+          createNewReviewForProduct.reset();
+          createNewReviewForProduct.resetForm();
+        },
+        error: (error) => {
+          this.resultError = true;
+          this.resultSuccess = false;
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail:
+              'An error has occured while posting a review' + error.toString(),
+          });
+          console.log('********** Create new review.ts: ' + error);
+        },
+      });
+  }
+
+  createNewReviewForAccessory(createNewReviewForAcc: NgForm) {
+    console.log('reach here: accessory');
+    this.reviewFormSubmitted = true;
+
+    this.reviewService
+      .createNewReviewForAcc(this.accId!, this.description, this.rating!)
+      .subscribe({
+        next: (response) => {
+          let reviewId: Number = response;
+          this.resultSuccess = true;
+          this.resultError = false;
+          this.clear();
+          this.createReviewDisplay = false;
+          this.viewOrderDisplay = false;
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Successfuly posted a review',
+            detail: 'Your review will greatly help the community!',
+          });
+          createNewReviewForAcc.reset();
+          createNewReviewForAcc.resetForm();
+        },
+        error: (error) => {
+          this.resultError = true;
+          this.resultSuccess = false;
+
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail:
+              'An error has occured while posting a review: ' +
+              error.toString(),
+          });
+          console.log('********** Create new review.ts: ' + error);
+        },
+      });
+  }
+
+  dummy() {
+    console.log('rating is : ' + this.rating);
+    if (1 + 1 == 2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isDisabled() {
+    return true;
   }
 }

@@ -64,6 +64,7 @@ import { CarouselModule } from "primeng/carousel";
 import { BadgeModule } from "primeng/badge";
 import { ViewAllAccessoryItemsPageComponent } from "./pages/accessoryOperations/view-all-accessory-items-page/view-all-accessory-items-page.component";
 import {TimelineModule} from 'primeng/timeline';
+import {ListboxModule} from 'primeng/listbox';
 
 @NgModule({
 	declarations: [
@@ -88,7 +89,7 @@ import {TimelineModule} from 'primeng/timeline';
 		UpdateForumComponent,
 		CustomizeProductsPageComponent,
 		UploadFileComponent,
-		ViewAllAccessoryItemsPageComponent,
+		ViewAllAccessoryItemsPageComponent
 	],
 	imports: [
 		BrowserModule,
@@ -132,7 +133,8 @@ import {TimelineModule} from 'primeng/timeline';
 		CarouselModule,
 		BadgeModule,
 		InputNumberModule,
-    TimelineModule
+    	TimelineModule,
+		ListboxModule
 	],
 	providers: [MessageService],
 	bootstrap: [AppComponent],

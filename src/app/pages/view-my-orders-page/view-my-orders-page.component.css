@@ -68,4 +68,27 @@ h1 h4 h6 {
   text-align: center;
 }
 
+.product-acc-button {
+  text-align: center;
+}
+
+.laptop-button {
+  margin-right: 2em;
+}
+
+.accessory-item-button {
+  margin-left: 2em;
+}
+
+.form-action-button {
+  text-align: center;
+}
+
+.submit-button {
+  margin-right: 2em;
+}
+
+.clear-button {
+  margin-left: 2em;
+}
 
