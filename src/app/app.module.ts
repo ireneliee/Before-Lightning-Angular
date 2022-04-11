@@ -66,6 +66,7 @@ import { BadgeModule } from "primeng/badge";
 import { ViewAllAccessoryItemsPageComponent } from "./pages/accessoryOperations/view-all-accessory-items-page/view-all-accessory-items-page.component";
 import {TimelineModule} from 'primeng/timeline';
 import {ListboxModule} from 'primeng/listbox';
+import { SidebarComponent } from './pages/sidebar/sidebar.component';
 
 @NgModule({
 	declarations: [
@@ -90,7 +91,8 @@ import {ListboxModule} from 'primeng/listbox';
 		UpdateForumComponent,
 		CustomizeProductsPageComponent,
 		UploadFileComponent,
-		ViewAllAccessoryItemsPageComponent
+		ViewAllAccessoryItemsPageComponent,
+  SidebarComponent
 	],
 	imports: [
 		BrowserModule,
