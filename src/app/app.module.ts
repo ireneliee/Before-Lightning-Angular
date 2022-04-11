@@ -33,6 +33,7 @@ import { InputTextareaModule } from "primeng/inputtextarea";
 import { MessageService } from "primeng/api";
 import { AvatarModule } from "primeng/avatar";
 import { InputNumberModule } from "primeng/inputnumber";
+import { CalendarModule } from "primeng/calendar";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -134,7 +135,8 @@ import {ListboxModule} from 'primeng/listbox';
 		BadgeModule,
 		InputNumberModule,
     	TimelineModule,
-		ListboxModule
+		ListboxModule,
+		CalendarModule
 	],
 	providers: [MessageService],
 	bootstrap: [AppComponent],

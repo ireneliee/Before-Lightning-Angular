@@ -6,7 +6,7 @@ import { Reply } from "./reply";
 import { ShoppingCart } from "./shopping-cart";
 
 export class Member {
-	memberId: number | undefined;
+	userEntityId: number | undefined;
 	username: string;
 	password: string;
 	firstname: string;
@@ -17,8 +17,8 @@ export class Member {
 	salt: string;
 	isActive: boolean;
 
-	creditCardEntities: CreditCard[] | undefined;
-	addressEntities: Address[] | undefined;
+	creditCards: CreditCard[] | undefined;
+	addresses: Address[] | undefined;
 	purchaseOrderEntities: PurchaseOrderEntity[] | undefined;
 	shoppingCartEntity: ShoppingCart | undefined;
 	listOfAutheredForumPosts: ForumPost[] | undefined;
@@ -26,8 +26,8 @@ export class Member {
 	listOfDislikedForumPost: ForumPost[] | undefined;
 	listOfReplyEntities: Reply[] | undefined;
 
-	constructor(username: string, password: string, firstname: string, lastname: string, email: string, contact: string, imageLink: string, salt: string, isActive: boolean, memberId?: number) {
-		this.memberId = memberId;
+	constructor(username: string, password: string, firstname: string, lastname: string, email: string, contact: string, imageLink: string, salt: string, isActive: boolean, userEntityId?: number) {
+		this.userEntityId = userEntityId;
 		this.username = username;
 		this.password = password;
 		this.firstname = firstname;

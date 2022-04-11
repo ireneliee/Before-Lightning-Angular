@@ -6,6 +6,9 @@ import { SessionService } from "./session.service";
 import { Member } from "../models/member";
 import { Address } from "../models/address";
 import { CreateNewMemberReq } from "../models/create-new-member-req";
+import { UpdateMemberDetailReq } from "../models/update-member-detail-req";
+import { CreateAddressReq } from "../models/create-address-req";
+import { CreateCreditcardReq } from "../models/create-creditcard-req";
 
 const httpOptions = {
 	headers: new HttpHeaders({ "Content-Type": "application/json" }),
@@ -31,6 +34,28 @@ export class MemberService {
 		console.log(createNewMemberReq);
 
 		return this.httpClient.put<Member>(this.baseUrl, createNewMemberReq, httpOptions).pipe(catchError(this.handleError));
+	}
+
+	UpdateMember(username:string,firstname: string, lastname: string, email: string, contact: string, imageLink: string ): Observable<Member> {
+		let updateMemberReq = new UpdateMemberDetailReq(username, firstname, lastname,email,contact,imageLink);
+		return this.httpClient.post<Member>(this.baseUrl + "/updateMember", updateMemberReq, httpOptions).pipe(catchError(this.handleError));
+	}
+
+	AddAddress(memberId:string,block:string,unit:string,postalCode:string,country:string): Observable<Member> {
+		let addAddress = new CreateAddressReq(memberId,block,unit,postalCode,country);
+		return this.httpClient.post<Member>(this.baseUrl + "/addAddress", addAddress, httpOptions).pipe(catchError(this.handleError));
+
+
+	}
+
+	RetrieveMemberById(memberEntityId:string): Observable<Member> {
+		return this.httpClient.get<Member>(this.baseUrl + "/retrieveMemberById?memberEntityId=" + memberEntityId).pipe(catchError(this.handleError));
+	}
+
+	AddCreditCard(memberId:string, creditCardNumber:string, nameOnCard:string, expiryDate:string): Observable<Member> {
+		let addCreditCard = new CreateCreditcardReq(memberId,creditCardNumber,nameOnCard,expiryDate);
+		return this.httpClient.post<Member>(this.baseUrl + "/addCreditCard", addCreditCard, httpOptions).pipe(catchError(this.handleError));
+
 	}
 
 	private handleError(error: HttpErrorResponse) {
