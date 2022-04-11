@@ -77,19 +77,19 @@ export class ViewMyOrdersPageComponent implements OnInit {
 
     this.events1 = [
       {
-        status: 'IN_PROGRESS',
+        status: 'in progress',
         color: 'blue',
       },
       {
-        status: 'READY_FOR_SHIPMENT',
+        status: 'ready for shipment',
         color: 'orange',
       },
       {
-        status: 'COMPLETE',
+        status: 'complete',
         color: 'green',
       },
       {
-        status: 'REFUNDED',
+        status: 'refunded',
         color: 'red',
       },
     ];
@@ -207,5 +207,28 @@ export class ViewMyOrdersPageComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  // check if there's at least one record
+  atLeastOneBuild(po: FullPurchaseOrderEntity) {
+    let listOfPols: FullPurchaseOrderLineItem[] =  po.purchaseOrderLineItems!;
+    for(let i = 0; i < listOfPols?.length; i++) {
+      if(listOfPols[i].purchaseOrderLineItemTypeEnum == PurchaseOrderLineItemTypeEnum.BUILD) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  atLeastOneAcc(po: FullPurchaseOrderEntity) {
+    let listOfPols: FullPurchaseOrderLineItem[] =  po.purchaseOrderLineItems!;
+    for(let i = 0; i < listOfPols?.length; i++) {
+      if(listOfPols[i].purchaseOrderLineItemTypeEnum == PurchaseOrderLineItemTypeEnum.ACCESSORY) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

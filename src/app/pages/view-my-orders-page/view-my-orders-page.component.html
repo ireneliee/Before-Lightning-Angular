@@ -18,7 +18,7 @@
         </h4>
         <br />
         <h6 style="text-align: center">
-          Timestamp: {{ purchaseOrder.dateCreated }}
+          Timestamp: {{ purchaseOrder.dateCreated | date:'medium'}}
         </h6>
         <br />
         <div class="status-badges">
@@ -85,11 +85,11 @@
   [modal]="true"
   header="View Purchase Order Details"
   [(visible)]="viewOrderDisplay"
-  [style]="{ width: '50vw' }"
+  [style]="{ width: '80vw' }"
 >
   <p-card
     header="Reference number: {{ purchaseOrderToView.referenceNumber }}"
-    subheader="Timestamp: {{ purchaseOrderToView.dateCreated }}"
+    subheader="Timestamp: {{ purchaseOrderToView.dateCreated | date:'medium'}}"
     [style]="{ width: '100%' }"
     styleClass="p-card-shadow"
   >
@@ -130,17 +130,17 @@
       ></p-badge>
     </p>
     <br />
-    <p>Total spending: ${{ purchaseOrderToView.totalPrice }}</p>
+    <p>Total spending: ${{ purchaseOrderToView.totalPrice | number: '.2' }}</p>
     <!-- <p> Status: <p-badge value="{{purchaseOrderToView.purchaseOrderStatus}}" severity = "success"></p-badge></p>   -->
     <p>List of items:</p>
     <br />
 
-    <p-table [value]="purchaseOrderLineItemToView">
+    <p-table *ngIf = "atLeastOneAcc(purchaseOrderToView)" [value]="purchaseOrderLineItemToView">
       <ng-template pTemplate="header">
         <tr>
           <th>Serial number</th>
           <th>Accessory</th>
-          <th>quantity</th>
+          <th>Quantity</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-pol>
@@ -155,13 +155,13 @@
     </p-table>
 
     <br />
-    <p-table [value]="purchaseOrderLineItemToView">
+    <p-table [value]="purchaseOrderLineItemToView"  *ngIf = "atLeastOneBuild(purchaseOrderToView)">
       <ng-template pTemplate="header">
         <tr>
           <th>Serial number</th>
           <th>Product</th>
           <th>Part choices</th>
-          <th>quantity</th>
+          <th>Quantity</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-pol>
