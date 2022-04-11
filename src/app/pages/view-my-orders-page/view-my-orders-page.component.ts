@@ -167,7 +167,7 @@ export class ViewMyOrdersPageComponent implements OnInit {
     this.viewOrderDisplay = true;
     this.purchaseOrderToView = purchaseOrderToView;
     this.purchaseOrderLineItemToView =
-      this.purchaseOrderToView.purchaseOrderLineItems!;
+    this.purchaseOrderToView.purchaseOrderLineItems!;
   }
 
   showForumPostDialog(pol: FullPurchaseOrderEntity) {
@@ -175,6 +175,7 @@ export class ViewMyOrdersPageComponent implements OnInit {
     this.createReviewDisplay = false;
     this.viewOrderDisplay = false;
     this.purchaseOrderToReview = pol;
+    this.purchaseOrderToView= pol;
     this.submitForumDisplay = true;
   }
 
@@ -293,6 +294,7 @@ export class ViewMyOrdersPageComponent implements OnInit {
     this.submitForumDisplay = false;
     this.viewOrderDisplay = false;
     this.purchaseOrderToReview = pol;
+    this.purchaseOrderToView= pol;
     this.createReviewDisplay = true;
   }
 
