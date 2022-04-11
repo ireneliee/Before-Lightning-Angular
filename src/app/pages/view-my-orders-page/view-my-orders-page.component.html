@@ -11,7 +11,7 @@
     <br />
   </ng-template>
   <ng-template let-purchaseOrder pTemplate="item">
-    <div class = "po-container">
+    <div class="po-container">
       <p-card>
         <h4 style="text-align: center">
           Reference number: {{ purchaseOrder.referenceNumber }}
@@ -25,6 +25,7 @@
           Status:
           <p-badge value="{{ purchaseOrder.purchaseOrderStatus }}"></p-badge>
         </h4>
+        
 
         <div class="car-buttons p-mt-5">
           <p-button
@@ -32,24 +33,209 @@
             type="button"
             styleClass="p-button p-button-rounded p-mr-2"
             icon="pi pi-search"
+            (onClick)="showViewPurchaseOrderDialog(purchaseOrder)"
           ></p-button>
           <p-button
             class="action-button"
             type="button"
             styleClass="p-button p-button-rounded p-mr-2"
-            icon="pi pi-star"
+            icon="pi pi-ticket"
           ></p-button>
           <p-button
             class="action-button"
             type="button"
             styleClass="p-button p-button-rounded"
-            icon="pi pi-cog"
+            icon="pi pi-comments"
+            (onClick)="showForumPostDialog()"
           ></p-button>
         </div>
       </p-card>
     </div>
   </ng-template>
 </p-carousel>
+
+<p-dialog
+  class="view-order-dialog"
+  *ngIf="viewOrderDisplay"
+  [modal]="true"
+  header="View Purchase Order Details"
+  [(visible)]="viewOrderDisplay"
+  [style]="{ width: '50vw' }"
+>
+  <p-card
+    header="Reference number: {{ purchaseOrderToView.referenceNumber }}"
+    subheader="Timestamp: {{ purchaseOrderToView.dateCreated }}"
+    [style]="{ width: '100%' }"
+    styleClass="p-card-shadow"
+  >
+    
+    <br/>
+        <h4>How is your purchase order processed? </h4>
+        <p-timeline [value]="events1" layout="horizontal">
+            <ng-template pTemplate="content" let-event>
+                {{event.status}}
+            </ng-template>
+        </p-timeline>
+    <br/>
+    <p *ngIf="isComplete(purchaseOrderToView)">
+        Status:
+        <p-badge
+          value="{{ purchaseOrderToView.purchaseOrderStatus }}"
+          severity="success"
+        ></p-badge>
+      </p>
+      <p *ngIf="inProgress(purchaseOrderToView)">
+        Status:
+        <p-badge
+          value="{{ purchaseOrderToView.purchaseOrderStatus }}"
+          severity="info"
+        ></p-badge>
+      </p>
+      <p *ngIf="readyForShipment(purchaseOrderToView)">
+        Status:
+        <p-badge
+          value="{{ purchaseOrderToView.purchaseOrderStatus }}"
+          severity="warning"
+        ></p-badge>
+      </p>
+      <p *ngIf="isRefunded(purchaseOrderToView)">
+        Status:
+        <p-badge
+          value="{{ purchaseOrderToView.purchaseOrderStatus }}"
+          severity="danger"
+        ></p-badge>
+      </p>
+    <br/>
+    <p>Total spending: ${{ purchaseOrderToView.totalPrice }}</p>
+    <!-- <p> Status: <p-badge value="{{purchaseOrderToView.purchaseOrderStatus}}" severity = "success"></p-badge></p>   -->
+    <p>List of items:</p>
+    <br />
+
+    <p-table [value]="purchaseOrderLineItemToView">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Serial number</th>
+          <th>Accessory</th>
+          <th>quantity</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-pol>
+        <tr>
+          <td *ngIf="isAccessory(pol)">{{ pol.serialNumber }}</td>
+          <td *ngIf="isAccessory(pol)">
+            {{ pol.accessoryItemEntity.accessoryItemName }}
+          </td>
+          <td *ngIf="isAccessory(pol)">{{ pol.quantity }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <br />
+    <p-table [value]="purchaseOrderLineItemToView">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Serial number</th>
+          <th>Product</th>
+          <th>Part choices</th>
+          <th>quantity</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-pol>
+        <tr>
+          <td *ngIf="isBuilt(pol)">{{ pol.serialNumber }}</td>
+          <td *ngIf="isBuilt(pol)">{{ pol.productEntity.productName }}</td>
+          <td *ngIf="isBuilt(pol)">
+            <p-table
+              [value]="pol.partChoiceEntities"
+              [style]="{ width: '20vw' }"
+            >
+              <ng-template pTemplate="body" let-partChoice>
+                <tr>
+                  <td>{{ partChoice.partChoiceName }}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </td>
+          <td *ngIf="isBuilt(pol)">{{ pol.quantity }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+  <br />
+  <p>Any complaints regarding your product? Write to us now!</p>
+  <br />
+  <p-button
+    class="action-button"
+    type="button"
+    styleClass="p-button p-mr-2"
+    label="Create a support ticket"
+    icon="pi pi-ticket"
+  ></p-button>
+  <br />
+  <br />
+  <p>Love our product? Leave us a review!</p>
+  <br />
+  <p-button
+    class="action-button"
+    type="button"
+    styleClass="p-button pp-mr-2"
+    icon = "pi pi-comments"
+    label="Write review"
+    (onClick)="showForumPostDialog()"
+  ></p-button>
+</p-dialog>
+
+<p-dialog
+  header="Leave us a review!"
+  class="submit-forum-dialog"
+  *ngIf="submitForumDisplay"
+  [modal]="true"
+  [(visible)]="submitForumDisplay"
+  [style]="{ width: '30vw' }"
+>
+  <p-card>
+    <p>
+      Share with others about your custom-built product & shopping experience!
+    </p>
+    <br />
+    <p-button
+      class="action-button"
+      type="button"
+      label="Bring me to the forum page"
+      (onClick)="directToForumPage()"
+    ></p-button>
+  </p-card>
+  <br />
+  <p-card>
+    <p>Have your product delivered already? Leave us a review!</p>
+    <br />
+    <p-button
+      class="action-button"
+      type="button"
+      label="Create a new review"
+    ></p-button>
+  </p-card>
+</p-dialog>
+
+<!-- <div class="card">
+	<h5>How is your build request processed?</h5>
+	<p-timeline [value]="events1" styleClass="customized-timeline">
+		<ng-template pTemplate="marker" let-event>
+			<span class="custom-marker p-shadow-2" [style.backgroundColor]="event.color">
+                <i [ngClass]="event.icon"></i>
+            </span>
+		</ng-template>
+		<ng-template pTemplate="content" let-event>
+			<p-card [header]="event.status">
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error
+					repudiandae numquam deserunt
+					quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate
+					neque quas!</p>
+				<button pButton label="Read more" class="p-button-text"></button>
+			</p-card>
+		</ng-template>
+	</p-timeline>
+</div> -->
 
 <!-- <div class="card">
     <p-dataView

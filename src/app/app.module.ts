@@ -61,6 +61,9 @@ import { CustomizeProductsPageComponent } from './pages/productOperations/custom
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 import {CarouselModule} from 'primeng/carousel';
 import {BadgeModule} from 'primeng/badge';
+import { TimelineModule } from "primeng/timeline";
+import {ListboxModule} from 'primeng/listbox';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -125,7 +128,9 @@ import {BadgeModule} from 'primeng/badge';
     InputTextareaModule,
     AvatarModule,
     CarouselModule,
-    BadgeModule
+    BadgeModule,
+    TimelineModule,
+    ListboxModule 
   ],
   providers: [MessageService],
   bootstrap: [AppComponent],

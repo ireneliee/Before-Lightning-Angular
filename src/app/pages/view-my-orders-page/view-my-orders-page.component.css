@@ -32,15 +32,11 @@
 
 .car-buttons {
   margin: 2em;
-}
-
-::ng-deep .action-button {
-  width: 5px;
+  text-align: center;
 }
 
 .action-button {
-  margin: 0.1em;
-  text-align: center;
+  margin: 0.5em;
 }
 h1 h4 h6 {
   font-family:'Courier New', Courier, monospace;
@@ -50,6 +46,22 @@ h1 h4 h6 {
 .po-container {
   margin-right: 0.5em;
 
+}
+
+.custom-marker {
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+::ng-deep .p-timeline-event-content .p-timeline-event-opposite{
+  
+  line-height: 1;
 }
 
 

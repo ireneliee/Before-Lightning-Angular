@@ -1,4 +1,4 @@
 export enum PurchaseOrderLineItemTypeEnum {
-	BUILD,
-	ACCESSORY,
+	BUILD = 'BUILD',
+	ACCESSORY = 'ACCESSORY',
 }

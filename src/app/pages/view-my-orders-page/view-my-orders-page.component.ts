@@ -14,6 +14,9 @@ import { DividerModule } from 'primeng/divider';
 import { CarouselModule } from 'primeng/carousel';
 import { BadgeModule } from 'primeng/badge';
 import { PurchaseOrderStatusEnum } from 'src/app/models/enum/purchase-order-status-enum';
+import { TimelineModule } from 'primeng/timeline';
+import { FullPurchaseOrderLineItem } from 'src/app/models/full-purchase-order-lineitems';
+import { PurchaseOrderLineItemTypeEnum } from 'src/app/models/enum/purchase-order-line-item-type-enum';
 
 @Component({
   selector: 'app-view-my-orders-page',
@@ -22,17 +25,27 @@ import { PurchaseOrderStatusEnum } from 'src/app/models/enum/purchase-order-stat
 })
 export class ViewMyOrdersPageComponent implements OnInit {
   listOfPurchaseOrder: PurchaseOrderEntity[];
-  purchaseOrderToView: PurchaseOrderEntity;
 
   //filtering and sorting purposes
   sortOptions: SelectItem[];
   sortField: string;
   sortOrder: number;
   sortKey: string;
-  inProgressStatus: PurchaseOrderStatusEnum;
-  readyForShipmentStatus: PurchaseOrderStatusEnum;
-  completeStatus: PurchaseOrderStatusEnum;
-  refunded: PurchaseOrderStatusEnum;
+  
+
+  // tracking information
+  events1: any[];
+
+  //view order details dialog
+  viewOrderDisplay: boolean;
+  purchaseOrderToView: FullPurchaseOrderEntity;
+  purchaseOrderLineItemToView: FullPurchaseOrderLineItem[];
+
+  //submit support ticket dialog
+  submitSupportTicketDisplay: boolean;
+
+  //submit forum dialog
+  submitForumDisplay: boolean;
 
   constructor(
     private router: Router,
@@ -51,11 +64,35 @@ export class ViewMyOrdersPageComponent implements OnInit {
     this.sortOrder = 0;
     this.sortOptions = new Array();
 
-    // aesthetic coloring purposes
-    this.inProgressStatus = PurchaseOrderStatusEnum.IN_PROGRESS;
-    this.readyForShipmentStatus =  PurchaseOrderStatusEnum.READY_FOR_SHIPMENT;
-    this.completeStatus =  PurchaseOrderStatusEnum.COMPLETE;
-    this.refunded =  PurchaseOrderStatusEnum.REFUNDED;
+    //view order details dialog
+    this.viewOrderDisplay =  false;
+    this.purchaseOrderToView = new FullPurchaseOrderEntity();
+    this.purchaseOrderLineItemToView = new Array();
+
+    //submit support ticket dialog
+    this.submitSupportTicketDisplay = false;
+  
+    //submit forum dialog
+    this.submitForumDisplay =  false;
+
+    this.events1 = [
+      {
+        status: 'IN_PROGRESS',
+        color: 'blue',
+      },
+      {
+        status: 'READY_FOR_SHIPMENT',
+        color: 'orange',
+      },
+      {
+        status: 'COMPLETE',
+        color: 'green',
+      },
+      {
+        status: 'REFUNDED',
+        color: 'red',
+      },
+    ];
   }
 
   ngOnInit(): void {
@@ -86,6 +123,27 @@ export class ViewMyOrdersPageComponent implements OnInit {
     }
   }
 
+  showViewPurchaseOrderDialog(purchaseOrderToView: FullPurchaseOrderEntity) {
+    this.viewOrderDisplay = true;
+    this.purchaseOrderToView = purchaseOrderToView;
+    this.purchaseOrderLineItemToView = this.purchaseOrderToView.purchaseOrderLineItems!;
+  }
+
+  showForumPostDialog() {
+    this.submitForumDisplay =  true;
+  }
+
+  directToForumPage() {
+    this.router.navigate(["/forumPage"]);
+  }
+
+  showSupportTicketDialog() {
+    this.submitSupportTicketDisplay = true;
+  }
+
+  
+
+
   onSortChange(event: { value: any }) {
     let value = event.value;
 
@@ -95,6 +153,59 @@ export class ViewMyOrdersPageComponent implements OnInit {
     } else {
       this.sortOrder = 1;
       this.sortField = value;
+    }
+  }
+
+  // badge-related
+  inProgress(po: FullPurchaseOrderEntity) {
+    if(po.purchaseOrderStatus == PurchaseOrderStatusEnum.IN_PROGRESS) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  readyForShipment(po: FullPurchaseOrderEntity) {
+
+    if(po.purchaseOrderStatus == PurchaseOrderStatusEnum.READY_FOR_SHIPMENT) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isComplete(po: FullPurchaseOrderEntity) {
+    if(po.purchaseOrderStatus == PurchaseOrderStatusEnum.COMPLETE ) {
+      //console.log("isComplete true");
+      return true;
+    } else {
+      console.log("isComplete false");
+      return false;
+    }
+  }
+
+  isRefunded(po: FullPurchaseOrderEntity) {
+    if(po.purchaseOrderStatus == PurchaseOrderStatusEnum.REFUNDED) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // decide if it's accessory or built
+  isBuilt(po: FullPurchaseOrderLineItem) {
+    if(po.purchaseOrderLineItemTypeEnum == PurchaseOrderLineItemTypeEnum.BUILD) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isAccessory(po: FullPurchaseOrderLineItem) {
+    if(po.purchaseOrderLineItemTypeEnum == PurchaseOrderLineItemTypeEnum.ACCESSORY) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
