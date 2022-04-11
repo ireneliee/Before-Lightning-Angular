@@ -8,7 +8,6 @@ import { PrimeNGConfig } from 'primeng/api';
 import { NgForm } from '@angular/forms';
 import { Reply } from 'src/app/models/reply';
 import { PurchaseOrderEntity } from 'src/app/models/purchase-order';
-import { PurchaseOrderService } from 'src/app/services/purchase-order-service';
 import { FullPurchaseOrderEntity } from 'src/app/models/full-purchase-order';
 import { DividerModule } from 'primeng/divider';
 import { CarouselModule } from 'primeng/carousel';
@@ -17,6 +16,7 @@ import { PurchaseOrderStatusEnum } from 'src/app/models/enum/purchase-order-stat
 import { TimelineModule } from 'primeng/timeline';
 import { FullPurchaseOrderLineItem } from 'src/app/models/full-purchase-order-lineitems';
 import { PurchaseOrderLineItemTypeEnum } from 'src/app/models/enum/purchase-order-line-item-type-enum';
+import { PurchaseOrderService } from 'src/app/services/purchase-order.service';
 
 @Component({
   selector: 'app-view-my-orders-page',
