@@ -1,1 +1,44 @@
-<p>sidebar works!</p>
+<aside class="sidebar">
+  <p-dataView [value]="listOfPromotions">
+    <ng-template let-promotion pTemplate="listItem">
+      <p-card>
+        <ng-template pTemplate="header">
+        <br/>
+          <h4>{{ promotion.promotionName }}</h4>
+        </ng-template>
+        <p>Ends on {{ promotion.endDate | date: "short" }}</p>
+        <p *ngIf="isDiscountPromotion(promotion)">
+          {{ promotion.discount }}% OFF!
+        </p>
+        <p *ngIf="!isDiscountPromotion(promotion)">
+          SGD{{ promotion.discountedPrice | number: ".2" }} OFF!
+        </p>
+        <br/>
+        <div *ngIf="isPartPromotion(promotion)">
+            <p-listbox
+              [options]="listOfPartChoices"
+              optionLabel="partChoiceName"
+              [listStyle]="{ 'max-height': '250px' }"
+            >
+              <ng-template pTemplate="header">
+                Part choice discounted
+              </ng-template>
+            </p-listbox>
+
+        </div>
+
+        <div *ngIf="!isPartPromotion(promotion)">
+            <p-listbox
+              [options]="listOfAccessoryItems"
+              optionLabel="accessoryItemName"
+              [listStyle]="{ 'max-height': '250px' }"
+            >
+              <ng-template pTemplate="header">
+                Accessories discounted
+              </ng-template>
+            </p-listbox>
+        </div>
+      </p-card>
+    </ng-template>
+  </p-dataView>
+</aside>
