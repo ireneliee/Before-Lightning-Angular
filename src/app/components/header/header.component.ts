@@ -31,12 +31,14 @@ export class HeaderComponent implements OnInit {
 				console.log(response);
 				let member: Member = response;
 
-				if (member != null) {
+				if (member != null && member.isActive == true) {
 					this.sessionService.setIsLogin(true);
 					this.sessionService.setCurrentMember(member);
 					this.loginError = false;
 					this.router.navigate(["/index"]);
 					window.location.reload();
+				} else if(member != null && member.isActive == false) {
+					this.router.navigate(["/deactivatedAccount"])
 				} else {
 					this.loginError = true;
 				}

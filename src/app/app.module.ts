@@ -68,6 +68,7 @@ import {ListboxModule} from 'primeng/listbox';
 import { SidebarComponent } from './pages/sidebar/sidebar.component';
 import { ViewAllAccessoryItemsPageComponent } from "./pages/accessoryOperations/view-all-accessory-items-page/view-all-accessory-items-page.component";
 import { CreateNewSupportTicketComponent } from './pages/create-new-support-ticket/create-new-support-ticket.component';
+import { BanCustomerComponent } from './pages/ban-customer/ban-customer.component';
 
 @NgModule({
 	declarations: [
@@ -95,6 +96,7 @@ import { CreateNewSupportTicketComponent } from './pages/create-new-support-tick
 		ViewAllAccessoryItemsPageComponent,
 		SidebarComponent,
 		CreateNewSupportTicketComponent,
+  BanCustomerComponent,
 
 	],
 	imports: [

@@ -426,6 +426,10 @@ export class ViewMyOrdersPageComponent implements OnInit {
       });
   }
 
+  navigateToSupportTicket() {
+    this.router.navigate(["/supportPage"]);
+  }
+
   dummy() {
     console.log('rating is : ' + this.rating);
     if (1 + 1 == 2) {

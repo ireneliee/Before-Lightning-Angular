@@ -16,6 +16,7 @@ import { CreateNewForumPostComponent } from "./pages/create-new-forum-post/creat
 import { UpdateForumComponent } from "./pages/update-forum/update-forum.component";
 import { CustomizeProductsPageComponent } from "./pages/productOperations/customize-products-page/customize-products-page.component";
 import { ViewAllAccessoryItemsPageComponent } from "./pages/accessoryOperations/view-all-accessory-items-page/view-all-accessory-items-page.component";
+import { BanCustomerComponent } from "./pages/ban-customer/ban-customer.component";
 
 const routes: Routes = [
 	{ path: "", redirectTo: "/index", pathMatch: "full" },
@@ -36,6 +37,8 @@ const routes: Routes = [
 	{ path: "viewMyForumPage", component: ViewMyForumPostComponent },
 	{ path: "createNewForumPage", component: CreateNewForumPostComponent },
 	{ path: "updateForumComponent/:forumId", component: UpdateForumComponent },
+	{ path: "deactivatedAccount", component: BanCustomerComponent },
+	{ path: "viewAllSupportTicket", component: SupportPageComponent}
 ];
 
 @NgModule({
