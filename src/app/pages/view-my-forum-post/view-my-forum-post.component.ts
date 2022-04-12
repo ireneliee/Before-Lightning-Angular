@@ -104,6 +104,7 @@ export class ViewMyForumPostComponent implements OnInit {
 
   callRefreshList(event: any) {
     this.refreshList();
+    this.display = false;
   }
 
    refreshList(){

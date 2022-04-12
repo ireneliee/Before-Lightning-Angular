@@ -13,9 +13,12 @@
   >
     <ng-template pTemplate="header">
       <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
-        <app-create-new-forum-post
-          (signalToRefresh)="callRefreshList($event)"
-        ></app-create-new-forum-post>
+        <div *ngIf="sessionService.getIsLogin() == true">
+          <app-create-new-forum-post
+            (signalToRefresh)="callRefreshList($event)"
+          ></app-create-new-forum-post>
+        </div>
+
         <br />
         <p-dropdown
           [options]="sortOptions"
@@ -178,13 +181,13 @@
   <p-toast></p-toast>
   <div class="reply-form-container">
     <div class="reply-profile">
-      <div class="member-bio" style = "margin-left: 1.2em;">
+      <div class="member-bio" style="margin-left: 1.2em">
         <p-avatar
           label="{{ currentMember.charAt(0) }}"
           shape="circle"
           size="large"
         ></p-avatar>
-        <br/>
+        <br />
       </div>
       <div>{{ currentMember }}</div>
     </div>

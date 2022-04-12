@@ -1,34 +1,48 @@
 <app-breadcrumb></app-breadcrumb>
-  
 
 <section class="page_404">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="col-sm-10 col-sm-offset-1 text-center">
-            <div class="four_zero_four_bg">
-              <h1 class="text-center">Oh no :(</h1>
-            </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="col-sm-10 col-sm-offset-1 text-center">
+          <div class="four_zero_four_bg">
+            <h1 class="text-center">Oh no :(</h1>
+          </div>
 
-            <div class="contant_box_404">
-              <h3 class="h2">
-                Looks like that your account has been deactivated!
-              </h3>
+          <div class="contant_box_404">
+            <h3 class="h2">
+              Looks like that your account has been deactivated!
+            </h3>
 
-              <p>You can browse our catalogue without logging in though!</p>
-              <br/>
+            <p>You can browse our catalogue without logging in though!</p>
+            <p>
+              If you would like to appeal for activation, please send us a
+              support ticket
+            </p>
+            <br />
+            <div class="action-button">
               <p-button
-                  title="Go to home page"
-                  icon = "pi pi-home"
-                  pButton
-                  class="p-button-raised p-button-rounded"
-                  (onClick)="redirectToHomepage()"
-                >
-                </p-button>
+              style = "margin-right: 1em;"
+                title="Go to home page"
+                icon="pi pi-home"
+                pButton
+                class="p-button-raised p-button-rounded"
+                (onClick)="redirectToHomepage()"
+              >
+              </p-button>
+
+              <p-button
+                title="Go to support page"
+                icon="pi pi-ticket"
+                pButton
+                class="p-button-raised p-button-rounded"
+                (onClick)="redirectToSupportPage()"
+              >
+              </p-button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
-
+  </div>
+</section>

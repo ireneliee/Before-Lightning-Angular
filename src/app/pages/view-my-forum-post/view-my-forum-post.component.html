@@ -1,30 +1,33 @@
 <app-breadcrumb></app-breadcrumb>
 <app-forum-menu></app-forum-menu>
-<div class="card">
-  <p-dataView
-    #dv
-    [value]="forumPosts"
-    [paginator]="true"
-    [rows]="9"
-    filterBy="name"
-    [sortField]="sortField"
-    [sortOrder]="sortOrder"
-    layout="grid"
-  >
-    <ng-template pTemplate="header">
-      <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
-        <app-create-new-forum-post
-          (signalToRefresh)="callRefreshList($event)"
-        ></app-create-new-forum-post>
-        <br />
-        <p-dropdown
-          [options]="sortOptions"
-          [(ngModel)]="sortKey"
-          placeholder="Sort By Date"
-          (onChange)="onSortChange($event)"
-          styleClass="p-mb-2 p-mb-md-0"
-        ></p-dropdown>
-        <!-- <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+<div *ngIf="sessionService.getIsLogin() == true">
+  <div class="card">
+    <p-dataView
+      #dv
+      [value]="forumPosts"
+      [paginator]="true"
+      [rows]="9"
+      filterBy="name"
+      [sortField]="sortField"
+      [sortOrder]="sortOrder"
+      layout="grid"
+    >
+      <ng-template pTemplate="header">
+        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+          <div *ngIf="sessionService.getIsLogin() == true">
+            <app-create-new-forum-post
+              (signalToRefresh)="callRefreshList($event)"
+            ></app-create-new-forum-post>
+          </div>
+          <br />
+          <p-dropdown
+            [options]="sortOptions"
+            [(ngModel)]="sortKey"
+            placeholder="Sort By Date"
+            (onChange)="onSortChange($event)"
+            styleClass="p-mb-2 p-mb-md-0"
+          ></p-dropdown>
+          <!-- <span class="p-input-icon-left p-mb-2 p-mb-md-0">
           <i class="pi pi-search"></i>
           <input
             type="search"
@@ -33,255 +36,270 @@
             (input)="dv.filter($any($event.target).value)"
           />
         </span> -->
-      </div>
-    </ng-template>
+        </div>
+      </ng-template>
 
-    <ng-template let-forum pTemplate="gridItem">
-      <div class="p-col-12 p-md-4">
-        <div class="product-grid-item card">
-          <div class="product-grid-item">
-            <div class="forum-box-user"></div>
-            <div class="forum-box-content">
-              <div class="forum-box-content-maincontent">
-                <span class="forum-title">{{ forum.title }}</span>
-                <p-divider></p-divider>
-                <div class="forum-timestamp">
-                  Published on {{ forum.timestamp | date: "medium" }}
+      <ng-template let-forum pTemplate="gridItem">
+        <div class="p-col-12 p-md-4">
+          <div class="product-grid-item card">
+            <div class="product-grid-item">
+              <div class="forum-box-user"></div>
+              <div class="forum-box-content">
+                <div class="forum-box-content-maincontent">
+                  <span class="forum-title">{{ forum.title }}</span>
+                  <p-divider></p-divider>
+                  <div class="forum-timestamp">
+                    Published on {{ forum.timestamp | date: "medium" }}
+                  </div>
+                  <br />
+                  <div class="forum-content">{{ forum.content }}</div>
                 </div>
-                <br />
-                <div class="forum-content">{{ forum.content }}</div>
-              </div>
-              <div class="forum-box-content-subcontent">
-                <button
-                  *ngIf="!hasAlreadyLiked(forum)"
-                  title="Like this post"
-                  pButton
-                  type="button"
-                  icon="pi pi-thumbs-up"
-                  class="p-button-raised p-button-rounded"
-                  (click)="changeLikes(forum)"
-                ></button>
+                <div class="forum-box-content-subcontent">
+                  <button
+                    *ngIf="!hasAlreadyLiked(forum)"
+                    title="Like this post"
+                    pButton
+                    type="button"
+                    icon="pi pi-thumbs-up"
+                    class="p-button-raised p-button-rounded"
+                    (click)="changeLikes(forum)"
+                  ></button>
 
-                <button
-                  *ngIf="hasAlreadyLiked(forum)"
-                  title="Unlike this post"
-                  pButton
-                  type="button"
-                  icon="pi pi-thumbs-down"
-                  class="p-button-raised p-button-rounded"
-                  (click)="changeLikes(forum)"
-                ></button>
+                  <button
+                    *ngIf="hasAlreadyLiked(forum)"
+                    title="Unlike this post"
+                    pButton
+                    type="button"
+                    icon="pi pi-thumbs-down"
+                    class="p-button-raised p-button-rounded"
+                    (click)="changeLikes(forum)"
+                  ></button>
 
-                <p-button
-                  title="Comment on this post"
-                  pButton
-                  type="button"
-                  icon="pi pi-comment"
-                  class="p-button-raised p-button-rounded"
-                  (onClick)="showCreateReplyDialog(forum)"
-                  style="margin-right: 0.7em"
-                ></p-button>
-                <p-button
-                  title="View forum details"
-                  pButton
-                  class="p-button-raised p-button-rounded"
-                  icon="pi pi-search"
-                  (onClick)="showDialog(forum)"
-                >
-                </p-button>
-                <p-button
-                  title="Edit forum"
-                  pButton
-                  class="p-button-raised p-button-rounded"
-                  icon="pi pi-pencil"
-                  style = "margin-left: 0.7em;"
-                  (onClick)="redirectToUpdate(forum)"
-                >
-                </p-button>
+                  <p-button
+                    title="Comment on this post"
+                    pButton
+                    type="button"
+                    icon="pi pi-comment"
+                    class="p-button-raised p-button-rounded"
+                    (onClick)="showCreateReplyDialog(forum)"
+                    style="margin-right: 0.7em"
+                  ></p-button>
+                  <p-button
+                    title="View forum details"
+                    pButton
+                    class="p-button-raised p-button-rounded"
+                    icon="pi pi-search"
+                    (onClick)="showDialog(forum)"
+                  >
+                  </p-button>
+                  <p-button
+                    title="Edit forum"
+                    pButton
+                    class="p-button-raised p-button-rounded"
+                    icon="pi pi-pencil"
+                    style="margin-left: 0.7em"
+                    (onClick)="redirectToUpdate(forum)"
+                  >
+                  </p-button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </ng-template>
-  </p-dataView>
-</div>
-
-<!-- This is dialog box to view forum post -->
-<p-dialog
-  class="view-forum-dialog"
-  *ngIf="display"
-  [modal]="true"
-  header="View Forum Details"
-  [(visible)]="display"
-  [style]="{ width: '50vw' }"
->
-  <p-card
-    header="{{ forumToView.title }}"
-    subheader="{{ forumToView.author?.username }}"
-    [style]="{ width: '100%' }"
-    styleClass="p-card-shadow"
-  >
-    <ng-template pTemplate="header">
-      <img *ngIf = "forumToView.imageLink" alt="forum image" src="{{'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' + forumToView.imageLink}}" />
-      <img *ngIf = "!forumToView.imageLink" alt="default forum image" src="assets/images/forumDefault.png" />
-    </ng-template>
-    <div style="overflow-wrap: break-word">
-      {{ forumToView.content }}
-    </div>
-    <ng-template pTemplate="footer">
-      <p-chip
-        label="{{ forumToView.userWhoLikes?.length }}"
-        icon="pi pi-thumbs-up"
-        style="padding-right: 1em"
-      ></p-chip>
-    </ng-template>
-  </p-card>
-  <p-panel header="Replies" [toggleable]="true">
-    <p-table [value]="forumToViewReplies">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Author</th>
-          <th>Content</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-reply>
-        <tr>
-          <td>
-            <p-avatar label="P" size="large"></p-avatar>
-            <p>{{ reply.author.username }}</p>
-          </td>
-          <td>{{ reply.content }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </p-panel>
-</p-dialog>
-
-<!-- This is dialog box to create new comment -->
-<p-dialog
-  class="view-forum-dialog"
-  *ngIf="display"
-  [modal]="true"
-  header="View Forum Details"
-  [(visible)]="display"
-  [style]="{ width: '50vw' }"
->
-  <p-card
-    header="{{ forumToView.title }}"
-    subheader="{{ forumToView.author?.username }}"
-    [style]="{ width: '100%' }"
-    styleClass="p-card-shadow"
-  >
-    <ng-template pTemplate="header">
-      <img
-        *ngIf="forumToView.imageLink"
-        alt="forum image"
-        src="{{
-          'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
-            forumToView.imageLink
-        }}"
-      />
-      <img
-        *ngIf="!forumToView.imageLink"
-        alt="default forum image"
-        src="assets/images/forumDefault.png"
-      />
-    </ng-template>
-
-    <div style="overflow-wrap: break-word">
-      {{ forumToView.content }}
-    </div>
-    <ng-template pTemplate="footer">
-      <p-chip
-        label="{{ forumToView.userWhoLikes?.length }}"
-        icon="pi pi-thumbs-up"
-        style="padding-right: 1em"
-      ></p-chip>
-    </ng-template>
-  </p-card>
-  <p-panel header="Replies" [toggleable]="true">
-    <p-dataView [value]="forumToViewReplies">
-      <ng-template let-reply pTemplate="listItem">
-        <div class="reply-box">
-          <div class="reply-avatar">
-            <div class="avatar-only">
-              <p-avatar
-                label="{{ reply.author.username.charAt(0) }}"
-                size="large"
-                style="text-align: center"
-              ></p-avatar>
-            </div>
-            <p>{{ reply.author.username }}</p>
-          </div>
-          <div class="reply-content">
-            <p>{{ reply.content }}</p>
-            <br />
-            <div class="forum-timestamp">
-              Published on {{ reply.timestamp | date: "medium" }}
-            </div>
-          </div>
-        </div>
-        <br />
       </ng-template>
     </p-dataView>
-  </p-panel>
-</p-dialog>
-
-<p-dialog
-  class="add-new-comment"
-  *ngIf="createReplyDisplay"
-  [modal]="true"
-  header="Create new comment"
-  [(visible)]="createReplyDisplay"
-  [style]="{ width: '40vw' }"
->
-  <p-toast></p-toast>
-  <div class="reply-form-container">
-    <div class="reply-profile">
-      <div class="member-bio" style = "margin-left: 1.2em;">
-        <p-avatar
-          label="{{ currentMember.charAt(0) }}"
-          shape="circle"
-          size="large"
-        ></p-avatar>
-        <br/>
-      </div>
-      <div>{{ currentMember }}</div>
-    </div>
-    <form>
-      <div class="reply-content-form">
-        <span class="p-float-label">
-          <textarea
-            inputId="textarea"
-            rows="3"
-            style="resize: none"
-            cols="30"
-            name="reply-text-area"
-            [(ngModel)]="replyContent"
-            pInputTextarea
-            style="width: 180%"
-          ></textarea>
-          <label for="textarea">Write your comment here!</label>
-        </span>
-      </div>
-      <div class="reply-action">
-        <div class="submit-button">
-          <button
-            icon="pi pi-comment"
-            (click)="createNewReply()"
-            pButton
-            label="Post comment"
-          ></button>
-        </div>
-        <div class="clear-button">
-          <p-button
-            icon="pi pi-times"
-            (click)="clearReplyForm()"
-            label="Clear"
-          ></p-button>
-        </div>
-      </div>
-    </form>
   </div>
-</p-dialog>
+
+  <!-- This is dialog box to view forum post -->
+  <p-dialog
+    class="view-forum-dialog"
+    *ngIf="display"
+    [modal]="true"
+    header="View Forum Details"
+    [(visible)]="display"
+    [style]="{ width: '50vw' }"
+  >
+    <p-card
+      header="{{ forumToView.title }}"
+      subheader="{{ forumToView.author?.username }}"
+      [style]="{ width: '100%' }"
+      styleClass="p-card-shadow"
+    >
+      <ng-template pTemplate="header">
+        <img
+          *ngIf="forumToView.imageLink"
+          alt="forum image"
+          src="{{
+            'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
+              forumToView.imageLink
+          }}"
+        />
+        <img
+          *ngIf="!forumToView.imageLink"
+          alt="default forum image"
+          src="assets/images/forumDefault.png"
+        />
+      </ng-template>
+      <div style="overflow-wrap: break-word">
+        {{ forumToView.content }}
+      </div>
+      <ng-template pTemplate="footer">
+        <p-chip
+          label="{{ forumToView.userWhoLikes?.length }}"
+          icon="pi pi-thumbs-up"
+          style="padding-right: 1em"
+        ></p-chip>
+      </ng-template>
+    </p-card>
+    <p-panel header="Replies" [toggleable]="true">
+      <p-table [value]="forumToViewReplies">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Author</th>
+            <th>Content</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-reply>
+          <tr>
+            <td>
+              <p-avatar label="P" size="large"></p-avatar>
+              <p>{{ reply.author.username }}</p>
+            </td>
+            <td>{{ reply.content }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-panel>
+  </p-dialog>
+
+  <!-- This is dialog box to create new comment -->
+  <p-dialog
+    class="view-forum-dialog"
+    *ngIf="display"
+    [modal]="true"
+    header="View Forum Details"
+    [(visible)]="display"
+    [style]="{ width: '50vw' }"
+  >
+    <p-card
+      header="{{ forumToView.title }}"
+      subheader="{{ forumToView.author?.username }}"
+      [style]="{ width: '100%' }"
+      styleClass="p-card-shadow"
+    >
+      <ng-template pTemplate="header">
+        <img
+          *ngIf="forumToView.imageLink"
+          alt="forum image"
+          src="{{
+            'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
+              forumToView.imageLink
+          }}"
+        />
+        <img
+          *ngIf="!forumToView.imageLink"
+          alt="default forum image"
+          src="assets/images/forumDefault.png"
+        />
+      </ng-template>
+
+      <div style="overflow-wrap: break-word">
+        {{ forumToView.content }}
+      </div>
+      <ng-template pTemplate="footer">
+        <p-chip
+          label="{{ forumToView.userWhoLikes?.length }}"
+          icon="pi pi-thumbs-up"
+          style="padding-right: 1em"
+        ></p-chip>
+      </ng-template>
+    </p-card>
+    <p-panel header="Replies" [toggleable]="true">
+      <p-dataView [value]="forumToViewReplies">
+        <ng-template let-reply pTemplate="listItem">
+          <div class="reply-box">
+            <div class="reply-avatar">
+              <div class="avatar-only">
+                <p-avatar
+                  label="{{ reply.author.username.charAt(0) }}"
+                  size="large"
+                  style="text-align: center"
+                ></p-avatar>
+              </div>
+              <p>{{ reply.author.username }}</p>
+            </div>
+            <div class="reply-content">
+              <p>{{ reply.content }}</p>
+              <br />
+              <div class="forum-timestamp">
+                Published on {{ reply.timestamp | date: "medium" }}
+              </div>
+            </div>
+          </div>
+          <br />
+        </ng-template>
+      </p-dataView>
+    </p-panel>
+  </p-dialog>
+
+  <p-dialog
+    class="add-new-comment"
+    *ngIf="createReplyDisplay"
+    [modal]="true"
+    header="Create new comment"
+    [(visible)]="createReplyDisplay"
+    [style]="{ width: '40vw' }"
+  >
+    <p-toast></p-toast>
+    <div class="reply-form-container">
+      <div class="reply-profile">
+        <div class="member-bio" style="margin-left: 1.2em">
+          <p-avatar
+            label="{{ currentMember.charAt(0) }}"
+            shape="circle"
+            size="large"
+          ></p-avatar>
+          <br />
+        </div>
+        <div>{{ currentMember }}</div>
+      </div>
+      <form>
+        <div class="reply-content-form">
+          <span class="p-float-label">
+            <textarea
+              inputId="textarea"
+              rows="3"
+              style="resize: none"
+              cols="30"
+              name="reply-text-area"
+              [(ngModel)]="replyContent"
+              pInputTextarea
+              style="width: 180%"
+            ></textarea>
+            <label for="textarea">Write your comment here!</label>
+          </span>
+        </div>
+        <div class="reply-action">
+          <div class="submit-button">
+            <button
+              icon="pi pi-comment"
+              (click)="createNewReply()"
+              pButton
+              label="Post comment"
+            ></button>
+          </div>
+          <div class="clear-button">
+            <p-button
+              icon="pi pi-times"
+              (click)="clearReplyForm()"
+              label="Clear"
+            ></p-button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </p-dialog>
+</div>
+<div *ngIf="sessionService.getIsLogin() == false">
+  You are not logged in yet! Please log in to view your forum posts!
+</div>

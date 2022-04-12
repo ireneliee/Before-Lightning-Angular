@@ -18,4 +18,9 @@ export class BanCustomerComponent implements OnInit {
   
   }
 
+  redirectToSupportPage() {
+    this.router.navigate(["supportPage"]);
+  
+  }
+
 }
