@@ -122,6 +122,8 @@ export class ViewMyCartPageComponent implements OnInit {
 		let finalDeliveryType: string = "";
 		if (this.selectedDeliveryChoice === "Express") {
 			finalDeliveryType = this.selectedDeliveryChoice;
+		} else {
+			this.selectedDeliveryChoice = "Standard";
 		}
 		console.log(" ------- sending out data to service --------");
 		console.log(this.myCart);
@@ -135,7 +137,7 @@ export class ViewMyCartPageComponent implements OnInit {
 			next: (response) => {
 				console.log(" ====== IN RESPONSE INSIDE VIEW CART COMPONENT =======");
 
-				let purchaseOrder: PurchaseOrderEntity = response;
+				let purchaseOrder = response;
 				console.log(purchaseOrder);
 
 				this.sessionService.setCart([]);
