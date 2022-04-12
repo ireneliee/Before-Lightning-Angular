@@ -1,21 +1,5 @@
-<p-messages></p-messages>
 <app-breadcrumb></app-breadcrumb>
 <app-forum-menu></app-forum-menu>
-<!-- <p-button
-  (click)="showMaximizableDialog()"
-  icon="pi pi-book"
-  label="View my forum posts"
-></p-button>
-<p-dialog
-  header="Create New Forum Post"
-  [(visible)]="displayMaximizable"
-  [modal]="true"
-  [style]="{ width: '50vw' }"
-  [maximizable]="true"
-  [baseZIndex]="10000"
-  [draggable]="false"
-  [resizable]="false"
-> -->
 <div class="card">
   <p-dataView
     #dv
@@ -27,9 +11,12 @@
     [sortOrder]="sortOrder"
     layout="grid"
   >
-    <app-create-new-forum-post></app-create-new-forum-post>
     <ng-template pTemplate="header">
       <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+        <app-create-new-forum-post
+          (signalToRefresh)="callRefreshList($event)"
+        ></app-create-new-forum-post>
+        <br />
         <p-dropdown
           [options]="sortOptions"
           [(ngModel)]="sortKey"
@@ -37,7 +24,7 @@
           (onChange)="onSortChange($event)"
           styleClass="p-mb-2 p-mb-md-0"
         ></p-dropdown>
-        <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+        <!-- <span class="p-input-icon-left p-mb-2 p-mb-md-0">
           <i class="pi pi-search"></i>
           <input
             type="search"
@@ -45,12 +32,7 @@
             placeholder="Search by Name"
             (input)="dv.filter($any($event.target).value)"
           />
-        </span>
-        <div class="extra-forum-function">
-          <div class="create-forum-button">
-            <app-create-new-forum-post (signalToRefresh)="callRefreshList($event)"></app-create-new-forum-post>
-          </div>
-        </div>
+        </span> -->
       </div>
     </ng-template>
 
@@ -58,19 +40,36 @@
       <div class="p-col-12 p-md-4">
         <div class="product-grid-item card">
           <div class="product-grid-item">
+            <div class="forum-box-user"></div>
             <div class="forum-box-content">
               <div class="forum-box-content-maincontent">
                 <span class="forum-title">{{ forum.title }}</span>
+                <p-divider></p-divider>
+                <div class="forum-timestamp">
+                  Published on {{ forum.timestamp | date: "medium" }}
+                </div>
+                <br />
                 <div class="forum-content">{{ forum.content }}</div>
-                <div class="forum-timestamp">{{ forum.timestamp }}</div>
               </div>
               <div class="forum-box-content-subcontent">
                 <button
+                  *ngIf="!hasAlreadyLiked(forum)"
                   title="Like this post"
                   pButton
                   type="button"
                   icon="pi pi-thumbs-up"
                   class="p-button-raised p-button-rounded"
+                  (click)="changeLikes(forum)"
+                ></button>
+
+                <button
+                  *ngIf="hasAlreadyLiked(forum)"
+                  title="Unlike this post"
+                  pButton
+                  type="button"
+                  icon="pi pi-thumbs-down"
+                  class="p-button-raised p-button-rounded"
+                  (click)="changeLikes(forum)"
                 ></button>
 
                 <p-button
@@ -91,16 +90,16 @@
                 >
                 </p-button>
                 <p-button
-                  title="Edit forum details"
+                  title="Edit forum"
                   pButton
-                  class="p-button-raised p-button-rounded edit-button"
+                  class="p-button-raised p-button-rounded"
                   icon="pi pi-pencil"
+                  style = "margin-left: 0.7em;"
                   (onClick)="redirectToUpdate(forum)"
                 >
                 </p-button>
               </div>
             </div>
-            <div class="forum-box-action"></div>
           </div>
         </div>
       </div>
@@ -161,17 +160,93 @@
 
 <!-- This is dialog box to create new comment -->
 <p-dialog
+  class="view-forum-dialog"
+  *ngIf="display"
+  [modal]="true"
+  header="View Forum Details"
+  [(visible)]="display"
+  [style]="{ width: '50vw' }"
+>
+  <p-card
+    header="{{ forumToView.title }}"
+    subheader="{{ forumToView.author?.username }}"
+    [style]="{ width: '100%' }"
+    styleClass="p-card-shadow"
+  >
+    <ng-template pTemplate="header">
+      <img
+        *ngIf="forumToView.imageLink"
+        alt="forum image"
+        src="{{
+          'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
+            forumToView.imageLink
+        }}"
+      />
+      <img
+        *ngIf="!forumToView.imageLink"
+        alt="default forum image"
+        src="assets/images/forumDefault.png"
+      />
+    </ng-template>
+
+    <div style="overflow-wrap: break-word">
+      {{ forumToView.content }}
+    </div>
+    <ng-template pTemplate="footer">
+      <p-chip
+        label="{{ forumToView.userWhoLikes?.length }}"
+        icon="pi pi-thumbs-up"
+        style="padding-right: 1em"
+      ></p-chip>
+    </ng-template>
+  </p-card>
+  <p-panel header="Replies" [toggleable]="true">
+    <p-dataView [value]="forumToViewReplies">
+      <ng-template let-reply pTemplate="listItem">
+        <div class="reply-box">
+          <div class="reply-avatar">
+            <div class="avatar-only">
+              <p-avatar
+                label="{{ reply.author.username.charAt(0) }}"
+                size="large"
+                style="text-align: center"
+              ></p-avatar>
+            </div>
+            <p>{{ reply.author.username }}</p>
+          </div>
+          <div class="reply-content">
+            <p>{{ reply.content }}</p>
+            <br />
+            <div class="forum-timestamp">
+              Published on {{ reply.timestamp | date: "medium" }}
+            </div>
+          </div>
+        </div>
+        <br />
+      </ng-template>
+    </p-dataView>
+  </p-panel>
+</p-dialog>
+
+<p-dialog
   class="add-new-comment"
   *ngIf="createReplyDisplay"
   [modal]="true"
   header="Create new comment"
   [(visible)]="createReplyDisplay"
-  [style]="{ width: '50vw' }"
+  [style]="{ width: '40vw' }"
 >
   <p-toast></p-toast>
   <div class="reply-form-container">
     <div class="reply-profile">
-      <p-avatar label="P" shape="circle" size="large"></p-avatar>
+      <div class="member-bio" style = "margin-left: 1.2em;">
+        <p-avatar
+          label="{{ currentMember.charAt(0) }}"
+          shape="circle"
+          size="large"
+        ></p-avatar>
+        <br/>
+      </div>
       <div>{{ currentMember }}</div>
     </div>
     <form>

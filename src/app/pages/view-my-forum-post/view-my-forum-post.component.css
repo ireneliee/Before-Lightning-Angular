@@ -38,9 +38,21 @@
     margin-right: 0.5em;
 }
 
-.edit-button {
-    margin-left: 0.7em;
+
+.reply-form-container {
+    display: flex;
 }
+
+.reply-profile {
+    margin-top: 1em;
+    flex-basis: 15%;
+}
+
+.reply-action {
+    margin-top: 1em;
+    display: flex;
+}
+
 
 .reply-form-container {
     display: flex;
@@ -59,5 +71,19 @@
 .submit-button {
     margin-right: 1em;
 }
+
+.reply-box {
+    display: flex;
+}
+
+.reply-avatar {
+    flex-basis: 20%;
+    text-align: left;
+}
+
+.avatar-only {
+    margin-left: 1em;
+}
+
 
 
