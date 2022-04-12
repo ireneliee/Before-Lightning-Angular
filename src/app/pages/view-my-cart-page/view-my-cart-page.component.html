@@ -53,7 +53,7 @@
 	</ng-template>
 </p-dialog>
 
-<div *ngIf="loggedIn == true; else elseBlock2">
+<div *ngIf="loggedIn === true && listOfCreditCards.length > 0; else elseBlock2">
 	<p-dialog #parentDialog header="Confirm Checkout?" [(visible)]="displayCheckoutDialog" [style]="{ width: '60vw', height: '70vw' }" inputId="dialogCheckout">
 		<h5>Please select how you would like to receive your order:</h5>
 		<br />
@@ -89,14 +89,13 @@
 		<br />
 		<h5>Please Select Credit Card For Payment :</h5>
 		<br />
-		<p-dropdown [options]="listOfCreditCards" [(ngModel)]="selectedAddress" placeholder="Select a Credit Card" [showClear]="true"></p-dropdown>
+		<p-dropdown [options]="listOfCreditCards" [(ngModel)]="selectedCreditCard" placeholder="Select a Credit Card" [showClear]="true" optionLabel="creditCardNumber"></p-dropdown>
 		<div *ngIf="selectedCreditCard.nameOnCard != null">
 			<br />
-			<p-panel header="Selected Address: ">
-				<h5>Country: {{ selectedAddress.country }}</h5>
-				<h5>Unit: {{ selectedAddress.unit }}</h5>
-				<h5>Block: {{ selectedAddress.block }}</h5>
-				<h5>Postal Code: {{ selectedAddress.postalCode }}</h5>
+			<p-panel header="Selected Credit Card: ">
+				<h5>Name On Card: {{ selectedCreditCard.nameOnCard }}</h5>
+				<h5>Card Number: {{ selectedCreditCard.creditCardNumber }}</h5>
+				<h5>Expiry Date: {{ selectedCreditCard.expiryDate }}</h5>
 			</p-panel>
 		</div>
 
@@ -106,14 +105,27 @@
 	</p-dialog>
 </div>
 <ng-template #elseBlock2>
-	<p-dialog header="Hold on..." [(visible)]="displayCheckoutDialog" [style]="{ width: '30vw' }">
-		<h5>It seems that you do not have an account yet</h5>
-		<br />
-		<h5>Register for a free account with us to be able to Checkout!</h5>
+	<div *ngIf="loggedIn === false; else elseBlock3">
+		<p-dialog header="Hold on..." [(visible)]="displayCheckoutDialog" [style]="{ width: '30vw' }">
+			<h5>It seems that you do not have an account yet</h5>
+			<br />
+			<h5>Register for a free account with us to be able to Checkout!</h5>
 
-		<ng-template pTemplate="footer">
-			<p-button icon="pi pi-check" (click)="closeCheckoutDialog()" label="No Problem!" styleClass="p-button-text"></p-button>
-		</ng-template>
-	</p-dialog>
+			<ng-template pTemplate="footer">
+				<p-button icon="pi pi-check" (click)="closeCheckoutDialog()" label="No Problem!" styleClass="p-button-text"></p-button>
+			</ng-template>
+		</p-dialog>
+	</div>
+
+	<ng-template #elseBlock3>
+		<p-dialog header="Before you proceed..." [(visible)]="displayCheckoutDialog" [style]="{ width: '30vw' }">
+			<h5>Please ensure that you have a credit card in your account registered!</h5>
+			<br />
+			<h5>Proceed to Settings to add a credit card!</h5>
+			<ng-template pTemplate="footer">
+				<p-button icon="pi pi-check" (click)="closeCheckoutDialog()" label="No Problem!" styleClass="p-button-text"></p-button>
+			</ng-template>
+		</p-dialog>
+	</ng-template>
 </ng-template>
 <!-- need to check if got credit card in account -->

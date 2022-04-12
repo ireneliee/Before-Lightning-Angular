@@ -1,4 +1,5 @@
 export enum DeliveryStatusEnum {
-	INSTORE,
-	OUTSTORE,
+	OUTSTORE = "OUTSTORE",
+	INSTORE = "INSTORE",
+	COMPLETE = "COMPLETE",
 }

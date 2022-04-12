@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaderResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, Observable, throwError } from "rxjs";
+import { Address } from "../models/address";
 import { CreatePurchaseOrderReq } from "../models/create-purchase-order-req";
 import { DeliverySlot } from "../models/delivery-slot";
 import { FullPurchaseOrderEntity } from "../models/full-purchase-order";
@@ -25,15 +26,31 @@ export class PurchaseOrderService {
 		return this.httpClient.get<FullPurchaseOrderEntity[]>(this.baseUrl + "/retrievePurchaseOrderByUsername?username=" + this.sessionService.getUsername()).pipe(catchError(this.handleError));
 	}
 
-	createNewPurchaseOrder(listOfLineItems: PurchaseOrderLineItem[], deliverySlot : DeliverySlot): Observable<PurchaseOrderEntity> {
+	createNewPurchaseOrder(listOfLineItems: PurchaseOrderLineItem[], deliverySlot: DeliverySlot, address: Address, deliveryType: string, totalPrice: number): Observable<PurchaseOrderEntity> {
 		console.log("====== HERE IN PURCHASE ORDER SERVICE =====");
+		console.log(" ------- sending out data to service --------");
+		console.log(listOfLineItems);
+		console.log(deliverySlot);
+		console.log("delivery status " + deliverySlot.deliveryStatus);
+
+		console.log(address);
+		console.log(deliveryType);
+		console.log(totalPrice);
+		console.log("----------------------------------------------");
 		listOfLineItems.forEach((item) => {
 			item.purchaseOrderLineItemEntityId = undefined;
 		});
+		console.log("outside of deleting IDs in line items");
+
 		console.log(listOfLineItems);
 
-		let purchaseOrderReq : CreatePurchaseOrderReq = new CreatePurchaseOrderReq(listOfLineItems, deliverySlot, this.sessionService.getCurrentMember().username); 
-		return this.httpClient.put<PurchaseOrderEntity>(this.baseUrl + "/createNewPurchaseOrder?username=" + this.sessionService.getUsername(), purchaseOrderReq, httpOptions).pipe(catchError(this.handleError));
+		let purchaseOrderReq: CreatePurchaseOrderReq = new CreatePurchaseOrderReq(listOfLineItems,  this.sessionService.getCurrentMember().username, address, deliveryType, totalPrice);
+// deliverySlot,
+		console.log("CREATED PURCHASE ORDER REQUEST");
+
+		console.log(purchaseOrderReq);
+
+		return this.httpClient.put<any>(this.baseUrl + "/createNewPurchaseOrder", purchaseOrderReq, httpOptions).pipe(catchError(this.handleError));
 	}
 
 	private handleError(error: HttpErrorResponse) {

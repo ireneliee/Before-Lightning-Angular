@@ -5,9 +5,11 @@ import { AccessoryItem } from "src/app/models/accessory-item";
 import { Address } from "src/app/models/address";
 import { CreditCard } from "src/app/models/credit-card";
 import { DeliverySlot } from "src/app/models/delivery-slot";
+import { DeliveryStatusEnum } from "src/app/models/enum/delivery-status-enum";
 import { PurchaseOrderLineItemTypeEnum } from "src/app/models/enum/purchase-order-line-item-type-enum";
 import { Member } from "src/app/models/member";
 import { PartChoice } from "src/app/models/part-choice";
+import { PurchaseOrderEntity } from "src/app/models/purchase-order";
 import { PurchaseOrderLineItem } from "src/app/models/purchase-order-line-item";
 import { PurchaseOrderService } from "src/app/services/purchase-order.service";
 import { SessionService } from "src/app/services/session.service";
@@ -29,7 +31,7 @@ export class ViewMyCartPageComponent implements OnInit {
 	member: Member | null = null;
 
 	//for checking out
-	deliveryDate: Date | null = null;
+	deliveryDate: Date = new Date();
 	deliveryOptions = [
 		{ label: "Self-Collection", value: "Self-Collection" },
 		{ label: "Delivery", value: "Delivery" },
@@ -44,8 +46,8 @@ export class ViewMyCartPageComponent implements OnInit {
 	earliestNumberOfDays: number = 0;
 	listOfCreditCards: CreditCard[] = [];
 	listOfAddresses: Address[] = [];
-	selectedCreditCard: CreditCard = new CreditCard;
-	selectedAddress: Address = new Address;
+	selectedCreditCard: CreditCard = new CreditCard();
+	selectedAddress: Address = new Address();
 
 	constructor(private router: Router, private sessionService: SessionService, private messageService: MessageService, private purchaseOrderService: PurchaseOrderService) {}
 
@@ -63,6 +65,10 @@ export class ViewMyCartPageComponent implements OnInit {
 				this.totalPrice += lineItem.subTotalPrice;
 			});
 		}
+		this.deliveryDate.setDate(new Date().getDate() + 14);
+		this.deliveryDate.setHours(12);
+		this.deliveryDate.setMinutes(0);
+		this.deliveryDate.setSeconds(0);
 		this.loggedIn = this.sessionService.getIsLogin();
 		this.startDateToChoose.setHours(12);
 		this.startDateToChoose.setMinutes(0);
@@ -98,21 +104,46 @@ export class ViewMyCartPageComponent implements OnInit {
 	}
 
 	confirmCheckoutCart() {
+		console.log(" =========== IN VIEW CART COMPONENT ========");
+		console.log(" =========== TRIGGERED CONFIRM CHECKOUT ========");
+
 		let deliverySlot: DeliverySlot = new DeliverySlot();
+		if (this.selectedDeliveryMode == "Delivery") {
+			deliverySlot.deliveryStatus = DeliveryStatusEnum.OUTSTORE;
+		} else {
+			deliverySlot.deliveryStatus = DeliveryStatusEnum.INSTORE;
+		}
+		deliverySlot.requestedTimeOfDelivery = this.deliveryDate;
 
-		this.purchaseOrderService.createNewPurchaseOrder(this.myCart, deliverySlot).subscribe({
+		let confirmedAddress: Address = new Address();
+		if (this.selectedAddress.country !== null) {
+			confirmedAddress = this.selectedAddress;
+		}
+		let finalDeliveryType: string = "";
+		if (this.selectedDeliveryChoice === "Express") {
+			finalDeliveryType = this.selectedDeliveryChoice;
+		}
+		console.log(" ------- sending out data to service --------");
+		console.log(this.myCart);
+		console.log(deliverySlot);
+		console.log(confirmedAddress);
+		console.log(finalDeliveryType);
+		console.log(this.totalPrice);
+		console.log("----------------------------------------------");
+
+		this.purchaseOrderService.createNewPurchaseOrder(this.myCart, deliverySlot, confirmedAddress, finalDeliveryType, this.totalPrice).subscribe({
 			next: (response) => {
-				// let newMember: Member = response;
-				// this.resultSuccess = true;
-				// this.resultError = false;
-				// this.initializeState;
+				console.log(" ====== IN RESPONSE INSIDE VIEW CART COMPONENT =======");
 
-				// createNewMemberForm.resetForm();
-				// createNewMemberForm.reset();
+				let purchaseOrder: PurchaseOrderEntity = response;
+				console.log(purchaseOrder);
 
 				this.sessionService.setCart([]);
 				this.myCart = [];
 				this.totalPrice = 0;
+				this.selectedAddress = new Address();
+				this.selectedCreditCard = new CreditCard();
+
 				this.messageService.add({ severity: "success", summary: "Congratulations!", detail: "You have successfully checked out your order!" });
 			},
 			error: (error) => {
