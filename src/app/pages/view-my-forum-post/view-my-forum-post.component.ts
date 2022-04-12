@@ -7,6 +7,7 @@ import {MessageService, SelectItem} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
 import { NgForm } from '@angular/forms';
 import { Reply } from 'src/app/models/reply';
+import { FileUploadService } from 'src/app/services/file-upload.service';
 
 @Component({
   selector: 'app-view-my-forum-post',
@@ -24,7 +25,6 @@ export class ViewMyForumPostComponent implements OnInit {
   sortField: string;
   sortOrder: number;
   sortKey: string;
-  url: string;
 
   // attribute for create new reply
   currentMember: string;
@@ -34,13 +34,19 @@ export class ViewMyForumPostComponent implements OnInit {
   replySuccess: boolean;
   replyError: boolean;
 
+  //image retrieval
+  imageToShow: any;
+  isImageLoading: boolean;
+
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public sessionService: SessionService,
     private forumService: ForumService,
     private primengConfig: PrimeNGConfig,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private fileUploadService: FileUploadService
   ) {
     this.forumPosts = new Array();
     this.sortOptions = new Array();
@@ -50,7 +56,6 @@ export class ViewMyForumPostComponent implements OnInit {
     this.sortField = "";
     this.sortKey = "";
     this.sortOrder = 0;
-    this.url = "../../../../../../../../../../glassfish-5.1.0-uploadedfiles/uploadedFiles/"
 
     this.replyContent = "";
     this.sortOrder = 0;
@@ -59,6 +64,9 @@ export class ViewMyForumPostComponent implements OnInit {
     this.replySubmitted = false;
     this.replySuccess = false;
     this.replyError = false;
+
+    // image retrieval
+    this.isImageLoading = false;
   }
 
   testtest():void {
@@ -92,6 +100,21 @@ export class ViewMyForumPostComponent implements OnInit {
         this.sortOrder = 1;
         this.sortField = value;
     }
+  }
+
+  callRefreshList(event: any) {
+    this.refreshList();
+  }
+
+   refreshList(){
+    this.forumService.getMyForumPosts().subscribe({
+      next:(response) => {
+        this.forumPosts = response;
+      },
+      error: (error) => {
+        console.log("***********ForumPageComponent.ts: " + error);
+      }
+    });
 }
 
 // view forum post detailss
@@ -149,4 +172,32 @@ createNewReply() {
 
   }
 }
+// image retrieval
+
+getImageFromService() {
+  this.isImageLoading = true;
+  let yourImageUrl = this.forumToView.imageLink;
+  this.fileUploadService.getImage(yourImageUrl!).subscribe({
+    next:(response) => {
+      this.createImageFromBlob(response);
+      this.isImageLoading = false;
+    },
+     error: (error) => {
+      this.isImageLoading = false;
+      console.log(error);
+     }
+  });
+}
+createImageFromBlob(image: Blob) {
+  let reader = new FileReader();
+  reader.addEventListener("load", () => {
+     this.imageToShow = reader.result;
+  }, false);
+
+  if (image) {
+     reader.readAsDataURL(image);
+  }
+}
+
+
 }

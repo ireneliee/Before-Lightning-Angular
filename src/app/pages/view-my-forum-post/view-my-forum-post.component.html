@@ -48,7 +48,7 @@
         </span>
         <div class="extra-forum-function">
           <div class="create-forum-button">
-            <app-create-new-forum-post></app-create-new-forum-post>
+            <app-create-new-forum-post (signalToRefresh)="callRefreshList($event)"></app-create-new-forum-post>
           </div>
         </div>
       </div>
@@ -124,7 +124,8 @@
     styleClass="p-card-shadow"
   >
     <ng-template pTemplate="header">
-      <img alt="Card" src="assets/images/lake-canada.jpg" />
+      <img *ngIf = "forumToView.imageLink" alt="forum image" src="{{'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' + forumToView.imageLink}}" />
+      <img *ngIf = "!forumToView.imageLink" alt="default forum image" src="assets/images/forumDefault.png" />
     </ng-template>
     <div style="overflow-wrap: break-word">
       {{ forumToView.content }}

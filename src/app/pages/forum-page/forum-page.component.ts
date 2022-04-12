@@ -85,8 +85,27 @@ export class ForumPageComponent implements OnInit {
     this.primengConfig.ripple = true;
   }
 
+  callRefreshList(event: any) {
+    this.refreshList();
+  }
 
-  onSortChange(event: { value: any; }) {
+   refreshList() {
+    this.forumService.getMyForumPosts().subscribe({
+      next:(response) => {
+        this.forumPosts = response;
+      },
+      error: (error) => {
+        console.log("***********ForumPageComponent.ts: " + error);
+      }
+    });
+}
+
+callOnSortChange(event: any) {
+  this.onSortChange(event.value);
+}
+
+
+  onSortChange(event: any) {
     let value = event.value;
 
     if (value.indexOf('!') === 0) {

@@ -13,6 +13,10 @@
   >
     <ng-template pTemplate="header">
       <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+        <app-create-new-forum-post
+          (signalToRefresh)="callRefreshList($event)"
+        ></app-create-new-forum-post>
+        <br />
         <p-dropdown
           [options]="sortOptions"
           [(ngModel)]="sortKey"
@@ -20,7 +24,7 @@
           (onChange)="onSortChange($event)"
           styleClass="p-mb-2 p-mb-md-0"
         ></p-dropdown>
-        <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+        <!-- <span class="p-input-icon-left p-mb-2 p-mb-md-0">
           <i class="pi pi-search"></i>
           <input
             type="search"
@@ -28,8 +32,7 @@
             placeholder="Search by Name"
             (input)="dv.filter($any($event.target).value)"
           />
-        </span>
-        <app-create-new-forum-post></app-create-new-forum-post>
+        </span> -->
       </div>
     </ng-template>
 
@@ -41,8 +44,12 @@
             <div class="forum-box-content">
               <div class="forum-box-content-maincontent">
                 <span class="forum-title">{{ forum.title }}</span>
+                <p-divider></p-divider>
+                <div class="forum-timestamp">
+                  Published on {{ forum.timestamp | date: "medium" }}
+                </div>
+                <br />
                 <div class="forum-content">{{ forum.content }}</div>
-                <div class="forum-timestamp">{{ forum.timestamp }}</div>
               </div>
               <div class="forum-box-content-subcontent">
                 <button
@@ -59,7 +66,7 @@
                   icon="pi pi-comment"
                   class="p-button-raised p-button-rounded"
                   (onClick)="showCreateReplyDialog(forum)"
-                  style = "margin-right: 0.7em;"
+                  style="margin-right: 0.7em"
                 ></p-button>
                 <p-button
                   title="View forum details"
@@ -93,8 +100,21 @@
     styleClass="p-card-shadow"
   >
     <ng-template pTemplate="header">
-      <img alt="Card" src="assets/images/lake-canada.jpg" />
+      <img
+        *ngIf="forumToView.imageLink"
+        alt="forum image"
+        src="{{
+          'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
+            forumToView.imageLink
+        }}"
+      />
+      <img
+        *ngIf="!forumToView.imageLink"
+        alt="default forum image"
+        src="assets/images/forumDefault.png"
+      />
     </ng-template>
+    <p-divider></p-divider>
     <div style="overflow-wrap: break-word">
       {{ forumToView.content }}
     </div>
@@ -111,23 +131,16 @@
     </ng-template>
   </p-card>
   <p-panel header="Replies" [toggleable]="true">
-    <p-table [value]="forumToViewReplies">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Author</th>
-          <th>Content</th>
-        </tr>
+    <p-dataView [value]="forumToViewReplies">
+      <ng-template let-reply pTemplate="listItem">
+        
+          <p-avatar label="P" size="large"></p-avatar>
+          <p>{{ reply.author.username }}</p>
+          <p>{{ reply.content }}</p>
+          <p-divider></p-divider>
+        
       </ng-template>
-      <ng-template pTemplate="body" let-reply>
-        <tr>
-          <td>
-            <p-avatar label="P" size="large"></p-avatar>
-            <p>{{ reply.author.username }}</p>
-          </td>
-          <td>{{ reply.content }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
+    </p-dataView>
   </p-panel>
 </p-dialog>
 
@@ -138,11 +151,11 @@
   header="Create new comment"
   [(visible)]="createReplyDisplay"
   [style]="{ width: '50vw' }"
-> <p-toast></p-toast>
+>
+  <p-toast></p-toast>
   <div class="reply-form-container">
-    
     <div class="reply-profile">
-      <p-avatar label="P" shape="circle" size = "large"></p-avatar>
+      <p-avatar label="P" shape="circle" size="large"></p-avatar>
       <div>{{ currentMember }}</div>
     </div>
     <form>
@@ -156,23 +169,28 @@
             name="reply-text-area"
             [(ngModel)]="replyContent"
             pInputTextarea
-            style = "width: 180%;"
+            style="width: 180%"
           ></textarea>
           <label for="textarea">Write your comment here!</label>
         </span>
       </div>
       <div class="reply-action">
-        <div class = "submit-button">
-        <button icon = "pi pi-comment" (click) = "createNewReply()" pButton label="Post comment"></button>
+        <div class="submit-button">
+          <button
+            icon="pi pi-comment"
+            (click)="createNewReply()"
+            pButton
+            label="Post comment"
+          ></button>
+        </div>
+        <div class="clear-button">
+          <p-button
+            icon="pi pi-times"
+            (click)="clearReplyForm()"
+            label="Clear"
+          ></p-button>
+        </div>
       </div>
-      <div class = "clear-button">
-        <p-button
-          icon="pi pi-times"
-          (click)="clearReplyForm()"
-          label="Clear"
-        ></p-button>
-      </div>
-    </div>
     </form>
   </div>
 </p-dialog>

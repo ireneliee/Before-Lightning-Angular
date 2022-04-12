@@ -14,6 +14,7 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class FileUploadService {
+  imageToShow: any;
   baseUrl: string = '/api/uploadedFiles';
   constructor(private httpClient: HttpClient) {}
 
@@ -42,6 +43,7 @@ export class FileUploadService {
       .pipe(catchError(this.handleError));
   }
 
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = '';
 
@@ -56,4 +58,11 @@ export class FileUploadService {
 
     return throwError(() => new Error(errorMessage));
   }
+
+  // edit later
+  getImage(url: string): Observable<Blob> {
+    return this.httpClient.get('http://myip/image/'+url, {responseType: "blob"});
+}
+
+
 }
