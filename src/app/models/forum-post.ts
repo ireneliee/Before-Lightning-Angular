@@ -12,7 +12,6 @@ export class ForumPost {
 
 	replies: Reply[] | undefined;
 	userWhoLikes: Member[] | undefined;
-	userWhoDislikes: Member[] | undefined;
     author : Member | undefined;
 
 
@@ -30,7 +29,6 @@ export class ForumPost {
 		this.imageLink = imageLink;
 		this.replies = replies;
 		this.userWhoLikes = userWhoLikes;
-		this.userWhoDislikes = userWhoDislikes;
 
 	}
 }

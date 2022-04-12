@@ -49,6 +49,21 @@ export class ForumService {
       catchError(this.handleError)
     )
   }
+
+  changeLikes(forumId: string): Observable<number> {
+    let username = this.sessionService.getUsername();
+    return this.httpClient.get<number>(this.baseUrl + "/changeLikes?postId=" + forumId + "&username=" + username).pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  checkUserLikes(forumId: string): Observable<boolean> {
+    let username = this.sessionService.getUsername();
+    return this.httpClient.get<boolean>(this.baseUrl + "/checkUserLikes?postId=" + forumId + "&username=" + username).pipe(
+      catchError(this.handleError)
+    )
+  }
+
   createNewForum(title: string, content: string, filename: string): Observable<number> {
     console.log(this.sessionService.getUsername())
     return this.httpClient.get<number>(this.baseUrl + "/createNewForum/?username=" + this.sessionService.getUsername()

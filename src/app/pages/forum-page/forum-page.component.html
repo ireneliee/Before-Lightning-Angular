@@ -53,12 +53,25 @@
               </div>
               <div class="forum-box-content-subcontent">
                 <button
+                  *ngIf = "!hasAlreadyLiked(forum)"
                   title="Like this post"
                   pButton
                   type="button"
                   icon="pi pi-thumbs-up"
                   class="p-button-raised p-button-rounded"
+                  (click)="changeLikes(forum)"
                 ></button>
+
+                <button
+                  *ngIf = "hasAlreadyLiked(forum)"
+                  title="Unlike this post"
+                  pButton
+                  type="button"
+                  icon="pi pi-thumbs-down"
+                  class="p-button-raised p-button-rounded"
+                  (click)="changeLikes(forum)"
+                ></button>
+                
                 <p-button
                   title="Comment on this post"
                   pButton
