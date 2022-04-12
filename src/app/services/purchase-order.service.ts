@@ -1,8 +1,11 @@
 import { HttpClient, HttpErrorResponse, HttpHeaderResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, Observable, throwError } from "rxjs";
+import { CreatePurchaseOrderReq } from "../models/create-purchase-order-req";
+import { DeliverySlot } from "../models/delivery-slot";
 import { FullPurchaseOrderEntity } from "../models/full-purchase-order";
 import { PurchaseOrderEntity } from "../models/purchase-order";
+import { PurchaseOrderLineItem } from "../models/purchase-order-line-item";
 import { SessionService } from "./session.service";
 
 const httpOptions = {
@@ -17,14 +20,22 @@ export class PurchaseOrderService {
 
 	constructor(private httpClient: HttpClient, private sessionService: SessionService) {}
 
-    getMyPurchaseOrder():Observable<FullPurchaseOrderEntity[]> {
+	getMyPurchaseOrder(): Observable<FullPurchaseOrderEntity[]> {
 		console.log(this.sessionService.getUsername());
-        return this.httpClient.get<FullPurchaseOrderEntity[]>(this.baseUrl + "/retrievePurchaseOrderByUsername?username=" + this.sessionService.getUsername()).pipe(
-          catchError(this.handleError)
-        )
-      }
+		return this.httpClient.get<FullPurchaseOrderEntity[]>(this.baseUrl + "/retrievePurchaseOrderByUsername?username=" + this.sessionService.getUsername()).pipe(catchError(this.handleError));
+	}
 
-    
+	createNewPurchaseOrder(listOfLineItems: PurchaseOrderLineItem[], deliverySlot : DeliverySlot): Observable<PurchaseOrderEntity> {
+		console.log("====== HERE IN PURCHASE ORDER SERVICE =====");
+		listOfLineItems.forEach((item) => {
+			item.purchaseOrderLineItemEntityId = undefined;
+		});
+		console.log(listOfLineItems);
+
+		let purchaseOrderReq : CreatePurchaseOrderReq = new CreatePurchaseOrderReq(listOfLineItems, deliverySlot, this.sessionService.getCurrentMember().username); 
+		return this.httpClient.put<PurchaseOrderEntity>(this.baseUrl + "/createNewPurchaseOrder?username=" + this.sessionService.getUsername(), purchaseOrderReq, httpOptions).pipe(catchError(this.handleError));
+	}
+
 	private handleError(error: HttpErrorResponse) {
 		let errorMessage: string = "";
 		if (error.error instanceof ErrorEvent) {

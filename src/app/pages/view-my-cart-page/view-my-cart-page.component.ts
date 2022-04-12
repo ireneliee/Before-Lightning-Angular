@@ -2,9 +2,14 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { MessageService } from "primeng/api";
 import { AccessoryItem } from "src/app/models/accessory-item";
+import { Address } from "src/app/models/address";
+import { CreditCard } from "src/app/models/credit-card";
+import { DeliverySlot } from "src/app/models/delivery-slot";
 import { PurchaseOrderLineItemTypeEnum } from "src/app/models/enum/purchase-order-line-item-type-enum";
+import { Member } from "src/app/models/member";
 import { PartChoice } from "src/app/models/part-choice";
 import { PurchaseOrderLineItem } from "src/app/models/purchase-order-line-item";
+import { PurchaseOrderService } from "src/app/services/purchase-order.service";
 import { SessionService } from "src/app/services/session.service";
 
 @Component({
@@ -19,11 +24,34 @@ export class ViewMyCartPageComponent implements OnInit {
 	selectedLineItem: PurchaseOrderLineItem | null = null;
 	selectedQuantity: number = 0;
 	selectedQuantityOnHand: number = 0;
+	displayCheckoutDialog: boolean = false;
+	loggedIn: boolean = false;
+	member: Member | null = null;
 
-	constructor(private router: Router, private sessionService: SessionService, private messageService: MessageService) {}
+	//for checking out
+	deliveryDate: Date | null = null;
+	deliveryOptions = [
+		{ label: "Self-Collection", value: "Self-Collection" },
+		{ label: "Delivery", value: "Delivery" },
+	];
+	deliveryChoices = [
+		{ label: "Standard", value: "Standard" },
+		{ label: "Express (+$10)", value: "Express" },
+	];
+	selectedDeliveryMode: string = "";
+	selectedDeliveryChoice: string = "";
+	startDateToChoose: Date = new Date();
+	earliestNumberOfDays: number = 0;
+	listOfCreditCards: CreditCard[] = [];
+	listOfAddresses: Address[] = [];
+	selectedCreditCard: CreditCard = new CreditCard;
+	selectedAddress: Address = new Address;
+
+	constructor(private router: Router, private sessionService: SessionService, private messageService: MessageService, private purchaseOrderService: PurchaseOrderService) {}
 
 	ngOnInit(): void {
 		this.checkAccessRight();
+		this.member = this.sessionService.getCurrentMember();
 		let cart: PurchaseOrderLineItem[] | undefined = this.sessionService.getCart();
 		if (cart) {
 			this.myCart = cart;
@@ -35,6 +63,14 @@ export class ViewMyCartPageComponent implements OnInit {
 				this.totalPrice += lineItem.subTotalPrice;
 			});
 		}
+		this.loggedIn = this.sessionService.getIsLogin();
+		this.startDateToChoose.setHours(12);
+		this.startDateToChoose.setMinutes(0);
+		this.startDateToChoose.setSeconds(0);
+		if (this.member.creditCards != undefined) {
+			this.listOfCreditCards = this.member.creditCards!;
+		}
+		this.listOfAddresses = this.member.addresses!;
 	}
 
 	checkItemPriceAndQuantity(lineitem: PurchaseOrderLineItem) {
@@ -43,7 +79,54 @@ export class ViewMyCartPageComponent implements OnInit {
 		//need to check if quantity still there?
 	}
 
-	checkoutCart() {}
+	checkoutCart() {
+		this.displayCheckoutDialog = true;
+	}
+
+	setEarliestNumberOfDays() {
+		if (this.selectedDeliveryChoice == "Express") {
+			this.earliestNumberOfDays = 7;
+		} else {
+			this.earliestNumberOfDays = 14;
+		}
+		this.startDateToChoose.setDate(new Date().getDate() + this.earliestNumberOfDays);
+		this.startDateToChoose.setHours(12);
+		this.startDateToChoose.setMinutes(0);
+		this.startDateToChoose.setSeconds(0);
+
+		console.log("EARLIEST DATE:" + this.startDateToChoose);
+	}
+
+	confirmCheckoutCart() {
+		let deliverySlot: DeliverySlot = new DeliverySlot();
+
+		this.purchaseOrderService.createNewPurchaseOrder(this.myCart, deliverySlot).subscribe({
+			next: (response) => {
+				// let newMember: Member = response;
+				// this.resultSuccess = true;
+				// this.resultError = false;
+				// this.initializeState;
+
+				// createNewMemberForm.resetForm();
+				// createNewMemberForm.reset();
+
+				this.sessionService.setCart([]);
+				this.myCart = [];
+				this.totalPrice = 0;
+				this.messageService.add({ severity: "success", summary: "Congratulations!", detail: "You have successfully checked out your order!" });
+			},
+			error: (error) => {
+				this.messageService.add({ severity: "error", summary: "Service Message", detail: "Error occured when creating purchase order" });
+				console.log("********** VIEW MY CART.ts: " + error);
+			},
+		});
+
+		this.displayCheckoutDialog = false;
+	}
+
+	closeCheckoutDialog() {
+		this.displayCheckoutDialog = false;
+	}
 
 	updateLineItem(lineItem: PurchaseOrderLineItem) {
 		this.selectedLineItem = lineItem;
@@ -206,6 +289,15 @@ export class ViewMyCartPageComponent implements OnInit {
 			return accessoryItem.price!;
 		}
 	}
+
+	// getParsedAddress(address : Address) : string {
+	// 	let str = "";
+	// 	str += address.block + "\n";
+	// 	str += address.postalCode + "\n";
+	// 	str += address.unit + "\n";
+	// 	str += address.country;
+	// 	return str;
+	// }
 
 	checkAccessRight() {
 		if (!this.sessionService.checkAccessRight(this.router.url)) {

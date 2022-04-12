@@ -1,3 +1,160 @@
 <app-breadcrumb pageName="Settings"></app-breadcrumb>
 
 <p>settings-page works!</p>
+
+<p>{{currMember.firstname}}</p>
+<p>{{currMember.lastname}}</p>
+<p>{{currMember.contact}}</p>
+<p>{{currMember.email}}</p>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>
+                Address ID
+            </th>
+            <th>Address block</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let add of addList">
+            <td>{{add.addressEntityId}}</td>
+            <td>{{add.block}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>
+                Card num
+            </th>
+            <th>Card exp date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let card of cardList">
+            <td>{{card.creditCardNumber}}</td>
+            <td>{{card.expiryDate}}</td>
+        </tr>
+    </tbody>
+</table>
+<p-messages></p-messages>
+<p-button
+  (click)="showUpdateMemberDetailDialog()"
+  icon="pi pi-plus"
+  label="Update member details"
+></p-button>
+<form #updateMemberDetails="ngForm" (ngSubmit)="updateMember()">
+
+<p-dialog
+  class="update-member-dialog"
+  *ngIf="createUpdateDisplay"
+  [modal]="true"
+  header="Update memeber details"
+  [(visible)]="createUpdateDisplay"
+  [style]="{ width: '50vw' }"
+>
+<p-toast></p-toast>
+    <div class="member-firstname-entry">
+      <h5>First Name</h5>
+      <br />
+      <input name="member-firstname" type="text" pInputText [(ngModel)]="memberToUpdate.firstname" style = "width: 100%;" />
+<br/>
+    <h5>Last Name</h5>
+    <br />
+    <input name="member-lastname" type="text" pInputText [(ngModel)]="memberToUpdate.lastname" style = "width: 100%;" />
+
+    <br/>
+    <h5>Email</h5>
+    <br />
+    <input name="member-email" type="text" pInputText [(ngModel)]="memberToUpdate.email" style = "width: 100%;" />
+    <br/>
+    <h5>Contact Number</h5>
+    <br />
+    <input name="member-contact" type="text" pInputText [(ngModel)]="memberToUpdate.contact" style = "width: 100%;" />
+    <button pButton type="submit" label="Update Member"></button>
+
+  </div>
+</p-dialog>
+</form>
+ 
+<!-- create new address  -->
+
+<p-button
+  (click)="showCreateNewAddressDialog()"
+  icon="pi pi-plus"
+  label="Create new address"
+></p-button>
+<form #createNewAddress="ngForm" (ngSubmit)="createAddress()">
+
+<p-dialog
+  class="create-address-dialog"
+  *ngIf="createNewAddressDisplay"
+  [modal]="true"
+  header="Create New Address"
+  [(visible)]="createNewAddressDisplay"
+  [style]="{ width: '50vw' }"
+>
+<p-toast></p-toast>
+    <div class="address-block-entry">
+      <h5>Block number</h5>
+      <br />
+      <input name="address-block" type="text" pInputText [(ngModel)]="newAddress.block" style = "width: 100%;" />
+<br/>
+    <h5>Unit Number</h5>
+    <br />
+    <input name="address-unit" type="text" pInputText [(ngModel)]="newAddress.unit" style = "width: 100%;" />
+
+    <br/>
+    <h5>Postal Code</h5>
+    <br />
+    <input name="address-postalCode" type="text" pInputText [(ngModel)]="newAddress.postalCode" style = "width: 100%;" />
+    <br/>
+    <h5>Country</h5>
+    <br />
+    <input name="address-country" type="text" pInputText [(ngModel)]="newAddress.country" style = "width: 100%;" />
+    <button pButton type="submit" label="Create New Address"></button>
+
+  </div>
+</p-dialog>
+</form>
+<!-- create credit card -->
+<p-button
+  (click)="showCreateNewCreditCardDialog()"
+  icon="pi pi-plus"
+  label="Create New Credit Card"
+></p-button>
+<form #createNewAddress="ngForm" (ngSubmit)="createCreditCard()">
+
+<p-dialog
+  class="create-address-dialog"
+  *ngIf="createNewCreditCardDisplay"
+  [modal]="true"
+  header="Create New Address"
+  [(visible)]="createNewCreditCardDisplay"
+  [style]="{ width: '50vw' }"
+>
+<p-toast></p-toast>
+    <div class="creditcard-number-entry">
+      <h5>Credit card number</h5>
+      <br />
+      <input name="creditcard-number" type="number" pInputText [(ngModel)]="newCreditCard.creditCardNumber" style = "width: 100%;" />
+   <br/>
+    <h5>Name on card</h5>
+    <br />
+    <input name="creditcard-name" type="text" pInputText [(ngModel)]="newCreditCard.nameOnCard" style = "width: 100%;" />
+
+    <br/>
+    <h5>Expiration Date</h5>
+    <br />
+    <input name="creditcard-date" type="text" pInputText [(ngModel)]="newCreditCard.expiryDate" style = "width: 100%;" />
+    <br/>
+    <button pButton type="submit" label="Create New Credit Card"></button>
+
+    </div>
+</p-dialog>
+</form>
+
+

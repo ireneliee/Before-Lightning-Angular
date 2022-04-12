@@ -6,7 +6,7 @@
 		<ng-template pTemplate="caption">
 			<div class="p-d-flex p-ai-center p-jc-between">
 				View My Cart
-				<p-button icon="pi pi-shopping-cart" label="Check Out" style="padding-left: 70%"></p-button>
+				<p-button icon="pi pi-shopping-cart" label="Check Out" style="padding-left: 70%" (click)="checkoutCart()"></p-button>
 			</div>
 		</ng-template>
 		<ng-template pTemplate="header">
@@ -52,3 +52,68 @@
 		<p-button icon="pi pi-check" (click)="confirmUpdate()" label="Confirm" styleClass="p-button-text"></p-button>
 	</ng-template>
 </p-dialog>
+
+<div *ngIf="loggedIn == true; else elseBlock2">
+	<p-dialog #parentDialog header="Confirm Checkout?" [(visible)]="displayCheckoutDialog" [style]="{ width: '60vw', height: '70vw' }" inputId="dialogCheckout">
+		<h5>Please select how you would like to receive your order:</h5>
+		<br />
+		<p-selectButton [options]="deliveryOptions" [(ngModel)]="selectedDeliveryMode" optionLabel="label" optionValue="value"></p-selectButton>
+
+		<div *ngIf="selectedDeliveryMode == 'Delivery'">
+			<br />
+			<br />
+			<h5>Please Select Your Delivery Choice :</h5>
+			<br />
+			<p-selectButton (onChange)="setEarliestNumberOfDays()" [options]="deliveryChoices" [(ngModel)]="selectedDeliveryChoice" optionLabel="label" optionValue="value"></p-selectButton>
+			<br />
+			<br />
+			<h5>Please Select Your Address For Delivery :</h5>
+			<br />
+			<p-dropdown [options]="listOfAddresses" [(ngModel)]="selectedAddress" placeholder="Select an Address" [showClear]="true" optionLabel="postalCode"></p-dropdown>
+			<div *ngIf="selectedAddress.country != null">
+				<p-panel header="Selected Address: ">
+					<br />
+					<h5>Country: {{ selectedAddress.country }}</h5>
+					<h5>Unit: {{ selectedAddress.unit }}</h5>
+					<h5>Block: {{ selectedAddress.block }}</h5>
+					<h5>Postal Code: {{ selectedAddress.postalCode }}</h5>
+				</p-panel>
+			</div>
+		</div>
+		<br />
+		<br />
+		<h5>Please Select Your Date of Collection/Delivery :</h5>
+		<br />
+		<p-calendar [(ngModel)]="deliveryDate" [showTime]="true" [stepHour]="2" [stepMinute]="0" [minDate]="startDateToChoose" [defaultDate]="startDateToChoose" inputId="time" [appendTo]="parentDialog"></p-calendar>
+		<br />
+		<br />
+		<h5>Please Select Credit Card For Payment :</h5>
+		<br />
+		<p-dropdown [options]="listOfCreditCards" [(ngModel)]="selectedAddress" placeholder="Select a Credit Card" [showClear]="true"></p-dropdown>
+		<div *ngIf="selectedCreditCard.nameOnCard != null">
+			<br />
+			<p-panel header="Selected Address: ">
+				<h5>Country: {{ selectedAddress.country }}</h5>
+				<h5>Unit: {{ selectedAddress.unit }}</h5>
+				<h5>Block: {{ selectedAddress.block }}</h5>
+				<h5>Postal Code: {{ selectedAddress.postalCode }}</h5>
+			</p-panel>
+		</div>
+
+		<ng-template pTemplate="footer">
+			<p-button icon="pi pi-check" (click)="confirmCheckoutCart()" label="Checkout Now!" styleClass="p-button-text"></p-button>
+		</ng-template>
+	</p-dialog>
+</div>
+<ng-template #elseBlock2>
+	<p-dialog header="Hold on..." [(visible)]="displayCheckoutDialog" [style]="{ width: '30vw' }">
+		<h5>It seems that you do not have an account yet</h5>
+		<br />
+		<h5>Register for a free account with us to be able to Checkout!</h5>
+
+		<ng-template pTemplate="footer">
+			<p-button icon="pi pi-check" (click)="closeCheckoutDialog()" label="No Problem!" styleClass="p-button-text"></p-button>
+		</ng-template>
+	</p-dialog>
+</ng-template>
+<!-- need to check if got credit card in account -->

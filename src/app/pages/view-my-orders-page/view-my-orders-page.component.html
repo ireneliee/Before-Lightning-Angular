@@ -1,4 +1,5 @@
 <app-breadcrumb pageName="View My Orders"></app-breadcrumb>
+<p-messages></p-messages>
 <p-carousel
   [value]="listOfPurchaseOrder"
   [numVisible]="3"
@@ -18,7 +19,7 @@
         </h4>
         <br />
         <h6 style="text-align: center">
-          Timestamp: {{ purchaseOrder.dateCreated }}
+          Timestamp: {{ purchaseOrder.dateCreated | date: "medium" }}
         </h6>
         <br />
         <div class="status-badges">
@@ -71,7 +72,7 @@
             type="button"
             styleClass="p-button p-button-rounded"
             icon="pi pi-comments"
-            (onClick)="showForumPostDialog()"
+            (onClick)="showForumPostDialog(purchaseOrder)"
           ></p-button>
         </div>
       </p-card>
@@ -83,13 +84,16 @@
   class="view-order-dialog"
   *ngIf="viewOrderDisplay"
   [modal]="true"
+  [maximizable]="true"
   header="View Purchase Order Details"
   [(visible)]="viewOrderDisplay"
-  [style]="{ width: '50vw' }"
+  [style]="{ width: '70vw' }"
 >
   <p-card
     header="Reference number: {{ purchaseOrderToView.referenceNumber }}"
-    subheader="Timestamp: {{ purchaseOrderToView.dateCreated }}"
+    subheader="Timestamp: {{
+      purchaseOrderToView.dateCreated | date: 'medium'
+    }}"
     [style]="{ width: '100%' }"
     styleClass="p-card-shadow"
   >
@@ -130,17 +134,20 @@
       ></p-badge>
     </p>
     <br />
-    <p>Total spending: ${{ purchaseOrderToView.totalPrice }}</p>
+    <p>Total spending: ${{ purchaseOrderToView.totalPrice | number: ".2" }}</p>
     <!-- <p> Status: <p-badge value="{{purchaseOrderToView.purchaseOrderStatus}}" severity = "success"></p-badge></p>   -->
     <p>List of items:</p>
     <br />
 
-    <p-table [value]="purchaseOrderLineItemToView">
+    <p-table
+      *ngIf="atLeastOneAcc(purchaseOrderToView)"
+      [value]="purchaseOrderLineItemToView"
+    >
       <ng-template pTemplate="header">
         <tr>
           <th>Serial number</th>
           <th>Accessory</th>
-          <th>quantity</th>
+          <th>Quantity</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-pol>
@@ -155,13 +162,16 @@
     </p-table>
 
     <br />
-    <p-table [value]="purchaseOrderLineItemToView">
+    <p-table
+      [value]="purchaseOrderLineItemToView"
+      *ngIf="atLeastOneBuild(purchaseOrderToView)"
+    >
       <ng-template pTemplate="header">
         <tr>
           <th>Serial number</th>
           <th>Product</th>
           <th>Part choices</th>
-          <th>quantity</th>
+          <th>Quantity</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-pol>
@@ -186,7 +196,7 @@
     </p-table>
   </p-card>
   <br />
-  <p>Any complaints regarding your product? Write to us now!</p>
+  <!-- <p>Any complaints regarding your product? Write to us now!</p>
   <br />
   <p-button
     class="action-button"
@@ -194,6 +204,7 @@
     styleClass="p-button p-mr-2"
     label="Create a support ticket"
     icon="pi pi-ticket"
+    (onClick) = "showForumPostDialog(purchaseOrderToView)"
   ></p-button>
   <br />
   <br />
@@ -205,8 +216,8 @@
     styleClass="p-button pp-mr-2"
     icon="pi pi-comments"
     label="Write review"
-    (onClick)="showForumPostDialog()"
-  ></p-button>
+    (onClick)="showForumPostDialog(purchaseOrderToReview)"
+  ></p-button> -->
 </p-dialog>
 
 <p-dialog
@@ -237,82 +248,222 @@
       class="action-button"
       type="button"
       label="Create a new review"
+      (onClick)="showCreateReviewDialog(purchaseOrderToReview)"
+      *ngIf = "isComplete(purchaseOrderToReview) || isRefunded(purchaseOrderToReview)"
+    ></p-button>
+
+    <p-button
+      class="action-button"
+      type="button"
+      [disabled]="true"
+      pTooltip="You can only review a product once the order is completed"
+      label="Create a new review"
+      (onClick)="showCreateReviewDialog(purchaseOrderToReview)"
+      *ngIf = "!isComplete(purchaseOrderToReview) && !isRefunded(purchaseOrderToReview)"
     ></p-button>
   </p-card>
 </p-dialog>
 
-<!-- <div class="card">
-	<h5>How is your build request processed?</h5>
-	<p-timeline [value]="events1" styleClass="customized-timeline">
-		<ng-template pTemplate="marker" let-event>
-			<span class="custom-marker p-shadow-2" [style.backgroundColor]="event.color">
-                <i [ngClass]="event.icon"></i>
-            </span>
-		</ng-template>
-		<ng-template pTemplate="content" let-event>
-			<p-card [header]="event.status">
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error
-					repudiandae numquam deserunt
-					quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate
-					neque quas!</p>
-				<button pButton label="Read more" class="p-button-text"></button>
-			</p-card>
-		</ng-template>
-	</p-timeline>
-</div> -->
+<p-dialog
+  header="Review for purchase order: {{
+    purchaseOrderToReview.referenceNumber
+  }}"
+  class="submit-forum-dialog"
+  *ngIf="createReviewDisplay"
+  [modal]="true"
+  [(visible)]="createReviewDisplay"
+  [maximizable]="true"
+  [style]="{ width: '70vw' }"
+>
 
-<!-- <div class="card">
-    <p-dataView
-    #dv
-    [value]="listOfPurchaseOrder"
-    [paginator]="true"
-    [rows]="9"
-    filterBy="name"
-    [sortField]="sortField"
-    [sortOrder]="sortOrder"
-    layout="grid"
+<p-divider></p-divider>
+  <p-card>
+    <p-messages></p-messages>
+    <p>Choose item that you want to review in the purchase order:</p>
+    <br />
+    <div class="product-acc-button">
+      <p-button
+        type="button"
+        styleClass="p-button p-button-rounded"
+        class="laptop-button"
+        icon="pi pi-desktop"
+        label="Customizable laptop"
+        (onClick)="chooseProduct()"
+      ></p-button>
+      <p-button
+        type="button"
+        styleClass="p-button p-button-rounded"
+        class="accessory-item-button"
+        icon="pi pi-mobile"
+        label="Accessory item"
+        (onClick)="chooseAccessory()"
+      ></p-button>
+    </div>
+  </p-card>
+  <br />
+
+  <form
+    *ngIf="chooseProd"
+    #productReviewForm="ngForm"
+    (ngSubmit)="createNewReviewForProduct(productReviewForm)"
   >
-    <ng-template pTemplate="header">
-      <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
-        <p-dropdown
-          [options]="sortOptions"
-          [(ngModel)]="sortKey"
-          placeholder="Sort By Date"
-          (onChange)="onSortChange($event)"
-          styleClass="p-mb-2 p-mb-md-0"
-        ></p-dropdown>
-        <span class="p-input-icon-left p-mb-2 p-mb-md-0">
-          <i class="pi pi-search"></i>
-          <input
-            type="search"
-            pInputText
-            placeholder="Search by Name"
-            (input)="dv.filter($any($event.target).value)"
-          />
-        </span>
-        <div class="extra-forum-function">
-          <div class="create-forum-button">
-          </div>
-        </div>
-      </div>
-    </ng-template>
+    <div class="product-listbox">
+      <p-listbox
+        [options]="productChoices"
+        [(ngModel)]="prodId"
+        id="inputProductId"
+        name="productId"
+        #inputProductId="ngModel"
+        [(ngModel)]="prodId"
+        required="true"
+        optionLabel="productName"
+        optionValue="productEntityId"
+      >
+        <ng-template pTemplate="header">
+          Choose the product you want to review
+        </ng-template>
+      </p-listbox>
+    </div>
+    <br />
 
-    <ng-template let-purchaseOrder pTemplate="gridItem">
-      <div class="p-col-12 p-md-4">
-        <div class="product-grid-item card">
-          <div class="product-grid-item">
-            <div class="po-content">
-              <div class="po-maincontent">
-                <span class="po-number">Your reference number: {{ purchaseOrder.referenceNumber }}</span>
-                <div class="po-timestamp">Purchase order timestamp: {{ purchaseOrder.dateCreated }}</div>
-                <div class="po-price">Total payment: SGD{{ purchaseOrder.totalPrice }}</div>
-              </div>
-            </div>
-            <div class="po-action"></div>
-          </div>
-          <p-divider></p-divider>
-        </div>
+    <!-- <span class="p-float-label">
+      <div *ngIf="chooseProd" class="acc-listbox">
+        <p-listbox
+          [options]="accessoryChoices"
+          [(ngModel)]="accId"
+          id="inputAccId"
+          name="accId"
+          type="number"
+          pInputText
+          #inputAccId="ngModel"
+          [(ngModel)]="accId"
+          required="true"
+          optionLabel="accessoryItemName"
+          optionValue="accessoryItemEntityId"
+        >
+          <ng-template pTemplate="header">
+            Choose the product you want to review
+          </ng-template>
+        </p-listbox>
       </div>
-    </ng-template>
-  </p-dataView>
-</div> -->
+      <label for="inputAccId">Choose the product you want to review</label>
+    </span> -->
+    <p-card *ngIf="prodId != 0">
+      <div class="rating-review-box">
+        <h4 for="inputRating">Choose the rating of the product</h4>
+        <br />
+        <p-rating
+          id="inputRating"
+          name="rating"
+          type="number"
+          [(ngModel)]="rating"
+          required="true"
+          #inputinputRating="ngModel"
+        ></p-rating>
+
+        <br />
+        <br />
+        <h4 for="inputDesc">What do you like / dislike from our product?</h4>
+        <br />
+        <textarea
+          style="width: 100%"
+          id="inputDesc"
+          name="description"
+          type="text"
+          [(ngModel)]="description"
+          required="false"
+          #inputDesc="ngModel"
+          pInputTextarea
+        ></textarea>
+      </div>
+    </p-card>
+
+    <!-- <button
+      *ngIf="chooseAcc"
+      (click)="createNewReviewForAccessory()"
+      pButton
+      type="submit"
+      label="Create new review"
+    ></button> -->
+    <br/>
+    <br/>
+    <div class="form-action-button">
+      <button
+        type="submit"
+        class = "submit-button"
+        pButton
+        type="submit"
+        label="Create new review"
+        icon=" pi pi-thumbs-up"
+      ></button>
+      <p-button class = "clear-button" icon="pi pi-times" (click)="clear()" label="Clear"></p-button>
+    </div>
+  </form>
+
+  <form
+    *ngIf="chooseAcc"
+    #accessoryReviewForm="ngForm"
+    (ngSubmit)="createNewReviewForAccessory(accessoryReviewForm)"
+  >
+    <div class="acc-listbox">
+      <p-listbox
+        [options]="accessoryChoices"
+        [(ngModel)]="accId"
+        id="inputAccId"
+        name="accId"
+        #inputAccId="ngModel"
+        [(ngModel)]="accId"
+        required="true"
+        optionLabel="accessoryItemName"
+        optionValue="accessoryItemEntityId"
+      >
+        <ng-template pTemplate="header">
+          Choose the product you want to review
+        </ng-template>
+      </p-listbox>
+    </div>
+    <br />
+    <p-card *ngIf="accId != 0">
+      <div class="rating-review-box">
+        <h4 for="inputRating">Choose the rating of the product</h4>
+        <br />
+        <p-rating
+          id="inputRating"
+          name="rating"
+          type="number"
+          [(ngModel)]="rating"
+          required="true"
+          #inputinputRating="ngModel"
+        ></p-rating>
+
+        <br />
+        <br />
+        <h4 for="inputDesc">What do you like / dislike from our product?</h4>
+        <br />
+        <textarea
+          style="width: 100%"
+          id="inputDesc"
+          name="description"
+          type="text"
+          [(ngModel)]="description"
+          required="false"
+          #inputDesc="ngModel"
+          pInputTextarea
+        ></textarea>
+      </div>
+    </p-card>
+    <br/>
+    <br/>
+    <div class="form-action-button">
+      <button
+        type="submit"
+        class = "submit-button"
+        pButton
+        type="submit"
+        label="Create new review"
+        icon=" pi pi-thumbs-up"
+      ></button>
+      <p-button class = "clear-button" icon="pi pi-times" (click)="clear()" label="Clear"></p-button>
+    </div>
+  </form>
+</p-dialog>

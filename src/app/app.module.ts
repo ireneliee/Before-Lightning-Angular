@@ -33,6 +33,7 @@ import { InputTextareaModule } from "primeng/inputtextarea";
 import { MessageService } from "primeng/api";
 import { AvatarModule } from "primeng/avatar";
 import { InputNumberModule } from "primeng/inputnumber";
+import { CalendarModule } from "primeng/calendar";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -63,8 +64,11 @@ import { UploadFileComponent } from "./components/upload-file/upload-file.compon
 import { CarouselModule } from "primeng/carousel";
 import { BadgeModule } from "primeng/badge";
 import {TimelineModule} from 'primeng/timeline';
+import {ListboxModule} from 'primeng/listbox';
+import { SidebarComponent } from './pages/sidebar/sidebar.component';
 import { ViewAllAccessoryItemsPageComponent } from "./pages/accessoryOperations/view-all-accessory-items-page/view-all-accessory-items-page.component";
 import { CreateNewSupportTicketComponent } from './pages/create-new-support-ticket/create-new-support-ticket.component';
+
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -89,7 +93,9 @@ import { CreateNewSupportTicketComponent } from './pages/create-new-support-tick
 		CustomizeProductsPageComponent,
 		UploadFileComponent,
 		ViewAllAccessoryItemsPageComponent,
-  CreateNewSupportTicketComponent,
+		SidebarComponent,
+		CreateNewSupportTicketComponent,
+
 	],
 	imports: [
 		BrowserModule,
@@ -133,7 +139,9 @@ import { CreateNewSupportTicketComponent } from './pages/create-new-support-tick
 		CarouselModule,
 		BadgeModule,
 		InputNumberModule,
-    TimelineModule
+    	TimelineModule,
+		ListboxModule,
+		CalendarModule
 	],
 	providers: [MessageService],
 	bootstrap: [AppComponent],
