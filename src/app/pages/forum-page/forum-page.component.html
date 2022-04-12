@@ -53,7 +53,7 @@
               </div>
               <div class="forum-box-content-subcontent">
                 <button
-                  *ngIf = "!hasAlreadyLiked(forum)"
+                  *ngIf="!hasAlreadyLiked(forum)"
                   title="Like this post"
                   pButton
                   type="button"
@@ -63,7 +63,7 @@
                 ></button>
 
                 <button
-                  *ngIf = "hasAlreadyLiked(forum)"
+                  *ngIf="hasAlreadyLiked(forum)"
                   title="Unlike this post"
                   pButton
                   type="button"
@@ -71,7 +71,7 @@
                   class="p-button-raised p-button-rounded"
                   (click)="changeLikes(forum)"
                 ></button>
-                
+
                 <p-button
                   title="Comment on this post"
                   pButton
@@ -127,7 +127,7 @@
         src="assets/images/forumDefault.png"
       />
     </ng-template>
-    <p-divider></p-divider>
+
     <div style="overflow-wrap: break-word">
       {{ forumToView.content }}
     </div>
@@ -142,12 +142,26 @@
   <p-panel header="Replies" [toggleable]="true">
     <p-dataView [value]="forumToViewReplies">
       <ng-template let-reply pTemplate="listItem">
-        
-          <p-avatar label="P" size="large"></p-avatar>
-          <p>{{ reply.author.username }}</p>
-          <p>{{ reply.content }}</p>
-          <p-divider></p-divider>
-        
+        <div class="reply-box">
+          <div class="reply-avatar">
+            <div class = "avatar-only">
+              <p-avatar
+                label="{{ reply.author.username.charAt(0) }}"
+                size="large"
+                style="text-align: center"
+              ></p-avatar>
+            </div>
+            <p>{{ reply.author.username }}</p>
+          </div>
+          <div class="reply-content">
+            <p>{{ reply.content }}</p>
+            <br />
+            <div class="forum-timestamp">
+              Published on {{ reply.timestamp | date: "medium" }}
+            </div>
+          </div>
+        </div>
+        <br />
       </ng-template>
     </p-dataView>
   </p-panel>
@@ -164,7 +178,7 @@
   <p-toast></p-toast>
   <div class="reply-form-container">
     <div class="reply-profile">
-      <p-avatar label="P" shape="circle" size="large"></p-avatar>
+      <p-avatar label="{{currentMember.charAt(0)}}" shape="circle" size="large"></p-avatar>
       <div>{{ currentMember }}</div>
     </div>
     <form>

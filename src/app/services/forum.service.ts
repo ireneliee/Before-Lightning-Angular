@@ -45,23 +45,26 @@ export class ForumService {
   }
 
   getMyForumPosts():Observable<ForumPost[]> {
-    return this.httpClient.get<ForumPost[]>(this.baseUrl + "/retrieveMyForumPosts/?username=" + this.sessionService.getUsername()).pipe(
+    return this.httpClient.get<ForumPost[]>(this.baseUrl + "/retrieveMyForumPosts?username=" + this.sessionService.getUsername()).pipe(
       catchError(this.handleError)
-    )
-  }
-
-  changeLikes(forumId: string): Observable<number> {
-    let username = this.sessionService.getUsername();
-    return this.httpClient.get<number>(this.baseUrl + "/changeLikes?postId=" + forumId + "&username=" + username).pipe(
-      catchError(this.handleError)
-    )
+    );
   }
 
   checkUserLikes(forumId: string): Observable<boolean> {
-    let username = this.sessionService.getUsername();
+    let username: string = this.sessionService.getUsername();
+
     return this.httpClient.get<boolean>(this.baseUrl + "/checkUserLikes?postId=" + forumId + "&username=" + username).pipe(
       catchError(this.handleError)
-    )
+    );
+  }
+
+  changeLikes(forumId: string): Observable<number> {
+    let username: string  = this.sessionService.getUsername();
+    console.log("changeLikes in resource called.");
+    console.log(this.baseUrl + "/changeLikes?postId=" + forumId + "&username=" + username);
+    return this.httpClient.get<any>(this.baseUrl + "/changeLikes?postId=" + forumId + "&username=" + username).pipe(
+      catchError(this.handleError)
+    );
   }
 
   createNewForum(title: string, content: string, filename: string): Observable<number> {

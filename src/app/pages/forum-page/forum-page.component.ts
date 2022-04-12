@@ -37,6 +37,8 @@ export class ForumPageComponent implements OnInit {
   replySuccess: boolean;
   replyError: boolean;
 
+  
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -175,7 +177,7 @@ createNewReply() {
 hasAlreadyLiked(post: ForumPost) {
   let postIdInString: string | undefined = post.forumPostEntityId?.toString();
   if(this.forumService.checkUserLikes(postIdInString!)) {
-    console.log("User currently like this photo");
+    console.log("result: " + this.forumService.checkUserLikes(postIdInString!));
     return true;
   } else {
     console.log("User currently does not like this photo");
