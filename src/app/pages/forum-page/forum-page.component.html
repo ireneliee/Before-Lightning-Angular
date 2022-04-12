@@ -144,7 +144,7 @@
       <ng-template let-reply pTemplate="listItem">
         <div class="reply-box">
           <div class="reply-avatar">
-            <div class = "avatar-only">
+            <div class="avatar-only">
               <p-avatar
                 label="{{ reply.author.username.charAt(0) }}"
                 size="large"
@@ -173,12 +173,19 @@
   [modal]="true"
   header="Create new comment"
   [(visible)]="createReplyDisplay"
-  [style]="{ width: '50vw' }"
+  [style]="{ width: '40vw' }"
 >
   <p-toast></p-toast>
   <div class="reply-form-container">
     <div class="reply-profile">
-      <p-avatar label="{{currentMember.charAt(0)}}" shape="circle" size="large"></p-avatar>
+      <div class="member-bio" style = "margin-left: 1.2em;">
+        <p-avatar
+          label="{{ currentMember.charAt(0) }}"
+          shape="circle"
+          size="large"
+        ></p-avatar>
+        <br/>
+      </div>
       <div>{{ currentMember }}</div>
     </div>
     <form>
