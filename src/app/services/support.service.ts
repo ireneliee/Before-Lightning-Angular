@@ -15,6 +15,20 @@ export class SupportService {
 	retrieveSupportTickets(email: string): Observable<SupportTicket[]> {
 		return this.httpClient.get<SupportTicket[]>(this.baseUrl + "/retrieveSupportTickets?email=" + email).pipe(catchError(this.handleError));
 	}
+
+	getMyForumPosts():Observable<SupportTicket[]> {
+		return this.httpClient.get<SupportTicket[]>(this.baseUrl + "/retrieveMySupportTickets/?username=" + this.sessionService.getUsername()).pipe(
+		  catchError(this.handleError)
+		)
+	}
+	
+	createSupportTicket(issue: string): Observable<number> {
+		console.log("current username: " + this.sessionService.getUsername());
+		return this.httpClient.get<number>(this.baseUrl + "/createNewSupportTicket/?username=" + this.sessionService.getUsername() + "&issue=" + issue)
+			.pipe(catchError(this.handleError));
+	}
+
+
 	private handleError(error: HttpErrorResponse) {
 		let errorMessage: string = "";
 		if (error.error instanceof ErrorEvent) {

@@ -62,9 +62,9 @@ import { CustomizeProductsPageComponent } from "./pages/productOperations/custom
 import { UploadFileComponent } from "./components/upload-file/upload-file.component";
 import { CarouselModule } from "primeng/carousel";
 import { BadgeModule } from "primeng/badge";
-import { ViewAllAccessoryItemsPageComponent } from "./pages/accessoryOperations/view-all-accessory-items-page/view-all-accessory-items-page.component";
 import {TimelineModule} from 'primeng/timeline';
-
+import { ViewAllAccessoryItemsPageComponent } from "./pages/accessoryOperations/view-all-accessory-items-page/view-all-accessory-items-page.component";
+import { CreateNewSupportTicketComponent } from './pages/create-new-support-ticket/create-new-support-ticket.component';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -89,6 +89,7 @@ import {TimelineModule} from 'primeng/timeline';
 		CustomizeProductsPageComponent,
 		UploadFileComponent,
 		ViewAllAccessoryItemsPageComponent,
+  CreateNewSupportTicketComponent,
 	],
 	imports: [
 		BrowserModule,

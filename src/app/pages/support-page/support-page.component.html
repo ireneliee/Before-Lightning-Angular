@@ -4,31 +4,60 @@
 	<p-dataView #dv [value]="supportTicketEntities" [paginator]="true" [rows]="9" layout="grid">
 		<ng-template pTemplate="header">
 			<div class="flex flex-column md:flex-row md:justify-content-between">
-				<h2>Premium Accessories</h2>
-				<p-dataViewLayoutOptions></p-dataViewLayoutOptions>
-				<p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)" [style]="{ 'min-width': '15em' }"></p-dropdown>
-			</div>
+				<h2>Support Page</h2><br/><br/>
+				<p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)" [style]="{ 'min-width': '15em' }"></p-dropdown><br/>
+			</div><br/>
+			<app-create-new-support-ticket></app-create-new-support-ticket>
+
 		</ng-template>
+
+
 		<ng-template let-supportTicket pTemplate="listItem">
-			<div class="col-12">
-				<div class="supportTicket-list-detail">
-					<div class="supportTicket-name">{{ supportTicket.supportTicketId }}</div>
-					<div class="supportTicket-issue">{{ supportTicket.issue }}</div>
-					<div class="supportTicket-email">{{ supportTicket.email }}</div>
-					<div class="supportTicket-status">{{ supportTicket. supportTicketStatus}}</div>
+			<div class="p-col-12 p-md-4">
+				<div class="product-grid-item card">
+				  <div class="product-grid-item">
+					  <div class="forum-box-content-maincontent">
+						<div class="forum-title"> 
+							Ticket Ticket ID: {{ supportTicket.supportTicketId }}
+						</div><br/>
+						<div class="forum-content">
+							Issue: {{ supportTicket.issue }}
+						</div>
+						<div class="forum-timestamp">
+							Email: {{ supportTicket.email }}
+						</div><br/>
+						<div class="supportTicket-status">
+							Status: {{ supportTicket.supportTicketStatus}}
+						</div>
+					</div>
 				</div>
 			</div>
+			</div>
 		</ng-template>
+
+
 		<ng-template let-supportTicket pTemplate="gridItem">
-			<div class="col-12">
-				<div class="supportTicket-list-detail">
-					<div class="supportTicket-name">{{ supportTicket.supportTicketId }}</div>
-					<div class="supportTicket-issue">{{ supportTicket.issue }}</div>
-					<div class="supportTicket-email">{{ supportTicket.email }}</div>
-					<div class="supportTicket-status">{{ supportTicket. supportTicketStatus}}</div>
+			<div class="p-col-12 p-md-4">
+				<div class="product-grid-item card">
+				  <div class="product-grid-item">
+					  <div class="forum-box-content-maincontent">
+						<div class="forum-title"> 
+							Ticket Ticket ID: {{ supportTicket.supportTicketId }}
+						</div><br/>
+						<div class="forum-content">
+							Issue: {{ supportTicket.issue }}
+						</div>
+						<div class="forum-timestamp">
+							Email: {{ supportTicket.email }}
+						</div><br/>
+						<div class="supportTicket-status">
+							Status: {{ supportTicket.supportTicketStatus}}
+						</div>
+					</div>
 				</div>
 			</div>
-		</ng-template>
+			</div>
+			</ng-template>
 		<!-- <ng-template let-supportTicket pTemplate="gridItem">
             <div class="col-12 md:col-4">
                 <div class="supportTicket-grid-item card">
