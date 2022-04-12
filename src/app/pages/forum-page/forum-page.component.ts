@@ -169,4 +169,24 @@ createNewReply() {
 
   }
 }
+
+// like function
+
+hasAlreadyLiked(post: ForumPost) {
+  let postIdInString: string | undefined = post.forumPostEntityId?.toString();
+  if(this.forumService.checkUserLikes(postIdInString!)) {
+    console.log("User currently like this photo");
+    return true;
+  } else {
+    console.log("User currently does not like this photo");
+    return false;
+  }
+}
+
+changeLikes(post: ForumPost) {
+  console.log("User wish to change status of like.");
+  let postIdInString: string | undefined = post.forumPostEntityId?.toString();
+  this.forumService.changeLikes(postIdInString!);
+  this.messageService.add({ severity: 'info', summary: "Successfuly like/unlike the forum post!"});
+}
 }

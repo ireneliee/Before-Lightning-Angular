@@ -23,7 +23,6 @@ export class Member {
 	shoppingCartEntity: ShoppingCart | undefined;
 	listOfAutheredForumPosts: ForumPost[] | undefined;
 	listOfLikedForumPost: ForumPost[] | undefined;
-	listOfDislikedForumPost: ForumPost[] | undefined;
 	listOfReplyEntities: Reply[] | undefined;
 
 	constructor(username: string, password: string, firstname: string, lastname: string, email: string, contact: string, imageLink: string, salt: string, isActive: boolean, userEntityId?: number) {
