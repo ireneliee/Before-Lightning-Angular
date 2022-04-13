@@ -19,10 +19,10 @@
 			<div class="col-12">
 				<div class="product-list-item">
 					<div *ngIf="accessoryItem.imageLink; else elseBlock">
-						<img alt="forum image" src="{{ 'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' + accessoryItem.imageLink }}" style="width: 20%" />
+						<img alt="forum image" src="{{ 'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' + accessoryItem.imageLink }}" style="width: 200px; height: 170px" />
 					</div>
 					<ng-template #elseBlock>
-						<img alt="Card" src="assets/images/sampleAccessoryItem.png" style="width: 20%" />
+						<img alt="Card" src="assets/images/sampleAccessoryItem.png" style="width: 200px; height: 170px" />
 					</ng-template>
 					<div class="product-list-detail" style="width: 55%">
 						<div class="product-name">{{ accessoryItem.accessoryItemName }}</div>
