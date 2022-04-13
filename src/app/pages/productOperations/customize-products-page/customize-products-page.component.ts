@@ -28,6 +28,13 @@ export class CustomizeProductsPageComponent implements OnInit {
 	JSON;
 	map = new Map<PartChoice, PartChoice>();
 	selectionMap = new Map<Part, PartChoice>();
+	cosmeticDefaultImages = ["assets/images/chassisCosmetic.png", 
+	"assets/images/chassisdesign1.png",
+	"assets/images/chassisdesign2.png",
+	"assets/images/chassisdesign3.png",
+	"assets/images/chassisdesign4.png",
+	"assets/images/chassisdesign5.png"]
+
 
 	constructor(private router: Router, private activatedRoute: ActivatedRoute, public sessionService: SessionService, private messageService: MessageService, private productService: ProductService) {
 		this.productId = null;
@@ -46,9 +53,34 @@ export class CustomizeProductsPageComponent implements OnInit {
 		if (this.productId != null) {
 			this.productService.getProductById(parseInt(this.productId)).subscribe({
 				next: (response) => {
-					// console.log(response);
+					console.log(response);
 
 					this.productToCustomize = response;
+					//to make selection map populated with default parts
+					let listOfParts: Part[] = [];
+					response.partEntities.forEach((part) => {
+						listOfParts.push(part);
+					});
+					let fakePartChoice = new PartChoice([], [], "", [], "", "", "", 999, 999, 999, "", false);
+					listOfParts.forEach((part) => {
+						this.selectionMap.set(part, fakePartChoice);
+					});
+					console.log(this.productToCustomize.partEntities);
+
+					//to sort the parts because it gets randomly sorted for some reason
+					let newListOfParts: Part[] = [];
+					this.productToCustomize.partEntities.forEach((part) => {
+						if (part.partName == "Chassis") {
+							newListOfParts.push(part);
+						}
+					});
+					this.productToCustomize.partEntities.sort((a: Part, b: Part) => (a.partName > b.partName ? 1 : -1));
+					this.productToCustomize.partEntities.forEach((part) => {
+						if (part.partName != "Chassis") {
+							newListOfParts.push(part);
+						}
+					});
+					this.productToCustomize.partEntities = newListOfParts;
 				},
 				error: (error) => {
 					this.retrieveProductError = true;
@@ -77,7 +109,7 @@ export class CustomizeProductsPageComponent implements OnInit {
 		}
 		this.buildPrice = totalPrice;
 	}
-	
+
 	// addBuildToCart(addBuildToCartForm: NgForm) {
 	addBuildToCart() {
 		console.log("CALLING ADD TO CART");

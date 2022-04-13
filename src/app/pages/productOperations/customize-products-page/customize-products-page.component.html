@@ -2,12 +2,13 @@
 <p-toast></p-toast>
 <!-- <form #addBuildToCartForm="ngForm" (ngSubmit)="addBuildToCart(addBuildToCartForm)"> -->
 <p-panel header="{{ productToCustomize.productName }}">
-	<div *ngIf="productToCustomize.imageLink; else elseBlock">
-		<img alt="Card" src="assets/images/sampleLaptop.png" style="width: 400px; height: 300px; margin: 20px" />
+	<div *ngIf="productToCustomize.imageLink; else elseBlock" style="text-align: center">
+		<img alt="forum image" src="{{ 'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' + productToCustomize.imageLink }}" style="width: 350px; height: 300px; margin: 20px" />
 	</div>
-	<ng-template #elseBlock>
-		<img alt="Card" src="assets/images/sampleLaptop.png" style="width: 400px; height: 300px; margin: 20px" />
+	<ng-template #elseBlock style="text-align: center">
+		<img alt="Card" src="assets/images/sampleLaptop.png" style="width: 350px; height: 300px; margin: 20px" />
 	</ng-template>
+
 	<div class="product-description">{{ productToCustomize.productOverview }}</div>
 	<br />
 	<div class="product-description">{{ productToCustomize.description }}</div>
@@ -17,6 +18,7 @@
 	<div class="product-description">
 		<h3>Current Price: ${{ buildPrice }}</h3>
 	</div>
+	<p-button (click)="addBuildToCart()" label="Add Build To Cart" icon="pi pi-shopping-cart"></p-button>
 </p-panel>
 
 <p-accordion *ngFor="let part of productToCustomize.partEntities">
@@ -25,7 +27,15 @@
 			{{ part.description }}
 		</div>
 		<p-divider></p-divider>
-		<img alt="Please Select a Part Choice" src="assets/images/samplePartChoice.png" style="width: 400px; height: 300px; margin: 20px" />
+		<div *ngIf="selectionMap.get(part)!.imageLink != ''; else elseBlock2" style="text-align: center">
+			<img alt="forum image" src="{{ 'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' + selectionMap.get(part)!.imageLink }}" style="width: 350px; height: 300px; margin: 20px" />
+		</div>
+		<ng-template #elseBlock2>
+			<div style="text-align: center">
+				<img alt="Please Select a Part Choice" src="assets/images/samplePartChoice.png" style="width: 350px; height: 300px; margin: 20px" />
+			</div>
+		</ng-template>
+
 		<p-divider></p-divider>
 		<div *ngFor="let partChoice of part.partChoiceEntities" class="field-checkbox">
 			<div *ngIf="partChoice.quantityOnHand != 0">
@@ -39,8 +49,41 @@
 		</div>
 	</p-accordionTab>
 </p-accordion>
+<p-accordion>
+	<p-accordionTab header="Cosmetic Customization (OPTIONAL)" style="margin-top: 15px">
+		<p-carousel [value]="cosmeticDefaultImages">
+			<ng-template let-image pTemplate="item">
+				<div class="product-item">
+					<div class="product-item-content">
+						<div class="mb-3">
+							<img src="{{ image }}" [alt]="'image not found'" class="product-image" style="width: 400px; height: 300px" />
+						</div>
+					</div>
+				</div>
+			</ng-template>
+		</p-carousel>
+		<div class="forum-photo-upload card">
+			<br />
+			<h5>Upload The Image You Would Like To See On Your Build</h5>
+			<h5>With our team of expert designers, using advanced laser technology and High Qualtity Printing techniques in order to bring your work of art to life</h5>
+			<h5>Completely free of charge as we encourage our members to let their inner creativity shine!</h5>
+			<br />
+			<h5>Own A Build That Is Entirely Created By You, For You</h5>
+			<br />
+			<p-fileUpload method="post" mode="advanced" name="file" url="http://localhost:8080/beforeLightningRWS/Resources/File/upload" accept="image/*"></p-fileUpload>
+			<br />
+			<div class="forum-photo-filename">
+				<h5>Photo name</h5>
+				<br />
+				<input name="forum-photo-name" type="text" pInputText pTooltip="Help us to store your photo nicely by filling in the exact name and extension of your photo!" [(ngModel)]="imageLink" style="width: 100%" />
+			</div>
+		</div>
+		<br />
+	</p-accordionTab>
+</p-accordion>
+<p-scrollTop></p-scrollTop>
 
 <!-- <button pButton type="submit" label="Add Build To Cart" icon="pi pi-shopping-cart"></button> -->
 <!-- <button pButton type="button" label="Add Build To Cart" icon="pi pi-shopping-cart" (onClick)="test()"></button> -->
-<p-button (click)="addBuildToCart()" label="Add Build To Cart" icon="pi pi-shopping-cart"></p-button>
+
 <!-- </form> -->
