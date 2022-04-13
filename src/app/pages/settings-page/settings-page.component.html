@@ -1,6 +1,6 @@
 <app-breadcrumb pageName="Settings"></app-breadcrumb>
 
-<p-messages></p-messages>
+<p-messages ></p-messages>
 <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
 <br>
 <p-card header="Account Details" [style]="{'width': '25rem', 'margin-bottom': '2em'}">
@@ -29,7 +29,7 @@
 <p-button
   (click)="showUpdateMemberDetailDialog()"
   icon="pi pi-plus"
-  label="Update member details"
+  label="Update Member Details"
 ></p-button>
 
 <br>
@@ -63,7 +63,7 @@
 <p-button
   (click)="showCreateNewAddressDialog()"
   icon="pi pi-plus"
-  label="Create new address"
+  label="Create New Address"
 ></p-button>
 <form #createNewAddress="ngForm" (ngSubmit)="createAddress()">
 
@@ -75,23 +75,27 @@
   [(visible)]="createNewAddressDisplay"
   [style]="{ width: '50vw' }"
 >
-<p-toast></p-toast>
     <div class="address-block-entry">
       <h5>Block number</h5>
       <br />
       <input name="address-block" type="text" pInputText [(ngModel)]="newAddress.block" style = "width: 100%;" />
 <br/>
+<br>
     <h5>Unit Number</h5>
     <br />
     <input name="address-unit" type="text" pInputText [(ngModel)]="newAddress.unit" style = "width: 100%;" />
     <br/>
+    <br>
     <h5>Postal Code</h5>
     <br />
-    <input name="address-postalCode" required minlength="6" required maxlength="6" type="text" pInputText [(ngModel)]="newAddress.postalCode" style = "width: 100%;" />
+    <input name="address-postalCode" type="text" pInputText [(ngModel)]="newAddress.postalCode" style = "width: 100%;" />
     <br/>
+    <br>
     <h5>Country</h5>
     <br />
     <input name="address-country" type="text" pInputText [(ngModel)]="newAddress.country" style = "width: 100%;" />
+    <br>
+    <br>
     <button pButton type="submit" label="Create New Address"></button>
 
   </div>
@@ -127,11 +131,10 @@
   class="update-member-dialog"
   *ngIf="createUpdateDisplay"
   [modal]="true"
-  header="Update memeber details"
+  header="Update Member Details"
   [(visible)]="createUpdateDisplay"
   [style]="{ width: '50vw' }"
 >
-<p-toast></p-toast>
 <br/>
 <h5>Upload your profile photo here</h5>
 <br/>
@@ -174,6 +177,8 @@
     <h5>Contact Number</h5>
     <br />
     <input name="member-contact" type="text" pInputText [(ngModel)]="memberToUpdate.contact" style = "width: 100%;" />
+    <br>
+    <br>
     <button pButton type="submit" label="Update Member"></button>
 
   </div>
@@ -193,25 +198,26 @@
   class="create-address-dialog"
   *ngIf="createNewCreditCardDisplay"
   [modal]="true"
-  header="Create New Address"
+  header="Create New Credit Card"
   [(visible)]="createNewCreditCardDisplay"
   [style]="{ width: '50vw' }"
 >
-<p-toast></p-toast>
     <div class="creditcard-number-entry">
       <h5>Credit card number</h5>
       <br />
-      <input name="creditcard-number" required minlength="16" required maxlength="16" type="number" pInputText [(ngModel)]="newCreditCard.creditCardNumber" style = "width: 100%;" />
+      <input name="creditcard-number" type="number" pInputText [(ngModel)]="newCreditCard.creditCardNumber" style = "width: 100%;" />
    <br/>
+   <br>
     <h5>Name on card</h5>
     <br />
     <input name="creditcard-name" type="text" pInputText [(ngModel)]="newCreditCard.nameOnCard" style = "width: 100%;" />
-
+<br>
     <br/>
     <h5>Expiration Date</h5>
     <br />
     <input name="creditcard-date" type="text"  pInputText [(ngModel)]="newCreditCard.expiryDate" style = "width: 100%;" />
     <br/>
+    <br>
     <button pButton type="submit" label="Create New Credit Card"></button>
 
     </div>
