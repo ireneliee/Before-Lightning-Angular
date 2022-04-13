@@ -5,6 +5,7 @@ import { Accessory } from "src/app/models/accessory";
 import { AccessoryItem } from "src/app/models/accessory-item";
 import { PurchaseOrderLineItemTypeEnum } from "src/app/models/enum/purchase-order-line-item-type-enum";
 import { PurchaseOrderLineItem } from "src/app/models/purchase-order-line-item";
+import { Review } from "src/app/models/review";
 import { AccessoryService } from "src/app/services/accessory.service";
 import { SessionService } from "src/app/services/session.service";
 
@@ -23,9 +24,11 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 	listOfAccessoryItems: AccessoryItem[] = [];
 	retrieveAccessoryError: boolean;
 	displayDialog: boolean = false;
+	displayReviewsDialog: boolean = false;
 	selectedAccessoryItem: AccessoryItem | null = null;
 	selectedQuantity: number = 1;
 	selectedAccessoryItemQuantityOnHand: number = 0;
+	listOfReviews: Review[] = [];
 
 	constructor(private router: Router, private activatedRoute: ActivatedRoute, public sessionService: SessionService, private messageService: MessageService, private accessoryService: AccessoryService) {
 		this.retrieveAccessoryError = false;
@@ -59,6 +62,13 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 		this.displayDialog = true;
 		this.selectedAccessoryItem = accessoryItem;
 		this.selectedAccessoryItemQuantityOnHand = this.selectedAccessoryItem.quantityOnHand!;
+	}
+
+	doDisplayReviewsDialog(accessoryItem: AccessoryItem) {
+		this.displayReviewsDialog = true;
+		console.log(accessoryItem);
+		this.selectedAccessoryItem = accessoryItem;
+		this.listOfReviews = this.selectedAccessoryItem.reviewEntities!;
 	}
 
 	addToCart() {
