@@ -12,16 +12,20 @@ import { SessionService } from "src/app/services/session.service";
 })
 export class ProductsHomePageComponent implements OnInit {
 	listOfProductEntities: Product[] = [];
+	number: number;
 	sortOptions: SelectItem[];
+	reviewMap: Map<string, number>;
 	sortField: string;
 	sortOrder: number;
 	sortKey: string;
 
 	constructor(private sessionService: SessionService, private router: Router, private productService: ProductService) {
 		this.sortOptions = new Array();
+		this.reviewMap = new Map<string, number>();
 		this.sortField = "";
 		this.sortKey = "";
 		this.sortOrder = 0;
+		this.number = 5;
 	}
 
 	ngOnInit(): void {
@@ -30,6 +34,18 @@ export class ProductsHomePageComponent implements OnInit {
 		this.productService.getProducts().subscribe({
 			next: (response) => {
 				this.listOfProductEntities = response;
+				console.log("going through products to calc rating");
+				this.listOfProductEntities.forEach((product) => {
+					let avgRating = 0;
+					let numReviews = product.reviewEntities.length;
+					let sumRating = 0;
+					product.reviewEntities.forEach((review) => {
+						sumRating += review.rating!;
+					})
+					avgRating = sumRating / numReviews;
+					console.log("avg rating for this product: " + avgRating);
+					this.reviewMap.set(product.productName!, avgRating);	
+				})
 				console.log(this.listOfProductEntities);
 			},
 			error: (error) => {
