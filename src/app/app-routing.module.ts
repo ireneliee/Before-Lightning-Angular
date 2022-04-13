@@ -32,6 +32,7 @@ const routes: Routes = [
 	{ path: "viewMyCartPage", component: ViewMyCartPageComponent },
 	{ path: "viewMyOrdersPage", component: ViewMyOrdersPageComponent },
 	{ path: "forumPage", component: ForumPageComponent },
+	{ path: "myForumPage", component: ViewMyForumPostComponent },
 	{ path: "supportPage", component: SupportPageComponent },
 	{ path: "settingsPage", component: SettingsPageComponent },
 	{ path: "viewMyForumPage", component: ViewMyForumPostComponent },

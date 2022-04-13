@@ -52,8 +52,11 @@ export class BreadcrumbComponent implements OnInit {
 		if (this.pageName == "Settings") {
 			this.items.push({ label: "Settings", routerLink: "/settingsPage" });
 		}
-		if (this.pageName == "Forum") {
-			this.items.push({ label: "Forum", routerLink: "forumPage" });
+		if (this.pageName == "Forum: All posts") {
+			this.items.push({ label: "Forum: All posts", routerLink: "/forumPage" });
+		}
+		if (this.pageName == "Forum: My posts") {
+			this.items.push({ label: "Forum: My posts", routerLink: "/myForumPage" });
 		}
 
 		this.home = { icon: "pi pi-home", routerLink: "/" };

@@ -45,11 +45,11 @@ export class SidebarComponent implements OnInit {
   isPartPromotion(promo: Promotion) {
     
     if(promo.partChoiceEntities != null && promo.partChoiceEntities.length >= 1) {
-      console.log("This is a part promotion");
+      //console.log("This is a part promotion");
       this.listOfPartChoices = promo.partChoiceEntities;
       return true;
     } else {
-      console.log("This is not a part promotion");
+      //console.log("This is not a part promotion");
       this.listOfAccessoryItems = promo.accessoryItemEntities;
       return false;
     }

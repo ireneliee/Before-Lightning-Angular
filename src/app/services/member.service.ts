@@ -52,6 +52,10 @@ export class MemberService {
 		return this.httpClient.get<Member>(this.baseUrl + "/retrieveMemberById?memberEntityId=" + memberEntityId).pipe(catchError(this.handleError));
 	}
 
+	RetrieveMemberByUsername(username:string): Observable<Member> {
+		return this.httpClient.get<Member>(this.baseUrl + "/retrieveMemberByUsername?username=" + username).pipe(catchError(this.handleError));
+	}
+
 	AddCreditCard(memberId:string, creditCardNumber:string, nameOnCard:string, expiryDate:string): Observable<Member> {
 		let addCreditCard = new CreateCreditcardReq(memberId,creditCardNumber,nameOnCard,expiryDate);
 		return this.httpClient.post<Member>(this.baseUrl + "/addCreditCard", addCreditCard, httpOptions).pipe(catchError(this.handleError));

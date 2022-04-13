@@ -1,4 +1,4 @@
-<app-breadcrumb></app-breadcrumb>
+<app-breadcrumb pageName="Forum: All posts"></app-breadcrumb>
 <app-forum-menu></app-forum-menu>
 <p-messages></p-messages>
 <div class="card">
@@ -28,18 +28,8 @@
           (onChange)="onSortChange($event)"
           styleClass="p-mb-2 p-mb-md-0"
         ></p-dropdown>
-        <!-- <span class="p-input-icon-left p-mb-2 p-mb-md-0">
-          <i class="pi pi-search"></i>
-          <input
-            type="search"
-            pInputText
-            placeholder="Search by Name"
-            (input)="dv.filter($any($event.target).value)"
-          />
-        </span> -->
       </div>
     </ng-template>
-
     <ng-template let-forum pTemplate="gridItem">
       <div class="p-col-12 p-md-4">
         <div class="product-grid-item card">
@@ -55,45 +45,54 @@
                 <br />
                 <div class="forum-content">{{ forum.content }}</div>
               </div>
-              <div class="forum-box-content-subcontent">
-                <button
-                  *ngIf="sessionService.getIsLogin() == true"
-                  title="Like this post"
-                  pButton
-                  type="button"
-                  icon="pi pi-thumbs-up"
-                  class="p-button-raised p-button-rounded"
-                  (click)="changeLikes(forum)"
-                ></button>
-
-                <!-- <button
-                  title="Unlike this post"
-                  pButton
-                  type="button"
-                  icon="pi pi-thumbs-down"
-                  class="p-button-raised p-button-rounded"
-                  (click)="changeLikes(forum)"
-                ></button> -->
-
-                <p-button
-                  *ngIf="sessionService.getIsLogin() == true"
-                  title="Comment on this post"
-                  pButton
-                  type="button"
-                  icon="pi pi-comment"
-                  class="p-button-raised p-button-rounded"
-                  (onClick)="showCreateReplyDialog(forum)"
-                  style="margin-right: 0.7em"
-                ></p-button>
-                <p-button
-                  title="View forum details"
-                  pButton
-                  class="p-button-raised p-button-rounded"
-                  icon="pi pi-search"
-                  (onClick)="showDialog(forum)"
-                >
-                </p-button>
-              </div>
+              <br />
+              <span class="p-buttonset">
+                <div class="forum-box-buttons">
+                  <p-button
+                    title="View forum details"
+                    class="p-button-raised p-button-rounded"
+                    icon="pi pi-search"
+                    (onClick)="showDialog(forum)"
+                    label = "View"
+                    id="view-button"
+                  >
+                  </p-button>
+                  <p-button
+                    *ngIf="sessionService.getIsLogin() == true"
+                    title="Comment on this post"
+                    icon="pi pi-comment"
+                    class="p-button-rounded forum-button"
+                    (onClick)="showCreateReplyDialog(forum)"
+                    label = "Comment"
+                    id="comment-button"
+                  ></p-button>
+                  <p-button
+                    *ngIf="
+                      sessionService.getIsLogin() == true &&
+                      !fastCheckHasAlreadyLiked(forum)
+                    "
+                    title="View forum details"
+                    class="p-button-raised p-button-rounded p-button-warning forum-button"
+                    icon="pi pi-thumbs-up"
+                    (click)="changeLikes(forum)"
+                    id="like-button"
+                    label = "Like"
+                  >
+                  </p-button>
+                  <p-button
+                    *ngIf="
+                      sessionService.getIsLogin() == true &&
+                      fastCheckHasAlreadyLiked(forum)
+                    "
+                    title="Unlike this post"
+                    class="p-button-rounded forum-button"
+                    icon="pi pi-thumbs-down"
+                    (click)="changeLikes(forum)"
+                    id="dislike-button"
+                    label = "Unlike"
+                  ></p-button>
+                </div>
+              </span>
             </div>
           </div>
         </div>
@@ -179,7 +178,6 @@
   [(visible)]="createReplyDisplay"
   [style]="{ width: '40vw' }"
 >
-  <p-toast></p-toast>
   <div class="reply-form-container">
     <div class="reply-profile">
       <div class="member-bio" style="margin-left: 1.2em">

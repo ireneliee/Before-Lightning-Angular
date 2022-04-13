@@ -8,6 +8,7 @@ import { PrimeNGConfig } from 'primeng/api';
 import { NgForm } from '@angular/forms';
 import { Reply } from 'src/app/models/reply';
 import { FileUploadService } from 'src/app/services/file-upload.service';
+import { Member } from 'src/app/models/member';
 
 @Component({
   selector: 'app-view-my-forum-post',
@@ -147,31 +148,48 @@ showCreateReplyDialog(forumToView:ForumPost) {
 }
 
 createNewReply() {
-  console.log("Create new reply here is called");
-  this.replySubmitted = true;
-  if(true) {
-    console.log("Creating the new class");
-    this.forumService.createNewReply(this.forumToView.forumPostEntityId!, this.replyContent).subscribe ({
-      next: (response) => {
-        console.log("Getting response");
-        let postId: Number = response;
-        this.replySuccess = true;
-        this.replyError = false;
-        this.clearReplyForm();
-        this.messageService.add({ severity: 'info', summary: "Successfuly posted a forum reply" });
-        //createNewReplyForm.resetForm();
-        //createNewReplyForm.reset();
-        this.clearReplyForm();
-      },
-      error: (error) => {
-        this.replyError = true;
-        this.replySuccess = false;
-        this.messageService.add({severity: 'error', summary: "Error", detail: "An error has occured while posting the entry"});
-        this.clearReplyForm();
-      },
-    });
-
+  if(this.replyContent !== "") {
+    this.replySubmitted = true;
+  if (true) {
+    console.log('Creating the new class');
+    this.forumService
+      .createNewReply(this.forumToView.forumPostEntityId!, this.replyContent)
+      .subscribe({
+        next: (response) => {
+          console.log('Getting response');
+          let postId: Number = response;
+          this.replySuccess = true;
+          this.replyError = false;
+          this.clearReplyForm();
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Successfuly posted a forum reply',
+          });
+          this.clearReplyForm();
+          this.refreshList();
+          this.createReplyDisplay = false;
+        },
+        error: (error) => {
+          this.replyError = true;
+          this.replySuccess = false;
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'An error has occured while posting the entry',
+          });
+          this.clearReplyForm();
+          this.createReplyDisplay = false;
+        },
+      });
   }
+  } else {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Comment cannot be empty!'
+    });
+    this.createReplyDisplay = false;
+  }
+  
 }
 // image retrieval
 
@@ -201,25 +219,50 @@ createImageFromBlob(image: Blob) {
 }
 
 
-// like function
+  // like / dislike function
 
-hasAlreadyLiked(post: ForumPost) {
-  let postIdInString: string | undefined = post.forumPostEntityId?.toString();
-  if(this.forumService.checkUserLikes(postIdInString!)) {
-    console.log("result: " + this.forumService.checkUserLikes(postIdInString!));
-    return true;
-  } else {
-    console.log("User currently does not like this photo");
+  fastCheckHasAlreadyLiked(post: ForumPost): boolean {
+    let username = this.sessionService.getUsername();
+    let listOfUserWhoLikes: Member[] | undefined = post.userWhoLikes;
+    if (listOfUserWhoLikes !== undefined) {
+      for (let i = 0; i < listOfUserWhoLikes.length; i++) {
+        if (listOfUserWhoLikes[i].username === username) {
+          return true;
+        }
+      }
+    }
     return false;
   }
-}
 
-changeLikes(post: ForumPost) {
-  console.log("User wish to change status of like.");
+hasAlreadyLiked(postId: string): Boolean {
+  this.forumService
+    .checkUserLikes(postId)
+    .toPromise()
+    .then((response) => {
+      if (response !== undefined) {
+        return response as boolean;
+      } else {
+        return false;
+      }
+    });
+  return false;
+}
+async changeLikes(post: ForumPost) {
   let postIdInString: string | undefined = post.forumPostEntityId?.toString();
-  this.forumService.changeLikes(postIdInString!);
-  this.messageService.add({ severity: 'info', summary: "Successfuly like/unlike the forum post!"});
-}
 
+  if (postIdInString !== undefined) {
+    await this.forumService
+      .changeLikes(postIdInString)
+      .toPromise()
+      .then((response) => {
+        this.refreshList();
+        if(this.fastCheckHasAlreadyLiked(post)) {
+          this.messageService.add({ severity: 'info', summary: "You like this post!"});
+        } else {
+          this.messageService.add({ severity: 'info', summary: "You unlike this post!"});
+        }
+      });
+  }
+}
 
 }

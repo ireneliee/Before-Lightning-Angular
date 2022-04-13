@@ -1,102 +1,104 @@
-<app-breadcrumb></app-breadcrumb>
+<app-breadcrumb pageName="Forum: My posts"></app-breadcrumb>
 <app-forum-menu></app-forum-menu>
-<div *ngIf="sessionService.getIsLogin() == true">
-  <div class="card">
-    <p-dataView
-      #dv
-      [value]="forumPosts"
-      [paginator]="true"
-      [rows]="9"
-      filterBy="name"
-      [sortField]="sortField"
-      [sortOrder]="sortOrder"
-      layout="grid"
-    >
-      <ng-template pTemplate="header">
-        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
-          <div *ngIf="sessionService.getIsLogin() == true">
-            <app-create-new-forum-post
-              (signalToRefresh)="callRefreshList($event)"
-            ></app-create-new-forum-post>
-          </div>
-          <br />
-          <p-dropdown
-            [options]="sortOptions"
-            [(ngModel)]="sortKey"
-            placeholder="Sort By Date"
-            (onChange)="onSortChange($event)"
-            styleClass="p-mb-2 p-mb-md-0"
-          ></p-dropdown>
-          <!-- <span class="p-input-icon-left p-mb-2 p-mb-md-0">
-          <i class="pi pi-search"></i>
-          <input
-            type="search"
-            pInputText
-            placeholder="Search by Name"
-            (input)="dv.filter($any($event.target).value)"
-          />
-        </span> -->
+<p-messages></p-messages>
+<div class="card" *ngIf = "sessionService.getIsLogin() == true">
+  <p-dataView
+    #dv
+    [value]="forumPosts"
+    [paginator]="true"
+    [rows]="9"
+    filterBy="name"
+    [sortField]="sortField"
+    [sortOrder]="sortOrder"
+    layout="grid"
+  >
+    <ng-template pTemplate="header">
+      <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+        <div *ngIf="sessionService.getIsLogin() == true">
+          <app-create-new-forum-post
+            (signalToRefresh)="callRefreshList($event)"
+          ></app-create-new-forum-post>
         </div>
-      </ng-template>
 
-      <ng-template let-forum pTemplate="gridItem">
-        <div class="p-col-12 p-md-4">
-          <div class="product-grid-item card">
-            <div class="product-grid-item">
-              <div class="forum-box-user"></div>
-              <div class="forum-box-content">
-                <div class="forum-box-content-maincontent">
-                  <span class="forum-title">{{ forum.title }}</span>
-                  <p-divider></p-divider>
-                  <div class="forum-timestamp">
-                    Published on {{ forum.timestamp | date: "medium" }}
-                  </div>
-                  <br />
-                  <div class="forum-content">{{ forum.content }}</div>
+        <br />
+        <p-dropdown
+          [options]="sortOptions"
+          [(ngModel)]="sortKey"
+          placeholder="Sort By Date"
+          (onChange)="onSortChange($event)"
+          styleClass="p-mb-2 p-mb-md-0"
+        ></p-dropdown>
+      </div>
+    </ng-template>
+    <ng-template let-forum pTemplate="gridItem">
+      <div class="p-col-12 p-md-4">
+        <div class="product-grid-item card">
+          <div class="product-grid-item">
+            <div class="forum-box-user"></div>
+            <div class="forum-box-content">
+              <div class="forum-box-content-maincontent">
+                <span class="forum-title">{{ forum.title }}</span>
+                <p-divider></p-divider>
+                <div class="forum-timestamp">
+                  Published on {{ forum.timestamp | date: "medium" }}
                 </div>
-                <div class="forum-box-content-subcontent">
-                  <button
-                    title="Like this post"
-                    pButton
-                    type="button"
-                    icon="pi pi-thumbs-up"
-                    class="p-button-raised p-button-rounded"
-                    (click)="changeLikes(forum)"
-                  ></button>
-                  <p-button
-                    title="Comment on this post"
-                    pButton
-                    type="button"
-                    icon="pi pi-comment"
-                    class="p-button-raised p-button-rounded"
-                    (onClick)="showCreateReplyDialog(forum)"
-                    style="margin-right: 0.7em"
-                  ></p-button>
+                <br />
+                <div class="forum-content">{{ forum.content }}</div>
+              </div>
+              <br />
+              <span class="p-buttonset">
+                <div class="forum-box-buttons">
                   <p-button
                     title="View forum details"
-                    pButton
                     class="p-button-raised p-button-rounded"
                     icon="pi pi-search"
                     (onClick)="showDialog(forum)"
+                    label = "View"
+                    id="view-button"
                   >
                   </p-button>
                   <p-button
-                    title="Edit forum"
-                    pButton
-                    class="p-button-raised p-button-rounded"
-                    icon="pi pi-pencil"
-                    style="margin-left: 0.7em"
-                    (onClick)="redirectToUpdate(forum)"
+                    *ngIf="sessionService.getIsLogin() == true"
+                    title="Comment on this post"
+                    icon="pi pi-comment"
+                    class="p-button-rounded forum-button"
+                    (onClick)="showCreateReplyDialog(forum)"
+                    label = "Comment"
+                    id="comment-button"
+                  ></p-button>
+                  <p-button
+                    *ngIf="
+                      sessionService.getIsLogin() == true &&
+                      !fastCheckHasAlreadyLiked(forum)
+                    "
+                    title="View forum details"
+                    class="p-button-raised p-button-rounded p-button-warning forum-button"
+                    icon="pi pi-thumbs-up"
+                    (click)="changeLikes(forum)"
+                    id="like-button"
+                    label = "Like"
                   >
                   </p-button>
+                  <p-button
+                    *ngIf="
+                      sessionService.getIsLogin() == true &&
+                      fastCheckHasAlreadyLiked(forum)
+                    "
+                    title="Unlike this post"
+                    class="p-button-rounded forum-button"
+                    icon="pi pi-thumbs-down"
+                    (click)="changeLikes(forum)"
+                    id="dislike-button"
+                    label = "Unlike"
+                  ></p-button>
                 </div>
-              </div>
+              </span>
             </div>
           </div>
         </div>
-      </ng-template>
-    </p-dataView>
-  </div>
+      </div>
+    </ng-template>
+  </p-dataView>
 
   <!-- This is dialog box to view forum post -->
   <p-dialog
@@ -238,7 +240,7 @@
     [(visible)]="createReplyDisplay"
     [style]="{ width: '40vw' }"
   >
-    <p-toast></p-toast>
+
     <div class="reply-form-container">
       <div class="reply-profile">
         <div class="member-bio" style="margin-left: 1.2em">
