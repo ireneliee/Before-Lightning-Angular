@@ -117,6 +117,13 @@ export class MainNavBarComponent implements OnInit {
 					},
 				},
 				{
+					label: "Support",
+					icon: "pi pi-flag",
+					command: () => {
+						this.router.navigate(["/supportPage"]);
+					},
+				},
+				{
 					label: "Forum",
 					icon: "pi pi-qrcode",
 					command: () => {

@@ -21,6 +21,14 @@
       <br />
       <input name="supportTicket-issue" type="text" pInputText [(ngModel)]="issue" style = "width: 100%;" />
     </div>
+
+    <div *ngIf="sessionService.getIsLogin() == false">
+      <h5>Let us know your email</h5>
+      <br />
+      <input name="supportTicket-email"  type="text" pInputText [(ngModel)]="email" style = "width: 100%;"  />
+    </div>
+
+
     <br/>
     <br/>
     <br/>
