@@ -92,12 +92,21 @@ export class SessionService {
 				path == "/accessoryHomePage" ||
 				path.startsWith("/viewAllAccessoryItemsPage") ||
 				path == "/viewMyCartPage" ||
-				path == "/forumPage"
+				path == "/forumPage" ||
+				path == "/supportPage" 
 			) {
 				return true;
 			} else {
 				return false;
 			}
 		}
+	}
+
+	getEmail(): string {
+		return sessionStorage["email"];
+	}
+
+	setEmail(email: string | undefined): void {
+		sessionStorage["email"] = email;
 	}
 }
