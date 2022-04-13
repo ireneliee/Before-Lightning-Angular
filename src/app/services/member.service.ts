@@ -9,6 +9,8 @@ import { CreateNewMemberReq } from "../models/create-new-member-req";
 import { UpdateMemberDetailReq } from "../models/update-member-detail-req";
 import { CreateAddressReq } from "../models/create-address-req";
 import { CreateCreditcardReq } from "../models/create-creditcard-req";
+import { DeleteAddressReq } from "../models/delete-address-req";
+import { DeleteCreditcardReq } from "../models/delete-creditcard-req";
 
 const httpOptions = {
 	headers: new HttpHeaders({ "Content-Type": "application/json" }),
@@ -47,7 +49,11 @@ export class MemberService {
 
 
 	}
+DeleteAddress(memberId:string, addressId: string) {
+	let deleteAddressReq = new DeleteAddressReq(addressId,memberId)
+	return this.httpClient.post<Member>(this.baseUrl + "/deleteAddress",deleteAddressReq,httpOptions).pipe(catchError(this.handleError));
 
+}
 	RetrieveMemberById(memberEntityId:string): Observable<Member> {
 		return this.httpClient.get<Member>(this.baseUrl + "/retrieveMemberById?memberEntityId=" + memberEntityId).pipe(catchError(this.handleError));
 	}
@@ -60,6 +66,11 @@ export class MemberService {
 		let addCreditCard = new CreateCreditcardReq(memberId,creditCardNumber,nameOnCard,expiryDate);
 		return this.httpClient.post<Member>(this.baseUrl + "/addCreditCard", addCreditCard, httpOptions).pipe(catchError(this.handleError));
 
+	}
+	DeleteCreditCard(memberId:string, creditCardId: string) {
+		let deleteCreditCard = new DeleteCreditcardReq(creditCardId,memberId)
+		return this.httpClient.post<Member>(this.baseUrl + "/deleteCreditCard",deleteCreditCard,httpOptions).pipe(catchError(this.handleError));
+	
 	}
 
 	private handleError(error: HttpErrorResponse) {

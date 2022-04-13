@@ -23,9 +23,17 @@ export class SupportService {
 	}
 	
 	createSupportTicket(issue: string): Observable<number> {
-		console.log("current username: " + this.sessionService.getUsername());
-		return this.httpClient.get<number>(this.baseUrl + "/createNewSupportTicket/?username=" + this.sessionService.getUsername() + "&issue=" + issue)
+		if (this.sessionService.getIsLogin() == false) {
+			console.log("user not logged in");
+			console.log("current email: " + this.sessionService.getEmail());
+			return this.httpClient.get<number>(this.baseUrl + "/createSupportTicketWithEmail/?email=" + this.sessionService.getEmail() + "&issue=" + issue)
 			.pipe(catchError(this.handleError));
+		} else {
+			console.log("user is logged in");
+			console.log("current username: " + this.sessionService.getUsername());
+			return this.httpClient.get<number>(this.baseUrl + "/createNewSupportTicket/?username=" + this.sessionService.getUsername() + "&issue=" + issue)
+				.pipe(catchError(this.handleError));
+		}
 	}
 
 

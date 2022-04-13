@@ -16,6 +16,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 export class CreateNewSupportTicketComponent implements OnInit {
   username: string;
   issue: string;
+  email: string;
 
   constructor(
     private messageService: MessageService,
@@ -25,13 +26,15 @@ export class CreateNewSupportTicketComponent implements OnInit {
     private supportService: SupportService,
     private primengConfig: PrimeNGConfig
   ) {
-    this.username = '';
-    this.issue = '';
+    this.username = "";
+    this.issue = "";
+    this.email = "";
   }
 
   clear() {
     this.username = "";
     this.issue = "";
+    this.email = "";
   }
 
   ngOnInit(): void {
@@ -46,14 +49,28 @@ export class CreateNewSupportTicketComponent implements OnInit {
   create(createSupportTicketForm: NgForm) {
     console.log("create method @createsupportticketcomponent");
     console.log("Issue received: " + this.issue);
+
+    if (this.email != null) {
+    }
   
-    if(createSupportTicketForm.valid) {
+    if (createSupportTicketForm.valid) {
+
+      if (this.email != "") {
+        this.sessionService.setEmail(this.email);
+      }
+
       this.supportService.createSupportTicket(this.issue).subscribe({
           next: (response) => {
-            this.clear();
-            this.messageService.add({ severity: 'info', summary: "Successfuly posted a forum post entry", detail: "Please visit the forum page to view your entry" });
+          this.clear();
+          if (this.email != "") {
+            this.messageService.add({ severity: 'info', summary: "Successfuly Created Support Ticket", detail: "Please Log In and visit the Support Page to view your entry" });
+          } else {
+            this.messageService.add({ severity: 'info', summary: "Successfuly Created Support Ticket", detail: "Please visit the Support Page to view your entry" });
+
+          }
             createSupportTicketForm.resetForm();
             createSupportTicketForm.reset();
+            this.sessionService.setEmail("");
           },
           error: (error) => {
             this.messageService.add({ severity: "error", summary: "Error", detail: "An error has occured while posting the entry" });

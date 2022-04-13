@@ -3,7 +3,6 @@ import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-
 import { PanelModule } from "primeng/panel";
 import { TableModule } from "primeng/table";
 import { ButtonModule } from "primeng/button";
@@ -30,10 +29,11 @@ import { SplitterModule } from "primeng/splitter";
 import { CheckboxModule } from "primeng/checkbox";
 import { RadioButtonModule } from "primeng/radiobutton";
 import { InputTextareaModule } from "primeng/inputtextarea";
-import { MessageService } from "primeng/api";
+import { ConfirmationService, MessageService } from "primeng/api";
 import { AvatarModule } from "primeng/avatar";
 import { InputNumberModule } from "primeng/inputnumber";
 import { CalendarModule } from "primeng/calendar";
+import { ScrollTopModule } from "primeng/scrolltop";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -63,12 +63,13 @@ import { CustomizeProductsPageComponent } from "./pages/productOperations/custom
 import { UploadFileComponent } from "./components/upload-file/upload-file.component";
 import { CarouselModule } from "primeng/carousel";
 import { BadgeModule } from "primeng/badge";
-import {TimelineModule} from 'primeng/timeline';
-import {ListboxModule} from 'primeng/listbox';
-import { SidebarComponent } from './pages/sidebar/sidebar.component';
+import { TimelineModule } from "primeng/timeline";
+import { ListboxModule } from "primeng/listbox";
+import { SidebarComponent } from "./pages/sidebar/sidebar.component";
 import { ViewAllAccessoryItemsPageComponent } from "./pages/accessoryOperations/view-all-accessory-items-page/view-all-accessory-items-page.component";
-import { CreateNewSupportTicketComponent } from './pages/create-new-support-ticket/create-new-support-ticket.component';
-import { BanCustomerComponent } from './pages/ban-customer/ban-customer.component';
+import { CreateNewSupportTicketComponent } from "./pages/create-new-support-ticket/create-new-support-ticket.component";
+import { BanCustomerComponent } from "./pages/ban-customer/ban-customer.component";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
 
 @NgModule({
 	declarations: [
@@ -96,8 +97,7 @@ import { BanCustomerComponent } from './pages/ban-customer/ban-customer.componen
 		ViewAllAccessoryItemsPageComponent,
 		SidebarComponent,
 		CreateNewSupportTicketComponent,
-  BanCustomerComponent,
-
+		BanCustomerComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -141,11 +141,13 @@ import { BanCustomerComponent } from './pages/ban-customer/ban-customer.componen
 		CarouselModule,
 		BadgeModule,
 		InputNumberModule,
-    	TimelineModule,
+		TimelineModule,
 		ListboxModule,
-		CalendarModule
+		CalendarModule,
+		ConfirmDialogModule,
+		ScrollTopModule,
 	],
-	providers: [MessageService],
+	providers: [MessageService, ConfirmationService],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

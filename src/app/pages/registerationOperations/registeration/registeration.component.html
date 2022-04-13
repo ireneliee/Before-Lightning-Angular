@@ -119,7 +119,20 @@
 						</div>
 						<br />
 					</tr>
-					<tr></tr>
+					<tr>
+						<div class="forum-photo-upload card">
+							<br />
+							<h5>Upload your photo here</h5>
+							<br />
+							<p-fileUpload method="post" mode="advanced" name="file" url="http://localhost:8080/beforeLightningRWS/Resources/File/upload" accept="image/*"></p-fileUpload>
+						</div>
+						<br />
+						<div class="forum-photo-filename">
+							<h5>Photo name</h5>
+							<br />
+							<input name="forum-photo-name" type="text" pInputText pTooltip="Help us to store your photo nicely by filling in the exact name and extension of your photo!" [(ngModel)]="imageLink" style="width: 100%" />
+						</div>
+					</tr>
 				</table>
 				<!-- <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload />
 
@@ -130,6 +143,7 @@
 					</button>
 				</div> -->
 			</div>
+
 			<div style="margin: auto">
 				<button pButton type="submit" label="Register Account"></button>
 			</div>

@@ -18,7 +18,7 @@ export class SupportPageComponent implements OnInit {
 	sortOrder: number;
 	sortKey: string;
 
-	constructor(private router: Router, private sessionService: SessionService, private memberService: MemberService, private supportService: SupportService) {
+	constructor(private router: Router, public sessionService: SessionService, private memberService: MemberService, private supportService: SupportService) {
 		this.sortOptions = new Array();
 		this.sortField = "";
 		this.sortKey = "";
