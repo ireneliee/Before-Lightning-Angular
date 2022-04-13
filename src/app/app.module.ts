@@ -33,6 +33,7 @@ import { ConfirmationService, MessageService } from "primeng/api";
 import { AvatarModule } from "primeng/avatar";
 import { InputNumberModule } from "primeng/inputnumber";
 import { CalendarModule } from "primeng/calendar";
+import { ScrollTopModule } from "primeng/scrolltop";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -62,14 +63,13 @@ import { CustomizeProductsPageComponent } from "./pages/productOperations/custom
 import { UploadFileComponent } from "./components/upload-file/upload-file.component";
 import { CarouselModule } from "primeng/carousel";
 import { BadgeModule } from "primeng/badge";
-import {TimelineModule} from 'primeng/timeline';
-import {ListboxModule} from 'primeng/listbox';
-import { SidebarComponent } from './pages/sidebar/sidebar.component';
+import { TimelineModule } from "primeng/timeline";
+import { ListboxModule } from "primeng/listbox";
+import { SidebarComponent } from "./pages/sidebar/sidebar.component";
 import { ViewAllAccessoryItemsPageComponent } from "./pages/accessoryOperations/view-all-accessory-items-page/view-all-accessory-items-page.component";
-import { CreateNewSupportTicketComponent } from './pages/create-new-support-ticket/create-new-support-ticket.component';
-import { BanCustomerComponent } from './pages/ban-customer/ban-customer.component';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-
+import { CreateNewSupportTicketComponent } from "./pages/create-new-support-ticket/create-new-support-ticket.component";
+import { BanCustomerComponent } from "./pages/ban-customer/ban-customer.component";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
 
 @NgModule({
 	declarations: [
@@ -97,8 +97,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 		ViewAllAccessoryItemsPageComponent,
 		SidebarComponent,
 		CreateNewSupportTicketComponent,
-  BanCustomerComponent,
-
+		BanCustomerComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -142,10 +141,11 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 		CarouselModule,
 		BadgeModule,
 		InputNumberModule,
-    	TimelineModule,
+		TimelineModule,
 		ListboxModule,
 		CalendarModule,
-		ConfirmDialogModule
+		ConfirmDialogModule,
+		ScrollTopModule,
 	],
 	providers: [MessageService, ConfirmationService],
 	bootstrap: [AppComponent],

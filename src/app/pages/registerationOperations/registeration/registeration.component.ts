@@ -77,7 +77,7 @@ export class RegisterationComponent implements OnInit {
 				this.resultSuccess = true;
 				this.resultError = false;
 				this.initializeState;
-				this.messageService.add({ severity: "success", summary: "Service Message", detail: "Registeration Complete! Welcome to BeforeLightning " + newMember.firstname + " " + newMember.lastname });
+				this.messageService.add({ severity: "success", summary: "Success", detail: "Registeration Complete! Welcome to BeforeLightning " + newMember.firstname + " " + newMember.lastname });
 				createNewMemberForm.resetForm();
 				createNewMemberForm.reset();
 			},
