@@ -4,6 +4,22 @@
 <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
 <br>
 <p-card header="Account Details" [style]="{'width': '25rem', 'margin-bottom': '2em'}">
+  <img
+  *ngIf="currMember.imageLink"
+  alt="forum image"
+  src="{{
+    'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
+      currMember.imageLink
+  }}"
+  style="height: 40px; width: 40px;"
+
+/>
+<img
+  *ngIf="!currMember.imageLink"
+  alt="default forum image"
+  src="assets/images/account.png"
+  style="height: 40px; width: 40px;"
+/>
   <p>First Name: {{currMember.firstname}}</p>
   <p>Last Name: {{currMember.lastname}}</p>
   <p>Contact: {{currMember.contact}}</p>
@@ -116,20 +132,45 @@
   [style]="{ width: '50vw' }"
 >
 <p-toast></p-toast>
+<br/>
+<h5>Upload your profile photo here</h5>
+<br/>
+<p-fileUpload
+  method="post"
+  mode="advanced"
+  name="file"
+  url="http://localhost:8080/beforeLightningRWS/Resources/File/upload"
+  accept="image/*"
+></p-fileUpload>
+<br>
+<h5>Photo name</h5>
+      <br />
+      <input
+        name="forum-photo-name"
+        type="text"
+        pInputText
+        pTooltip="Help us to store your photo nicely by filling in the exact name and extension of your photo!"
+        [(ngModel)]="memberToUpdate.imageLink"
+        style = "width: 100%;"
+      />
+      <br>
+      <br>
     <div class="member-firstname-entry">
       <h5>First Name</h5>
-      <br />
+      <br>
       <input name="member-firstname" type="text" pInputText [(ngModel)]="memberToUpdate.firstname" style = "width: 100%;" />
 <br/>
+<br>
     <h5>Last Name</h5>
     <br />
     <input name="member-lastname" type="text" pInputText [(ngModel)]="memberToUpdate.lastname" style = "width: 100%;" />
-
+<br>
     <br/>
     <h5>Email</h5>
     <br />
     <input name="member-email" type="email" pInputText [(ngModel)]="memberToUpdate.email" style = "width: 100%;" />
     <br/>
+    <br>
     <h5>Contact Number</h5>
     <br />
     <input name="member-contact" type="text" pInputText [(ngModel)]="memberToUpdate.contact" style = "width: 100%;" />
