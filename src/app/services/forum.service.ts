@@ -62,7 +62,7 @@ export class ForumService {
     let username: string  = this.sessionService.getUsername();
     console.log("changeLikes in resource called.");
     console.log(this.baseUrl + "/changeLikes?postId=" + forumId + "&username=" + username);
-    return this.httpClient.get<any>(this.baseUrl + "/changeLikes?postId=" + forumId + "&username=" + username).pipe(
+    return this.httpClient.get<number>(this.baseUrl + "/changeLikes?postId=" + forumId + "&username=" + username).pipe(
       catchError(this.handleError)
     );
   }

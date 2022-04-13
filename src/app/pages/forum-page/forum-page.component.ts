@@ -175,21 +175,35 @@ createNewReply() {
 
 // like function
 
-hasAlreadyLiked(post: ForumPost) {
+async hasAlreadyLiked(post: ForumPost): Promise<Boolean | undefined> {
   let postIdInString: string | undefined = post.forumPostEntityId?.toString();
-  if(this.forumService.checkUserLikes(postIdInString!)) {
-    console.log("result: " + this.forumService.checkUserLikes(postIdInString!));
-    return true;
-  } else {
-    console.log("User currently does not like this photo");
-    return false;
-  }
+  return this.forumService.checkUserLikes(postIdInString!).toPromise();
 }
 
 changeLikes(post: ForumPost) {
   console.log("User wish to change status of like.");
   let postIdInString: string | undefined = post.forumPostEntityId?.toString();
-  this.forumService.changeLikes(postIdInString!);
-  this.messageService.add({ severity: 'info', summary: "Successfuly like/unlike the forum post!"});
+  this.forumService.changeLikes(postIdInString!).subscribe ({
+    next: async (response) => {
+      console.log("Getting response");
+      
+      if(await this.hasAlreadyLiked(post)) {
+        this.messageService.add({ severity: 'info', summary: "Successfully like the forum post!"});
+      } else {
+        this.messageService.add({ severity: 'info', summary: "Successfully unlike the forum post!"});
+      }
+    },
+    error: async (error) => {
+      if(await this.hasAlreadyLiked(post)) {
+        this.messageService.add({ severity: 'info', summary: "Unsuccessfully unlike the forum post!"});
+      } else {
+        this.messageService.add({ severity: 'info', summary: "Unsuccessfully like the forum post!"});
+      }
+      
+      
+    },
+  });
+  
+
 }
 }
