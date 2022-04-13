@@ -3,7 +3,6 @@ import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-
 import { PanelModule } from "primeng/panel";
 import { TableModule } from "primeng/table";
 import { ButtonModule } from "primeng/button";
@@ -30,7 +29,7 @@ import { SplitterModule } from "primeng/splitter";
 import { CheckboxModule } from "primeng/checkbox";
 import { RadioButtonModule } from "primeng/radiobutton";
 import { InputTextareaModule } from "primeng/inputtextarea";
-import { MessageService } from "primeng/api";
+import { ConfirmationService, MessageService } from "primeng/api";
 import { AvatarModule } from "primeng/avatar";
 import { InputNumberModule } from "primeng/inputnumber";
 import { CalendarModule } from "primeng/calendar";
@@ -69,6 +68,8 @@ import { SidebarComponent } from './pages/sidebar/sidebar.component';
 import { ViewAllAccessoryItemsPageComponent } from "./pages/accessoryOperations/view-all-accessory-items-page/view-all-accessory-items-page.component";
 import { CreateNewSupportTicketComponent } from './pages/create-new-support-ticket/create-new-support-ticket.component';
 import { BanCustomerComponent } from './pages/ban-customer/ban-customer.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+
 
 @NgModule({
 	declarations: [
@@ -143,9 +144,10 @@ import { BanCustomerComponent } from './pages/ban-customer/ban-customer.componen
 		InputNumberModule,
     	TimelineModule,
 		ListboxModule,
-		CalendarModule
+		CalendarModule,
+		ConfirmDialogModule
 	],
-	providers: [MessageService],
+	providers: [MessageService, ConfirmationService],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}
