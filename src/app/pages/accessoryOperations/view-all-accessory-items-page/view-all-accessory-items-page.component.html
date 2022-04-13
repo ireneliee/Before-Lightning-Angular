@@ -18,8 +18,13 @@
 		<ng-template let-accessoryItem pTemplate="listItem">
 			<div class="col-12">
 				<div class="product-list-item">
-					<img alt="Card" src="assets/images/sampleAccessoryItem.png" style="width: 20%" />
-					<div class="product-list-detail" style="width: 60%">
+					<div *ngIf="accessoryItem.imageLink; else elseBlock">
+						<img alt="forum image" src="{{ 'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' + accessoryItem.imageLink }}" style="width: 20%" />
+					</div>
+					<ng-template #elseBlock>
+						<img alt="Card" src="assets/images/sampleAccessoryItem.png" style="width: 20%" />
+					</ng-template>
+					<div class="product-list-detail" style="width: 55%">
 						<div class="product-name">{{ accessoryItem.accessoryItemName }}</div>
 						<div class="product-description">{{ accessoryItem.brand }} - {{ accessoryItem.skuCode }}</div>
 						<div class="product-description"></div>
@@ -28,7 +33,7 @@
 						<p-rating [ngModel]="accessoryItem.rating" [readonly]="true" [cancel]="false"></p-rating>
 						<div class="product-name">${{ getBestPrice(accessoryItem) }}</div>
 					</div>
-					<div class="product-list-action" style="width: 20%; float: left">
+					<div class="product-list-action" style="width: 20%; float: left; padding-left: 2px;">
 						<div class="product-description">{{ accessoryItem.accessoryOverview }}</div>
 						<p-button label="Add To Cart" (onClick)="doDisplayDialog(accessoryItem)"> </p-button>
 					</div>
@@ -40,7 +45,14 @@
 			<div class="col-12" style="border: 10px; margin-top: 20px; margin-bottom: 20px; border-width: 20px">
 				<p-card header="{{ accessoryItem.accessoryItemName }}" subheader="{{ accessoryItem.brand }}  -  {{ accessoryItem.skuCode }}" [style]="{ width: '100%' }" styleClass="p-card-shadow">
 					<ng-template pTemplate="header">
-						<img alt="Card" src="assets/images/sampleAccessoryItem.png" style="width: 600px; height: 500px" />
+						<div style="text-align: center">
+							<div *ngIf="accessoryItem.imageLink; else elseBlock" style="text-align: center">
+								<img alt="forum image" src="{{ 'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' + accessoryItem.imageLink }}" style="width: 350px; height: 300px; margin: 20px; text-align: center" />
+							</div>
+							<ng-template #elseBlock>
+								<img alt="Card" src="assets/images/sampleAccessoryItem.png" style="width: 350px; height: 300px; margin: 20px; text-align: center" />
+							</ng-template>
+						</div>
 					</ng-template>
 					<div class="product-description">{{ accessoryItem.description }}</div>
 					<p-rating [ngModel]="accessoryItem.rating" [readonly]="true" [cancel]="false"></p-rating>
