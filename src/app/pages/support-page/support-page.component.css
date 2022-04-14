@@ -19,11 +19,16 @@
     overflow-wrap: break-word;
 }
 
-.forum-title {
+.support-title {
     font-size: 1.5em;
+    color: white;
+    background-color: dodgerblue;
+    height: fit-content;
+    padding: 2%;
+    border-radius: 25px;
 }
 
-.forum-timestamp {
+.support-timestamp {
     font-size: 1.0em;
 }
 
@@ -44,7 +49,6 @@
 
 p-panel {
     overflow-wrap: break-word;
-
 }
 
 .reply-form-container {
@@ -65,4 +69,6 @@ p-panel {
     margin-right: 1em;
 }
 
-
+.support-email {
+    font-size: small;
+}

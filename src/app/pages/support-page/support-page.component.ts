@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { SelectItem } from "primeng/api";
+import { SupportTicketStatusEnum } from "src/app/models/enum/support-ticket-status-enum";
 import { SupportTicket } from "src/app/models/support-ticket";
 import { MemberService } from "src/app/services/member.service";
 import { SessionService } from "src/app/services/session.service";
@@ -69,5 +70,35 @@ export class SupportPageComponent implements OnInit {
 			console.log('***********ForumPageComponent.ts: ' + error);
 		  },
 		});
-	  }
+	}
+	
+	isOpen(st: SupportTicket) {
+		// console.log("support ticket status: " + st.supportTicketStatus);
+		if (st.supportTicketId!.toString == SupportTicketStatusEnum.OPEN.toString) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+
+	isProcessing(st: SupportTicket) {
+		// console.log("reached isProcessing");
+		if (st.supportTicketStatus.toString == SupportTicketStatusEnum.PROCESSING.toString) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	isClosed(st: SupportTicket) {
+		// console.log("reached isClosed");
+		if (st.supportTicketStatus.toString == SupportTicketStatusEnum.CLOSED.toString) {
+			return true;
+
+		} else {
+			return false;
+
+		}
+	}
 }
