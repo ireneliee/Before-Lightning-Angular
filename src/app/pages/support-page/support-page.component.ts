@@ -56,4 +56,18 @@ export class SupportPageComponent implements OnInit {
 			this.router.navigate(["/accessRightError"]);
 		}
 	}
+
+	callRefreshList(event: any) {
+		this.refreshList();
+	}
+	refreshList() {
+		this.supportService.retrieveSupportTickets(this.sessionService.getCurrentMember().email).subscribe({
+		  next: (response) => {
+			this.supportTicketEntities = response;
+		  },
+		  error: (error) => {
+			console.log('***********ForumPageComponent.ts: ' + error);
+		  },
+		});
+	  }
 }

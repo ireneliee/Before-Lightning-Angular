@@ -17,6 +17,8 @@ export class CreateNewSupportTicketComponent implements OnInit {
   username: string;
   issue: string;
   email: string;
+  @Output()
+  signalToRefresh: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
     private messageService: MessageService,
@@ -70,7 +72,9 @@ export class CreateNewSupportTicketComponent implements OnInit {
           }
             createSupportTicketForm.resetForm();
             createSupportTicketForm.reset();
-            this.sessionService.setEmail("");
+          this.sessionService.setEmail("");
+          this.signalToRefresh.emit('');
+
           },
           error: (error) => {
             this.messageService.add({ severity: "error", summary: "Error", detail: "An error has occured while posting the entry" });
