@@ -1,81 +1,103 @@
 <header class="header">
-  <article>
+  <div class="header-container">
     <div class="bl-title">
       <h1>Before Lightning</h1>
       <p>Your Go-to for Custom Builds</p>
-    </div>
-  </article>
-  <aside id="loginbox" class="loginbox">
-    <div *ngIf="sessionService.getIsLogin() == false">
-      <label for="username">Username </label>
-      <input
-        type="text"
-        [(ngModel)]="username"
-        size="16"
-        required
-        maxlength="32"
-      />
-      &nbsp;
-      <label for="password">Password </label>
-      <input
-        type="password"
-        [(ngModel)]="password"
-        size="16"
-        required
-        maxlength="32"
-      />
-      &nbsp;
-      <p-button
-          (click)="resetButton()"
-          label="Clear"
-          [style]="{'width':'60px', 'height':'25px', 'font-size' : '10px', 'padding' : '2px'}"  
-        ></p-button>      &nbsp;
-
-      <p-button
-          (click)="memberLogin()"
-          label="Login"
-          [style]="{'width':'60px', 'height':'25px', 'font-size' : '10px', 'padding' : '2px'}"  
-        ></p-button>
+    <br/>
     </div>
 
-    <div *ngIf="loginError == true" style="text-align: right; color: red">
-      Invalid login credential: Username does not exist or invalid password!
+    <div classname="login-box">
+      <div class="sign-in-box">
+        <div *ngIf="sessionService.getIsLogin() == false">
+        <br/>
+          <label for="username">Username </label>
+          <input
+            type="text"
+            [(ngModel)]="username"
+            size="16"
+            required
+            maxlength="32"
+          />
+          &nbsp;
+          <label for="password">Password </label>
+          <input
+            type="password"
+            [(ngModel)]="password"
+            size="16"
+            required
+            maxlength="32"
+          />
+          &nbsp;
+          <p-button
+            (click)="resetButton()"
+            label="Clear"
+            [style]="{
+              width: '60px',
+              height: '25px',
+              'font-size': '10px',
+              padding: '2px'
+            }"
+          ></p-button>
+          &nbsp;
+
+          <p-button
+            (click)="memberLogin()"
+            label="Login"
+            [style]="{
+              width: '60px',
+              height: '25px',
+              'font-size': '10px',
+              padding: '2px'
+            }"
+          ></p-button>
+        </div>
+
+        <div *ngIf="loginError == true" style="text-align: right; color: red">
+          Invalid login credential: Username does not exist or invalid password!
+        </div>
+      </div>
+
+      <div *ngIf="sessionService.getIsLogin() == true">
+        <div class="log-in-as">
+          <div class="greeting-profile">
+            <div class="greeting">
+              <h3>
+                {{ sessionService.getCurrentMember().firstname }}
+                {{ sessionService.getCurrentMember().lastname }}
+              </h3>
+            </div>
+            <div class="profile-picture">
+              <button
+                class="profile-button"
+                type="button"
+                style="background-color: transparent; border: none"
+                (click)="op.toggle($event)"
+              >
+                <img
+                  *ngIf="sessionService.getCurrentMember().imageLink"
+                  alt="forum image"
+                  src="{{
+                    'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
+                      sessionService.getCurrentMember().imageLink
+                  }}"
+                />
+                <img
+                  *ngIf="!sessionService.getCurrentMember().imageLink"
+                  alt="default forum image"
+                  src="assets/images/account.png"
+                  style="height: 60px; width: 60px; border-radius: 50%"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div *ngIf="sessionService.getIsLogin() == true">
-      <div class="log-in-as">
-
-        <img
-        *ngIf="sessionService.getCurrentMember().imageLink"
-        alt="forum image"
-        src="{{
-          'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
-          sessionService.getCurrentMember().imageLink
-        }}"
-        style="  height: 60px;
-        width: 60px;
-        border-radius: 50%;"
-      
-      />
-      <img
-        *ngIf="!sessionService.getCurrentMember().imageLink"
-        alt="default forum image"
-        src="assets/images/account.png"
-        style="height: 60px;
-        width: 60px;
-        border-radius: 50%;"
-      />
-        <p>Welcome to BeforeLightning, {{ sessionService.getCurrentMember().firstname }}
-        {{ sessionService.getCurrentMember().lastname }}!</p>
-
-        <p-button
-        (click)="memberLogout()"
-        label="Logout"
-        [style]="{'width':'60px', 'height':'25px', 'font-size' : '10px', 'padding' : '2px'}"  
-      >
+  </div>
+  <p-overlayPanel #op>
+    <ng-template pTemplate>
+      <p-button (click)="memberLogout()" label="Logout" icon="pi pi-sign-out">
       </p-button>
-    </div>
-       
-    </div>
-  </aside>
+    </ng-template>
+  </p-overlayPanel>
 </header>
