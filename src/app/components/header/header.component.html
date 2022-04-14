@@ -2,7 +2,7 @@
   <article>
     <div class="bl-title">
       <h1>Before Lightning</h1>
-      <p>Your Go-to for Custom Built</p>
+      <p>Your Go-to for Custom Builds</p>
     </div>
   </article>
   <aside id="loginbox" class="loginbox">
@@ -45,8 +45,28 @@
     <div *ngIf="sessionService.getIsLogin() == true">
       <div class="log-in-as">
 
-        <p>You are logged in as {{ sessionService.getCurrentMember().firstname }}
-        {{ sessionService.getCurrentMember().lastname }}</p>
+        <img
+        *ngIf="sessionService.getCurrentMember().imageLink"
+        alt="forum image"
+        src="{{
+          'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
+          sessionService.getCurrentMember().imageLink
+        }}"
+        style="  height: 100px;
+        width: 100px;
+        border-radius: 50%;"
+      
+      />
+      <img
+        *ngIf="!sessionService.getCurrentMember().imageLink"
+        alt="default forum image"
+        src="assets/images/account.png"
+        style="height: 100px;
+        width: 100px;
+        border-radius: 50%;"
+      />
+        <p>Welcome to BeforeLightning, {{ sessionService.getCurrentMember().firstname }}
+        {{ sessionService.getCurrentMember().lastname }}!</p>
 
         <p-button
         (click)="memberLogout()"

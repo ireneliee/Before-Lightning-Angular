@@ -120,13 +120,16 @@ export class CustomizeProductsPageComponent implements OnInit {
 					checkPartExist = true;
 					if (this.listOfSelectedPartChoices[j].part != undefined) {
 						partName = this.listOfSelectedPartChoices[j].part!.partName;
+						console.log(this.listOfSelectedPartChoices[j].part!);
+						console.log("PART NAME IS: " + partName);
+
 						break;
 					}
 				}
 			}
 			if (checkPartExist == false) {
 				checkBuild = false;
-				this.messageService.add({ severity: "error", summary: "Error", detail: "Missing Part: " + partName });
+				this.messageService.add({ severity: "error", summary: "Error", detail: "Missing Part: " + this.productToCustomize.partEntities[i].partName });
 				break;
 			}
 		}

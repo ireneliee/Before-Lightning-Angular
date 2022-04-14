@@ -173,7 +173,9 @@ createAddress() {
 
 createCreditCard() {
 	if(this.currMember.userEntityId && this.newCreditCard.creditCardNumber && this.newCreditCard.nameOnCard, this.newCreditCard.expiryDate) {
-		if(this.newCreditCard.creditCardNumber?.toString.length != 16) {
+		if(this.newCreditCard.creditCardNumber!.toString().length != 16) {
+			console.log(this.newCreditCard.creditCardNumber);
+			console.log(this.newCreditCard.creditCardNumber!.toString().length)
 			this.messageService.add({severity: "error", summary: "Service Message", detail: "Credit card number needs to be 16 digits long!"});
 
 		} else{
@@ -188,7 +190,7 @@ createCreditCard() {
 				this.currMember = this.sessionService.getCurrentMember();
 				this.cardList = this.currMember.creditCards!;
 				this.newCreditCard = new CreditCard;
-				this.messageService.add({ severity: 'info', summary: "Successfully deleted the credit card" });
+				this.messageService.add({ severity: 'info', summary: "Successfully created the credit card" });
 					}
 				}
 			})
