@@ -26,10 +26,15 @@
         maxlength="32"
       />
       &nbsp;
-      <input type="reset" value="Clear" />
+      <p-button type="reset" label="Clear" [style]="{'width':'60px', 'height':'25px', 'font-size' : '10px', 'padding' : '2px'}"  ></p-button>
       &nbsp;
-      <input type="button" (click)="memberLogin()" value="Login" />
-    </form>
+
+      <p-button
+          (click)="memberLogin()"
+          label="Login"
+          [style]="{'width':'60px', 'height':'25px', 'font-size' : '10px', 'padding' : '2px'}"  
+        ></p-button>
+      </form>
     </div>
 
     <div *ngIf="loginError == true" style="text-align: right; color: red">
@@ -37,9 +42,14 @@
     </div>
 
     <div *ngIf="sessionService.getIsLogin() == true">
-      You are login as {{ sessionService.getCurrentMember().firstname }}
+      <h4>You are logged in as</h4> {{ sessionService.getCurrentMember().firstname }}
       {{ sessionService.getCurrentMember().lastname }}
-      <input type="button" (click)="memberLogout()" value="Logout" />
+    
+        <p-button
+          (click)="memberLogout()"
+          label="Logout"
+          [style]="{'width':'60px', 'height':'25px', 'font-size' : '10px', 'padding' : '2px'}"  
+        ></p-button>
     </div>
   </aside>
 </header>
