@@ -77,6 +77,7 @@ export class ViewMyCartPageComponent implements OnInit {
 			this.listOfCreditCards = this.member.creditCards!;
 		}
 		this.listOfAddresses = this.member.addresses!;
+		console.log("testtest");
 	}
 
 	checkItemPriceAndQuantity(lineitem: PurchaseOrderLineItem) {
