@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { SelectItem } from "primeng/api";
 import { Product } from "src/app/models/product";
+import { Review } from "src/app/models/review";
 import { ProductService } from "src/app/services/product.service";
 import { SessionService } from "src/app/services/session.service";
 
@@ -18,6 +19,10 @@ export class ProductsHomePageComponent implements OnInit {
 	sortField: string;
 	sortOrder: number;
 	sortKey: string;
+	selectedProduct: Product | null = null;
+	displayReviewsDialog: boolean = false;
+	listOfReviews: Review[] = [];
+	ratingsMap: Map<Product, number> = new Map();
 
 	constructor(private sessionService: SessionService, private router: Router, private productService: ProductService) {
 		this.sortOptions = new Array();
@@ -36,16 +41,25 @@ export class ProductsHomePageComponent implements OnInit {
 				this.listOfProductEntities = response;
 				console.log("going through products to calc rating");
 				this.listOfProductEntities.forEach((product) => {
-					let avgRating = 0;
-					let numReviews = product.reviewEntities.length;
-					let sumRating = 0;
-					product.reviewEntities.forEach((review) => {
-						sumRating += review.rating!;
-					})
-					avgRating = sumRating / numReviews;
-					console.log("avg rating for this product: " + avgRating);
-					this.reviewMap.set(product.productName!, avgRating);	
-				})
+					let rating = 0;
+					let total = 0;
+					if (product.reviewEntities!.length > 0) {
+						product.reviewEntities!.forEach((review) => {
+							total += review.rating!;
+						});
+						rating = Math.round(total / product.reviewEntities!.length);
+					}
+					this.ratingsMap.set(product, rating);
+					// let avgRating = 0;
+					// let numReviews = product.reviewEntities.length;
+					// let sumRating = 0;
+					// product.reviewEntities.forEach((review) => {
+					// 	sumRating += review.rating!;
+					// });
+					// avgRating = sumRating / numReviews;
+					// console.log("avg rating for this product: " + avgRating);
+					// this.reviewMap.set(product.productName!, avgRating);
+				});
 				console.log(this.listOfProductEntities);
 			},
 			error: (error) => {
@@ -73,7 +87,14 @@ export class ProductsHomePageComponent implements OnInit {
 	}
 
 	customizeProduct(product: Product) {
-      this.router.navigate(["/customizeProductsPage/" + product.productEntityId]);
+		this.router.navigate(["/customizeProductsPage/" + product.productEntityId]);
+	}
+
+	doDisplayReviewsDialog(product: Product) {
+		this.displayReviewsDialog = true;
+		console.log(product);
+		this.selectedProduct = product;
+		this.listOfReviews = this.selectedProduct.reviewEntities!;
 	}
 
 	checkAccessRight() {

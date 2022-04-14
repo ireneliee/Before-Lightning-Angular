@@ -29,6 +29,7 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 	selectedQuantity: number = 1;
 	selectedAccessoryItemQuantityOnHand: number = 0;
 	listOfReviews: Review[] = [];
+	ratingsMap : Map<AccessoryItem,number> = new Map();
 
 	constructor(private router: Router, private activatedRoute: ActivatedRoute, public sessionService: SessionService, private messageService: MessageService, private accessoryService: AccessoryService) {
 		this.retrieveAccessoryError = false;
@@ -49,6 +50,17 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 				next: (response) => {
 					this.accessory = response;
 					this.listOfAccessoryItems = this.accessory.accessoryItemEntities!;
+					this.listOfAccessoryItems.forEach(acc => {
+						let rating = 0;
+						let total = 0;
+						if (acc.reviewEntities!.length > 0) {
+							acc.reviewEntities!.forEach(review => {
+								total += review.rating!;
+							});
+							rating = Math.round(total/acc.reviewEntities!.length);
+						}
+						this.ratingsMap.set(acc, rating);
+					})
 				},
 				error: (error) => {
 					this.retrieveAccessoryError = true;

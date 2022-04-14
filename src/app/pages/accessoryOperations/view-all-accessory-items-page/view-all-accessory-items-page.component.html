@@ -30,12 +30,13 @@
 						<div class="product-description"></div>
 						<div class="product-description">{{ accessoryItem.description }}</div>
 
-						<p-rating [ngModel]="accessoryItem.rating" [readonly]="true" [cancel]="false"></p-rating>
+						<p-rating [ngModel]="ratingsMap.get(accessoryItem)" [readonly]="true" [cancel]="false" [stars]="5"></p-rating>
 						<div class="product-name">${{ getBestPrice(accessoryItem) }}</div>
 					</div>
 					<div class="product-list-action" style="width: 20%; float: left; padding-left: 2px">
 						<div class="product-description">{{ accessoryItem.accessoryOverview }}</div>
 						<p-button label="Add To Cart" (onClick)="doDisplayDialog(accessoryItem)"> </p-button>
+						&nbsp;
 						<p-button label="View Reviews" (onClick)="doDisplayReviewsDialog(accessoryItem)"> </p-button>
 					</div>
 				</div>
@@ -56,12 +57,13 @@
 						</div>
 					</ng-template>
 					<div class="product-description">{{ accessoryItem.description }}</div>
-					<p-rating [ngModel]="accessoryItem.rating" [readonly]="true" [cancel]="false"></p-rating>
+					<p-rating [ngModel]="ratingsMap.get(accessoryItem)" [readonly]="true" [cancel]="false" [stars]="5"></p-rating>
 					<div class="product-name">${{ getBestPrice(accessoryItem) }}</div>
 
 					<ng-template pTemplate="footer">
 						<p-button label="Add To Cart" (onClick)="doDisplayDialog(accessoryItem)"></p-button>
-						<p-button label="View Reviews" (onClick)="doDisplayReviewsDialog(accessoryItem)"></p-button>
+						&nbsp;
+						<p-button label="View Reviews" class="p-button-secondary" (onClick)="doDisplayReviewsDialog(accessoryItem)"></p-button>
 					</ng-template>
 				</p-card>
 			</div>
@@ -91,8 +93,6 @@
 	<ng-template #elseBlock3 style="text-align: center">
 		<img alt="Card" src="assets/images/noReviewsImage.png" style="width: 90%; height: 90%; margin: 20px" />
 	</ng-template>
-
-	<!-- <p-rating [ngModel]="review.rating" [readonly]="true" [stars]="5" [cancel]="false"></p-rating> -->
 	<ng-template pTemplate="footer">
 		<h3>There are a total of {{ listOfReviews.length }} reviews</h3>
 	</ng-template>
