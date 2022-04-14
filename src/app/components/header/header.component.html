@@ -3,57 +3,65 @@
     <div class="bl-title">
       <h1>Before Lightning</h1>
       <p>Your Go-to for Custom Builds</p>
-    <br/>
+      <br />
     </div>
 
     <div classname="login-box">
       <div class="sign-in-box">
         <div *ngIf="sessionService.getIsLogin() == false">
-        <br/>
-          <label for="username">Username </label>
-          <input
-            type="text"
-            [(ngModel)]="username"
-            size="16"
-            required
-            maxlength="32"
-          />
-          &nbsp;
-          <label for="password">Password </label>
-          <input
-            type="password"
-            [(ngModel)]="password"
-            size="16"
-            required
-            maxlength="32"
-          />
-          &nbsp;
-          <p-button
-            (click)="resetButton()"
-            label="Clear"
-            [style]="{
-              width: '60px',
-              height: '25px',
-              'font-size': '10px',
-              padding: '2px'
-            }"
-          ></p-button>
-          &nbsp;
+          <div class="logging-in-box">
+            <div class="username-input">
+              <label for="username">Username </label>
+              <input
+                type="text"
+                [(ngModel)]="username"
+                size="16"
+                required
+                maxlength="32"
+              />
+            </div>
+            <br />
+            <div class="password-input">
+              <label for="password">Password </label>
+              <input
+                type="password"
+                [(ngModel)]="password"
+                size="16"
+                required
+                maxlength="32"
+              />
+            </div>
+          </div>
 
-          <p-button
-            (click)="memberLogin()"
-            label="Login"
-            [style]="{
-              width: '60px',
-              height: '25px',
-              'font-size': '10px',
-              padding: '2px'
-            }"
-          ></p-button>
+          <div class="login-action-button">
+            <p-button
+              (click)="resetButton()"
+              label="Clear"
+              [style]="{
+                width: '60px',
+                height: '25px',
+                'font-size': '10px',
+                padding: '2px'
+              }"
+            ></p-button>
+            &nbsp;
+
+            <p-button
+              (click)="memberLogin()"
+              label="Login"
+              [style]="{
+                width: '60px',
+                height: '25px',
+                'font-size': '10px',
+                padding: '2px'
+              }"
+            ></p-button>
+          </div>
         </div>
-
-        <div *ngIf="loginError == true" style="text-align: right; color: red">
-          Invalid login credential: Username does not exist or invalid password!
+        <div class="error-message">
+          <div *ngIf="loginError == true" style="text-align: right; color: red">
+            Invalid username or password!
+          </div>
         </div>
       </div>
 

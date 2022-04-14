@@ -50,3 +50,26 @@ h1 {
 .input-container {
   margin-bottom: 3em;
 }
+
+.login-action-button {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  margin-right: 1em;
+  text-align: right;
+}
+
+.username-input {
+  display: flex;
+  margin-top: 1em;
+  margin-right: 1em;
+}
+
+.input-label {
+  flex-basis: 70%;
+}
+
+.error-message {
+  margin-right: 1em;
+  margin-left: 0;
+  padding-left: 0;
+}

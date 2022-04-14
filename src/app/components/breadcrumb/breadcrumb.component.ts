@@ -31,10 +31,10 @@ export class BreadcrumbComponent implements OnInit {
 			this.items.push({ label: "Registeration", routerLink: "/registeration" });
 		}
 		if (this.pageName == "Accessory") {
-			this.items.push({ label: "Accessory", routerLink: "accessoryHomePage" });
+			this.items.push({ label: "Accessory", routerLink: "/accessoryHomePage" });
 		}
 		if (this.pageName == "View All Accessory Items") {
-			this.items.push({ label: "Accessory", routerLink: "accessoryHomePage" });
+			this.items.push({ label: "Accessory", routerLink: "/viewAllAccessoryItemsPage"});
 			this.items.push({ label: "View All Accessories" });
 		}
 		if (this.pageName == "View My Cart") {
