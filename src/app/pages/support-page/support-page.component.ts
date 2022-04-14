@@ -74,7 +74,7 @@ export class SupportPageComponent implements OnInit {
 	
 	isOpen(st: SupportTicket) {
 		// console.log("support ticket status: " + st.supportTicketStatus);
-		if (st.supportTicketId!.toString == SupportTicketStatusEnum.OPEN.toString) {
+		if (st.supportTicketStatus == SupportTicketStatusEnum.OPEN) {
 			return true;
 		} else {
 			return false;
@@ -84,7 +84,7 @@ export class SupportPageComponent implements OnInit {
 
 	isProcessing(st: SupportTicket) {
 		// console.log("reached isProcessing");
-		if (st.supportTicketStatus.toString == SupportTicketStatusEnum.PROCESSING.toString) {
+		if (st.supportTicketStatus== SupportTicketStatusEnum.PROCESSING) {
 			return true;
 		} else {
 			return false;
@@ -93,7 +93,7 @@ export class SupportPageComponent implements OnInit {
 
 	isClosed(st: SupportTicket) {
 		// console.log("reached isClosed");
-		if (st.supportTicketStatus.toString == SupportTicketStatusEnum.CLOSED.toString) {
+		if (st.supportTicketStatus == SupportTicketStatusEnum.CLOSED) {
 			return true;
 
 		} else {

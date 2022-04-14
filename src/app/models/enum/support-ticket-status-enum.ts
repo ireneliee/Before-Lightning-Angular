@@ -1,5 +1,5 @@
 export enum SupportTicketStatusEnum {
-	OPEN,
-	PROCESSING,
-	CLOSED,
+	OPEN = 'OPEN',
+	PROCESSING = 'PROCESSING',
+	CLOSED = 'CLOSED',
 }
