@@ -1,5 +1,7 @@
 ::ng-deep header {
   background-image: linear-gradient(to right, #174b80, #c5c6c7);
+  min-height: 70px;
+
 }
 
 h1 {
@@ -10,6 +12,7 @@ h1 {
   color: white;
   margin-top: 1em;
   margin-left: 1em;
+  flex-basis: 88%;
 }
 
 .log-in-as {
@@ -18,4 +21,32 @@ h1 {
   color: #13142c;
   margin-top: 0px;
   flex-direction: row-reverse;
+}
+
+.header-container {
+  display: flex;
+}
+
+.greeting-profile {
+  display: flex;
+}
+
+.profile-button img {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  margin-right: 0.5em;
+  margin-top: 2em;
+}
+
+.greeting h3 {
+  color: white;
+  margin-top: 2.8em;
+  margin-right: 0.6em;
+  margin-bottom: 0.2em;
+  text-align: right;
+}
+
+.input-container {
+  margin-bottom: 3em;
 }

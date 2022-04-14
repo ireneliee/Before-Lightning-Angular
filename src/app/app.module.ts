@@ -71,6 +71,7 @@ import { CreateNewSupportTicketComponent } from "./pages/create-new-support-tick
 import { BanCustomerComponent } from "./pages/ban-customer/ban-customer.component";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import {AvatarGroupModule} from 'primeng/avatargroup';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -146,7 +147,8 @@ import {AvatarGroupModule} from 'primeng/avatargroup';
 		CalendarModule,
 		ConfirmDialogModule,
 		ScrollTopModule,
-		AvatarGroupModule
+		AvatarGroupModule,
+		OverlayPanelModule
 	],
 	providers: [MessageService, ConfirmationService],
 	bootstrap: [AppComponent],
