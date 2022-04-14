@@ -45,6 +45,10 @@ export class ViewMyOrdersPageComponent implements OnInit {
   purchaseOrderToView: FullPurchaseOrderEntity;
   purchaseOrderLineItemToView: FullPurchaseOrderLineItem[];
 
+  // separating between acc & build
+  listOfAccPol: FullPurchaseOrderLineItem[];
+  listOfBuildPol: FullPurchaseOrderLineItem[];
+
   //submit support ticket dialog
   submitSupportTicketDisplay: boolean;
 
@@ -113,6 +117,10 @@ export class ViewMyOrdersPageComponent implements OnInit {
     this.resultSuccess = false;
     this.resultError = false;
 
+    // separating
+    this.listOfAccPol = new Array();
+    this.listOfBuildPol = new Array();
+
     this.JSON = JSON;
 
     this.events1 = [
@@ -164,6 +172,20 @@ export class ViewMyOrdersPageComponent implements OnInit {
   }
 
   showViewPurchaseOrderDialog(purchaseOrderToView: FullPurchaseOrderEntity) {
+    this.listOfBuildPol = [];
+    this.listOfAccPol = [];
+    let listOfPols: FullPurchaseOrderLineItem[] = purchaseOrderToView.purchaseOrderLineItems!;
+    for (let i = 0; i < listOfPols.length; i++) {
+      if (
+        listOfPols[i].purchaseOrderLineItemTypeEnum ==
+        PurchaseOrderLineItemTypeEnum.BUILD
+      ) {
+        console.log(listOfPols[i].productEntity.productName);
+        this.listOfBuildPol.push(listOfPols[i]);
+      } else {
+        this.listOfAccPol.push(listOfPols[i]);
+      }
+    }
     this.submitSupportTicketDisplay = false;
     this.submitForumDisplay = false;
     this.createReviewDisplay = false;

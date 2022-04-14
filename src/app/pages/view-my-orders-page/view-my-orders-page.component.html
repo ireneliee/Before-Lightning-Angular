@@ -171,7 +171,7 @@
 
     <p-table
       *ngIf="atLeastOneAcc(purchaseOrderToView)"
-      [value]="purchaseOrderLineItemToView"
+      [value]="listOfAccPol"
     >
       <ng-template pTemplate="header">
         <tr>
@@ -193,7 +193,7 @@
 
     <br />
     <p-table
-      [value]="purchaseOrderLineItemToView"
+      [value]="listOfBuildPol"
       *ngIf="atLeastOneBuild(purchaseOrderToView)"
     >
       <ng-template pTemplate="header">
