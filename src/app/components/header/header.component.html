@@ -29,7 +29,7 @@
       &nbsp;
       <p-button
           (click)="memberLogin()"
-          label="Logout"
+          label="Login"
           [style]="{'width':'60px', 'height':'25px', 'font-size' : '10px', 'padding' : '2px'}"  
         ></p-button>
     </div>
@@ -39,14 +39,19 @@
     </div>
 
     <div *ngIf="sessionService.getIsLogin() == true">
-      <h4>You are logged in as</h4> {{ sessionService.getCurrentMember().firstname }}
-      {{ sessionService.getCurrentMember().lastname }}
-    
+      <div class="log-in-as">
+
+        <p>You are logged in as {{ sessionService.getCurrentMember().firstname }}
+        {{ sessionService.getCurrentMember().lastname }}</p>
+
         <p-button
-          (click)="memberLogout()"
-          label="Logout"
-          [style]="{'width':'60px', 'height':'25px', 'font-size' : '10px', 'padding' : '2px'}"  
-        ></p-button>
+        (click)="memberLogout()"
+        label="Logout"
+        [style]="{'width':'60px', 'height':'25px', 'font-size' : '10px', 'padding' : '2px'}"  
+      >
+      </p-button>
+    </div>
+       
     </div>
   </aside>
 </header>
