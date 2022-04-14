@@ -11,7 +11,7 @@
         <div *ngIf="sessionService.getIsLogin() == false">
           <div class="logging-in-box">
             <div class="username-input">
-              <label for="username">Username </label>
+              <label style = "text-align: right;"  for="username"> Username:</label>
               <input
                 type="text"
                 [(ngModel)]="username"
@@ -22,7 +22,7 @@
             </div>
             <br />
             <div class="password-input">
-              <label for="password">Password </label>
+              <label style = "text-align: right;" for="password">Password:  </label>
               <input
                 type="password"
                 [(ngModel)]="password"
