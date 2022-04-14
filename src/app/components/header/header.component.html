@@ -7,7 +7,6 @@
   </article>
   <aside id="loginbox" class="loginbox">
     <div *ngIf="sessionService.getIsLogin() == false">
-      <form>
       <label for="username">Username </label>
       <input
         type="text"
@@ -26,15 +25,17 @@
         maxlength="32"
       />
       &nbsp;
-      <p-button type="reset" label="Clear" [style]="{'width':'60px', 'height':'25px', 'font-size' : '10px', 'padding' : '2px'}"  ></p-button>
-      &nbsp;
+      <p-button
+          (click)="resetButton()"
+          label="Clear"
+          [style]="{'width':'60px', 'height':'25px', 'font-size' : '10px', 'padding' : '2px'}"  
+        ></p-button>      &nbsp;
 
       <p-button
           (click)="memberLogin()"
           label="Login"
           [style]="{'width':'60px', 'height':'25px', 'font-size' : '10px', 'padding' : '2px'}"  
         ></p-button>
-      </form>
     </div>
 
     <div *ngIf="loginError == true" style="text-align: right; color: red">
