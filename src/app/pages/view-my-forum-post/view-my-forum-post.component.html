@@ -1,6 +1,6 @@
 <app-breadcrumb pageName="Forum: My posts"></app-breadcrumb>
 <app-forum-menu></app-forum-menu>
-<p-messages></p-messages>
+<p-messages [(value)]="msgs"></p-messages>
 <div class="card" *ngIf = "sessionService.getIsLogin() == true">
   <p-dataView
     #dv
@@ -208,10 +208,22 @@
       <p-dataView [value]="forumToViewReplies">
         <ng-template let-reply pTemplate="listItem">
           <div class="reply-box">
+            <!-- <h1>{{JSON.stringify(reply.author)}}</h1> -->
             <div class="reply-avatar">
               <div class="avatar-only">
                 <p-avatar
+                  *ngIf = "reply.author.imageLink === null"
                   label="{{ reply.author.username.charAt(0) }}"
+                  size="large"
+                  style="text-align: center"
+                ></p-avatar>
+               
+                <p-avatar
+                  *ngIf = "reply.author.imageLink !== null"
+                  image = "{{
+                    'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
+                      reply.author.imageLink
+                  }}"
                   size="large"
                   style="text-align: center"
                 ></p-avatar>
@@ -224,6 +236,7 @@
               <div class="forum-timestamp">
                 Published on {{ reply.timestamp | date: "medium" }}
               </div>
+              <br/>
             </div>
           </div>
           <br />
@@ -245,13 +258,24 @@
       <div class="reply-profile">
         <div class="member-bio" style="margin-left: 1.2em">
           <p-avatar
-            label="{{ currentMember.charAt(0) }}"
-            shape="circle"
-            size="large"
-          ></p-avatar>
-          <br />
-        </div>
-        <div>{{ currentMember }}</div>
+          *ngIf="currentMember.imageLink === null"
+          label="{{ currentMember.username.charAt(0) }}"
+          size="large"
+          style="text-align: center"
+        ></p-avatar>
+
+        <p-avatar
+          *ngIf="currentMember.imageLink !== null"
+          image="{{
+            'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
+              currentMember.imageLink
+          }}"
+          size="large"
+          style="text-align: center"
+        ></p-avatar>
+        <br />
+      </div>
+      <div>{{ currentMember.username }}</div>
       </div>
       <form>
         <div class="reply-content-form">

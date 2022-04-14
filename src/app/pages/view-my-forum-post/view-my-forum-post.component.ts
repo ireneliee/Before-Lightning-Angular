@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ForumPost } from 'src/app/models/forum-post';
 import { ForumService } from 'src/app/services/forum.service';
 import { SessionService } from 'src/app/services/session.service';
-import {MessageService, SelectItem} from 'primeng/api';
+import {Message, MessageService, SelectItem} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
 import { NgForm } from '@angular/forms';
 import { Reply } from 'src/app/models/reply';
@@ -28,7 +28,7 @@ export class ViewMyForumPostComponent implements OnInit {
   sortKey: string;
 
   // attribute for create new reply
-  currentMember: string;
+  currentMember: Member;
   replyContent: string;
   createReplyDisplay:boolean;
   replySubmitted: boolean;
@@ -38,6 +38,9 @@ export class ViewMyForumPostComponent implements OnInit {
   //image retrieval
   imageToShow: any;
   isImageLoading: boolean;
+
+  // message
+  msgs: Message[];
 
 
   constructor(
@@ -60,7 +63,7 @@ export class ViewMyForumPostComponent implements OnInit {
 
     this.replyContent = "";
     this.sortOrder = 0;
-    this.currentMember = this.sessionService.getUsername();
+    this.currentMember = this.sessionService.getCurrentMember();
     this.createReplyDisplay = false;
     this.replySubmitted = false;
     this.replySuccess = false;
@@ -68,11 +71,21 @@ export class ViewMyForumPostComponent implements OnInit {
 
     // image retrieval
     this.isImageLoading = false;
+
+    // message service
+    this.msgs = [];
   }
 
   testtest():void {
     console.log("this is testing method");
   }
+
+  // showing message
+  makeMessageAppear(m: Message) {
+    this.msgs = [];
+    this.msgs.push(m);
+  }
+
 
   ngOnInit(): void {
     this.forumService.getMyForumPosts().subscribe({
@@ -161,7 +174,7 @@ createNewReply() {
           this.replySuccess = true;
           this.replyError = false;
           this.clearReplyForm();
-          this.messageService.add({
+          this.makeMessageAppear({
             severity: 'info',
             summary: 'Successfuly posted a forum reply',
           });
@@ -172,7 +185,7 @@ createNewReply() {
         error: (error) => {
           this.replyError = true;
           this.replySuccess = false;
-          this.messageService.add({
+          this.makeMessageAppear({
             severity: 'error',
             summary: 'Error',
             detail: 'An error has occured while posting the entry',
@@ -183,7 +196,7 @@ createNewReply() {
       });
   }
   } else {
-    this.messageService.add({
+    this.makeMessageAppear({
       severity: 'error',
       summary: 'Comment cannot be empty!'
     });
@@ -257,9 +270,9 @@ async changeLikes(post: ForumPost) {
       .then((response) => {
         this.refreshList();
         if(this.fastCheckHasAlreadyLiked(post)) {
-          this.messageService.add({ severity: 'info', summary: "You like this post!"});
+          this.makeMessageAppear({ severity: 'info', summary: "You like this post!"});
         } else {
-          this.messageService.add({ severity: 'info', summary: "You unlike this post!"});
+          this.makeMessageAppear({ severity: 'info', summary: "You unlike this post!"});
         }
       });
   }
