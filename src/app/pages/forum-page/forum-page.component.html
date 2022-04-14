@@ -116,31 +116,39 @@
     styleClass="p-card-shadow"
   >
     <ng-template pTemplate="header">
-      <img
-        *ngIf="forumToView.imageLink"
-        alt="forum image"
-        src="{{
-          'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
-            forumToView.imageLink
-        }}"
-      />
-      <img
-        *ngIf="!forumToView.imageLink"
-        alt="default forum image"
-        src="assets/images/forumDefault.png"
-      />
+      <div class="forum-image">
+        <img
+          *ngIf="forumToView.imageLink"
+          alt="forum image"
+          src="{{
+            'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
+              forumToView.imageLink
+          }}"
+        />
+        <img
+          *ngIf="!forumToView.imageLink"
+          alt="default forum image"
+          src="assets/images/forumDefault.png"
+        />
+      </div>
     </ng-template>
 
     <div style="overflow-wrap: break-word">
       {{ forumToView.content }}
     </div>
     <ng-template pTemplate="footer">
-      <p-chip
-        label="{{ forumToView.userWhoLikes?.length }}"
+      <p-button
+        label="Like"
+        badge="{{ forumToView.userWhoLikes?.length }}"
+        styleClass="mr-2"
+        (click)="showViewLikesDisplay(forumToView)"
+      ></p-button>
+      <!-- <p-chip
+        label=
         icon="pi pi-thumbs-up"
+        type = "button"
         style="padding-right: 1em"
-      ></p-chip>
-      
+      ></p-chip> -->
     </ng-template>
   </p-card>
   <p-panel header="Replies" [toggleable]="true">
@@ -192,12 +200,9 @@
   [(visible)]="createReplyDisplay"
   [style]="{ width: '40vw' }"
 >
-
   <div class="reply-form-container">
-    
     <div class="reply-profile">
       <div class="member-bio" style="margin-left: 1.2em">
-        
         <p-avatar
           *ngIf="currentMember.imageLink === null"
           label="{{ currentMember.username.charAt(0) }}"
@@ -253,4 +258,43 @@
       </div>
     </form>
   </div>
+</p-dialog>
+
+<p-dialog
+  class="add-new-comment"
+  *ngIf="viewLikesDisplay"
+  [modal]="true"
+  header="User who likes the post"
+  [(visible)]="viewLikesDisplay"
+  [style]="{ width: '20vw' }"
+>
+  <p-dataView [value]="likeList">
+    <ng-template let-userLikes pTemplate="listItem">
+      <div class="like-box">
+        <div class="like-avatar">
+          <div class="avatar-only">
+            <p-avatar
+              *ngIf="!doesNotHaveProfilePic(userLikes)"
+              label="{{ userLikes.username.charAt(0) }}"
+              size="large"
+              style="text-align: center; margin-right: 2em"
+            ></p-avatar>
+
+            <p-avatar
+              *ngIf="doesNotHaveProfilePic(userLikes)"
+              image="{{
+                'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
+                  userLikes.imageLink
+              }}"
+              size="large"
+              style="text-align: center; margin-right: 2em"
+            ></p-avatar>
+          </div>
+          <p>{{ userLikes.username }}</p>
+        </div>
+        <br />
+      </div>
+      <br />
+    </ng-template>
+  </p-dataView>
 </p-dialog>

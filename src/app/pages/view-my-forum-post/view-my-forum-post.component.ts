@@ -42,6 +42,11 @@ export class ViewMyForumPostComponent implements OnInit {
   // message
   msgs: Message[];
 
+    // view likes
+    viewLikesDisplay: boolean;
+    likeList: Member[];
+  
+
 
   constructor(
     private router: Router,
@@ -74,6 +79,10 @@ export class ViewMyForumPostComponent implements OnInit {
 
     // message service
     this.msgs = [];
+
+    //view likes
+    this.viewLikesDisplay = false;
+    this.likeList = new Array();
   }
 
   testtest():void {
@@ -278,4 +287,16 @@ async changeLikes(post: ForumPost) {
   }
 }
 
+showViewLikesDisplay(forumToView: ForumPost) {
+  this.viewLikesDisplay = true;
+  this.likeList = forumToView.userWhoLikes!;
+}
+
+doesNotHaveProfilePic(member: Member) {
+  if(member.imageLink === null || member.imageLink === "") {
+    return false;
+  } else {
+    return true;
+  }
+}
 }

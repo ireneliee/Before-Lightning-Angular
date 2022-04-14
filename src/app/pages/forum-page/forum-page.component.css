@@ -98,6 +98,11 @@ p-panel {
     margin-right: 1em;
 }
 
+.forum-image img {
+    width: 100%;
+    height: 30em;
+}
+
 .reply-box {
     display: flex;
 }
@@ -107,9 +112,8 @@ p-panel {
     text-align: left;
 }
 
-.avatar-only {
-    margin-left: 1em;
+.like-avatar {
+    text-align: center;
 }
-
 
 

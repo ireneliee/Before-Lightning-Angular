@@ -1,74 +1,171 @@
 <app-breadcrumb pageName="Products"></app-breadcrumb>
 
 <div class="card">
-	<p-dataView #dv [value]="listOfProductEntities" [paginator]="true" [rows]="9" layout="grid">
-		<ng-template pTemplate="header">
-			<div class="flex flex-column md:flex-row md:justify-content-between">
-				<h2>Bespoke Customizable Goods</h2>
-				<br />
-				<span style="width: 25%; float: left">
-					<p-dataViewLayoutOptions></p-dataViewLayoutOptions>
-				</span>
-				<span style="width: 75%">
-					<p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)" [style]="{ 'min-width': '15em' }"></p-dropdown>
-				</span>
-			</div>
-		</ng-template>
-		<ng-template let-product pTemplate="listItem">
-			<div class="col-12">
-				<div class="product-list-item">
-					<div *ngIf="product.imageLink; else elseBlock">
-						<img alt="forum image" src="{{ 'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' + product.imageLink }}" style="width: 200px; height: 170px" />
-					</div>
-					<ng-template #elseBlock>
-						<img alt="Card" src="assets/images/sampleLaptop.png" style="width: 200px; height: 170px" />
-					</ng-template>
-					<!-- <img alt="Card" src="assets/images/sampleLaptop.png" style="width: 20%" /> -->
-					<div class="product-list-detail" style="width: 60%">
-						<div class="product-name">{{ product.productName }}</div>
-						<div class="product-description">{{ product.description }}</div>
-						<p-rating [ngModel]="ratingsMap.get(product)" [readonly]="true" [cancel]="false" [stars]="5"></p-rating>
-						<!-- <div>[ngModel]="reviewMap.get(product.productName)"</div> -->
-					</div>
-					<div class="product-list-action" style="width: 20%; float: left">
-						<div class="product-description">{{ product.productOverview }}</div>
-						<p-button label="Customize Now" icon="pi pi-check" (onClick)="customizeProduct(product)"> </p-button>
-						&nbsp;
-						<p-button label="View Reviews" (onClick)="doDisplayReviewsDialog(product)"> </p-button>
-					</div>
-				</div>
-			</div>
-			<div class="col-12"><br /></div>
-		</ng-template>
-		<ng-template let-product pTemplate="gridItem">
-			<div class="col-12" style="border: 10px; margin-top: 20px; margin-bottom: 20px; border-width: 20px">
-				<p-card header="{{ product.productName }}" subheader="{{ product.productOverview }}" [style]="{ width: '100%' }" styleClass="p-card-shadow">
-					<ng-template pTemplate="header">
-						<div style="text-align: center">
-							<div *ngIf="product.imageLink; else elseBlock" style="text-align: center">
-								<img alt="forum image" src="{{ 'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' + product.imageLink }}" style="width: 350px; height: 300px; margin: 20px; text-align: center" />
-							</div>
-							<ng-template #elseBlock>
-								<img alt="Card" src="assets/images/sampleLaptop.png" style="width: 350px; height: 300px; margin: 20px; text-align: center" />
-							</ng-template>
-						</div>
-					</ng-template>
-					<div class="product-description">{{ product.description }}</div>
-					<p-rating [ngModel]="ratingsMap.get(product)" [readonly]="true" [cancel]="false" [stars]="5"></p-rating>
+  <p-dataView
+    #dv
+    [value]="listOfProductEntities"
+    [paginator]="true"
+    [rows]="9"
+    layout="grid"
+  >
+    <ng-template pTemplate="header">
+      <div class="flex flex-column md:flex-row md:justify-content-between">
+        <h2>Bespoke Customizable Goods</h2>
+        <br />
+        <span style="width: 25%; float: left">
+          <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+        </span>
+        <span style="width: 75%">
+          <p-dropdown
+            [options]="sortOptions"
+            [(ngModel)]="sortKey"
+            placeholder="Sort By"
+            (onChange)="onSortChange($event)"
+            [style]="{ 'min-width': '15em' }"
+          ></p-dropdown>
+        </span>
+      </div>
+    </ng-template>
+    <ng-template let-product pTemplate="listItem">
+      <div class="col-12">
+        <div class="product-list-item">
+          <div *ngIf="product.imageLink; else elseBlock">
+            <img
+              alt="forum image"
+              src="{{
+                'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
+                  product.imageLink
+              }}"
+              style="width: 200px; height: 170px"
+            />
+          </div>
+          <ng-template #elseBlock>
+            <img
+              alt="Card"
+              src="assets/images/sampleLaptop.png"
+              style="width: 200px; height: 170px"
+            />
+          </ng-template>
+          <!-- <img alt="Card" src="assets/images/sampleLaptop.png" style="width: 20%" /> -->
+          <div class="product-list-detail" style="width: 60%">
+            <div class="product-name">{{ product.productName }}</div>
+            <br />
+            <div class="product-description">{{ product.description }}</div>
+            <div class="product-description">{{ product.productOverview }}</div>
+            <p-rating
+              [ngModel]="ratingsMap.get(product)"
+              [readonly]="true"
+              [cancel]="false"
+              [stars]="5"
+            ></p-rating>
+            <!-- <div>[ngModel]="reviewMap.get(product.productName)"</div> -->
+          </div>
+          <div class="product-list-action" style="width: 20%; float: left">
+            <p-button
+              label="Customize Now"
+              icon="pi pi-check"
+              (onClick)="customizeProduct(product)"
+            >
+            </p-button>
+            &nbsp;
+            <p-button
+              label="View Reviews"
+              icon="pi pi-bars"
+              (onClick)="doDisplayReviewsDialog(product)"
+              style="min-width: 100%"
+            >
+            </p-button>
+          </div>
+        </div>
+      </div>
+      <div class="col-12"><br /></div>
+    </ng-template>
+    <ng-template let-product pTemplate="gridItem">
+      <div
+        class="col-12"
+        style="
+          border: 10px;
+          margin-top: 20px;
+          margin-bottom: 20px;
+          border-width: 20px;
+        "
+      >
+        <p-card
+          header="{{ product.productName }}"
+          subheader="{{ product.productOverview }}"
+          [style]="{ width: '100%' }"
+          styleClass="p-card-shadow"
+        >
+          <ng-template pTemplate="header">
+            <div style="text-align: center">
+              <div
+                *ngIf="product.imageLink; else elseBlock"
+                style="text-align: center"
+              >
+                <img
+                  alt="forum image"
+                  src="{{
+                    'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
+                      product.imageLink
+                  }}"
+                  style="
+                    width: 350px;
+                    height: 300px;
+                    margin: 20px;
+                    text-align: center;
+                  "
+                />
+              </div>
+              <ng-template #elseBlock>
+                <img
+                  alt="Card"
+                  src="assets/images/sampleLaptop.png"
+                  style="
+                    width: 350px;
+                    height: 300px;
+                    margin: 20px;
+                    text-align: center;
+                  "
+                />
+              </ng-template>
+            </div>
+          </ng-template>
+          <div class="product-description">{{ product.description }}</div>
+          <p-rating
+            [ngModel]="ratingsMap.get(product)"
+            [readonly]="true"
+            [cancel]="false"
+            [stars]="5"
+          ></p-rating>
 
-					<ng-template pTemplate="footer">
-						<p-button label="Customize Now" icon="pi pi-check" (onClick)="customizeProduct(product)"></p-button>
-						&nbsp;
-						<p-button label="View Reviews" (onClick)="doDisplayReviewsDialog(product)"> </p-button>
-					</ng-template>
-				</p-card>
-			</div>
-		</ng-template>
-	</p-dataView>
+          <ng-template pTemplate="footer">
+            <p-button
+              label="Customize Now"
+              icon="pi pi-check"
+              (onClick)="customizeProduct(product)"
+            ></p-button>
+            &nbsp;
+            <p-button
+              label="View Reviews"
+              icon="pi pi-bars"
+              (onClick)="doDisplayReviewsDialog(product)"
+              style="min-width: 100%"
+            >
+            </p-button>
+          </ng-template>
+        </p-card>
+      </div>
+    </ng-template>
+  </p-dataView>
 </div>
 
-<p-dialog header="View All Reviews" [(visible)]="displayReviewsDialog" [style]="{ width: '50vw' }">
-	<div *ngIf="listOfReviews.length > 0; else elseBlock3">
+<p-dialog
+  [modal]="true"
+  header="View All Reviews"
+  [(visible)]="displayReviewsDialog"
+  [style]="{ width: '50vw' }"
+>
+  <!-- <div *ngIf="listOfReviews.length > 0; else elseBlock3">
 		<div *ngFor="let review of listOfReviews">
 			<p-panel header="Written By: {{ review.customerUsername }}">
 				<h5>{{ review.description }}</h5>
@@ -76,11 +173,54 @@
 				<p-rating [ngModel]="review.rating" [readonly]="true" [stars]="5" [cancel]="false"></p-rating>
 			</p-panel>
 		</div>
-	</div>
-	<ng-template #elseBlock3 style="text-align: center">
-		<img alt="Card" src="assets/images/noReviewsImage.png" style="width: 90%; height: 90%; margin: 20px" />
-	</ng-template>
-	<ng-template pTemplate="footer">
-		<h3>There are a total of {{ listOfReviews.length }} reviews</h3>
-	</ng-template>
+	</div> -->
+  <p-panel
+    header="Replies"
+    [toggleable]="true"
+    *ngIf="listOfReviews.length > 0; else elseBlock3"
+  >
+    <p-dataView [value]="listOfReviews">
+      <ng-template let-review pTemplate="listItem">
+        <div class="reply-box">
+          <div class="reply-avatar">
+            <div class="avatar-only">
+              <p-avatar
+                label="{{ review.customerUsername.charAt(0) }}"
+                size="large"
+                style="text-align: center"
+              ></p-avatar>
+
+        
+            </div>
+            <p>{{ review.customerUsername }}</p>
+          </div>
+          <div class="reply-content">
+            <div class="forum-timestamp">
+              <p-rating
+                [ngModel]="review.rating"
+                [readonly]="true"
+                [stars]="5"
+                [cancel]="false"
+              ></p-rating>
+            </div>
+            <br />
+            <p>{{ review.description }}</p>
+
+            <br />
+          </div>
+        </div>
+        <br />
+      </ng-template>
+    </p-dataView>
+  </p-panel>
+  <ng-template #elseBlock3 style="text-align: center">
+    <img
+      alt="Card"
+      src="assets/images/noReviewsImage.png"
+      style="width: 90%; height: 90%; margin: 20px"
+    />
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <h3>There are a total of {{ listOfReviews.length }} reviews</h3>
+  </ng-template>
 </p-dialog>

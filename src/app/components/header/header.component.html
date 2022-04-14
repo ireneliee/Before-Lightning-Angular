@@ -52,8 +52,8 @@
           'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
           sessionService.getCurrentMember().imageLink
         }}"
-        style="  height: 100px;
-        width: 100px;
+        style="  height: 60px;
+        width: 60px;
         border-radius: 50%;"
       
       />
@@ -61,8 +61,8 @@
         *ngIf="!sessionService.getCurrentMember().imageLink"
         alt="default forum image"
         src="assets/images/account.png"
-        style="height: 100px;
-        width: 100px;
+        style="height: 60px;
+        width: 60px;
         border-radius: 50%;"
       />
         <p>Welcome to BeforeLightning, {{ sessionService.getCurrentMember().firstname }}

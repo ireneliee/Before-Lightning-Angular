@@ -11,8 +11,7 @@ import { ChipModule } from 'primeng/chip';
 import { DividerModule } from 'primeng/divider';
 import { Member } from 'src/app/models/member';
 import { FixedSizeVirtualScrollStrategy } from '@angular/cdk/scrolling';
-import {AvatarGroupModule} from 'primeng/avatargroup';
-
+import { AvatarGroupModule } from 'primeng/avatargroup';
 
 @Component({
   selector: 'app-forum-page',
@@ -45,6 +44,10 @@ export class ForumPageComponent implements OnInit {
   // customized msgs service
   msgs: Message[];
 
+  // view likes
+  viewLikesDisplay: boolean;
+  likeList: Member[];
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -75,6 +78,10 @@ export class ForumPageComponent implements OnInit {
 
     // this message
     this.msgs = [];
+
+    //view likes
+    this.viewLikesDisplay = false;
+    this.likeList = new Array();
   }
 
   testtest(): void {
@@ -144,7 +151,6 @@ export class ForumPageComponent implements OnInit {
     this.display = true;
     this.forumToView = forumToView;
     this.forumToViewReplies = forumToView.replies!;
-    
   }
 
   // below are the method for create new reply
@@ -161,50 +167,56 @@ export class ForumPageComponent implements OnInit {
     this.forumToView = forumToView;
   }
 
+  showViewLikesDisplay(forumToView: ForumPost) {
+    this.likeList = forumToView.userWhoLikes!;
+    this.viewLikesDisplay = true;
+  }
+
   createNewReply() {
-    if(this.replyContent !== "") {
+    if (this.replyContent !== '') {
       this.replySubmitted = true;
-    if (true) {
-      
-      console.log('Creating the new class');
-      this.forumService
-        .createNewReply(this.forumToView.forumPostEntityId!, this.replyContent)
-        .subscribe({
-          next: (response) => {
-            console.log('Getting response');
-            let postId: Number = response;
-            this.replySuccess = true;
-            this.replyError = false;
-            this.clearReplyForm();
-            this.makeMessageAppear({
-              severity: 'info',
-              summary: 'Successfuly posted a forum reply',
-            });
-            this.clearReplyForm();
-            this.refreshList();
-            this.createReplyDisplay = false;
-          },
-          error: (error) => {
-            this.replyError = true;
-            this.replySuccess = false;
-            this.makeMessageAppear({
-              severity: 'error',
-              summary: 'Error',
-              detail: 'An error has occured while posting the entry',
-            });
-            this.clearReplyForm();
-            this.createReplyDisplay = false;
-          },
-        });
-    }
+      if (true) {
+        console.log('Creating the new class');
+        this.forumService
+          .createNewReply(
+            this.forumToView.forumPostEntityId!,
+            this.replyContent
+          )
+          .subscribe({
+            next: (response) => {
+              console.log('Getting response');
+              let postId: Number = response;
+              this.replySuccess = true;
+              this.replyError = false;
+              this.clearReplyForm();
+              this.makeMessageAppear({
+                severity: 'info',
+                summary: 'Successfuly posted a forum reply',
+              });
+              this.clearReplyForm();
+              this.refreshList();
+              this.createReplyDisplay = false;
+            },
+            error: (error) => {
+              this.replyError = true;
+              this.replySuccess = false;
+              this.makeMessageAppear({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'An error has occured while posting the entry',
+              });
+              this.clearReplyForm();
+              this.createReplyDisplay = false;
+            },
+          });
+      }
     } else {
       this.makeMessageAppear({
         severity: 'error',
-        summary: 'Comment cannot be empty!'
+        summary: 'Comment cannot be empty!',
       });
       this.createReplyDisplay = false;
     }
-    
   }
 
   // like / dislike function
@@ -222,7 +234,6 @@ export class ForumPageComponent implements OnInit {
     return false;
   }
 
-
   async changeLikes(post: ForumPost) {
     let postIdInString: string | undefined = post.forumPostEntityId?.toString();
 
@@ -232,13 +243,26 @@ export class ForumPageComponent implements OnInit {
         .toPromise()
         .then((response) => {
           this.refreshList();
-          if(this.fastCheckHasAlreadyLiked(post)) {
-            this.makeMessageAppear({severity: 'info', summary: "You unlike this post!"});
+          if (this.fastCheckHasAlreadyLiked(post)) {
+            this.makeMessageAppear({
+              severity: 'info',
+              summary: 'You unlike this post!',
+            });
           } else {
-            
-            this.makeMessageAppear({severity: 'info', summary: "You like this post!"});
+            this.makeMessageAppear({
+              severity: 'info',
+              summary: 'You like this post!',
+            });
           }
         });
+    }
+  }
+
+  doesNotHaveProfilePic(member: Member) {
+    if(member.imageLink === null || member.imageLink === "") {
+      return false;
+    } else {
+      return true;
     }
   }
 }

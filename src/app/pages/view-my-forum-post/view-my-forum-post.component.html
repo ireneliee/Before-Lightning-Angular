@@ -1,7 +1,7 @@
 <app-breadcrumb pageName="Forum: My posts"></app-breadcrumb>
 <app-forum-menu></app-forum-menu>
 <p-messages [(value)]="msgs"></p-messages>
-<div class="card" *ngIf = "sessionService.getIsLogin() == true">
+<div class="card" *ngIf="sessionService.getIsLogin() == true">
   <p-dataView
     #dv
     [value]="forumPosts"
@@ -53,7 +53,7 @@
                     class="p-button-raised p-button-rounded"
                     icon="pi pi-search"
                     (onClick)="showDialog(forum)"
-                    label = "View"
+                    label="View"
                     id="view-button"
                   >
                   </p-button>
@@ -63,7 +63,7 @@
                     icon="pi pi-comment"
                     class="p-button-rounded forum-button"
                     (onClick)="showCreateReplyDialog(forum)"
-                    label = "Comment"
+                    label="Comment"
                     id="comment-button"
                   ></p-button>
                   <p-button
@@ -76,7 +76,7 @@
                     icon="pi pi-thumbs-up"
                     (click)="changeLikes(forum)"
                     id="like-button"
-                    label = "Like"
+                    label="Like"
                   >
                   </p-button>
                   <p-button
@@ -89,7 +89,17 @@
                     icon="pi pi-thumbs-down"
                     (click)="changeLikes(forum)"
                     id="dislike-button"
-                    label = "Unlike"
+                    label="Unlike"
+                  ></p-button>
+
+                  <p-button
+                    *ngIf="sessionService.getIsLogin() == true"
+                    title="Unlike this post"
+                    class="p-button-rounded forum-button"
+                    icon="pi pi-pencil"
+                    (click)="redirectToUpdate(forum)"
+                    id="edit-button"
+                    label="Edit"
                   ></p-button>
                 </div>
               </span>
@@ -101,66 +111,6 @@
   </p-dataView>
 
   <!-- This is dialog box to view forum post -->
-  <p-dialog
-    class="view-forum-dialog"
-    *ngIf="display"
-    [modal]="true"
-    header="View Forum Details"
-    [(visible)]="display"
-    [style]="{ width: '50vw' }"
-  >
-    <p-card
-      header="{{ forumToView.title }}"
-      subheader="{{ forumToView.author?.username }}"
-      [style]="{ width: '100%' }"
-      styleClass="p-card-shadow"
-    >
-      <ng-template pTemplate="header">
-        <img
-          *ngIf="forumToView.imageLink"
-          alt="forum image"
-          src="{{
-            'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
-              forumToView.imageLink
-          }}"
-        />
-        <img
-          *ngIf="!forumToView.imageLink"
-          alt="default forum image"
-          src="assets/images/forumDefault.png"
-        />
-      </ng-template>
-      <div style="overflow-wrap: break-word">
-        {{ forumToView.content }}
-      </div>
-      <ng-template pTemplate="footer">
-        <p-chip
-          label="{{ forumToView.userWhoLikes?.length }}"
-          icon="pi pi-thumbs-up"
-          style="padding-right: 1em"
-        ></p-chip>
-      </ng-template>
-    </p-card>
-    <p-panel header="Replies" [toggleable]="true">
-      <p-table [value]="forumToViewReplies">
-        <ng-template pTemplate="header">
-          <tr>
-            <th>Author</th>
-            <th>Content</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-reply>
-          <tr>
-            <td>
-              <p-avatar label="P" size="large"></p-avatar>
-              <p>{{ reply.author.username }}</p>
-            </td>
-            <td>{{ reply.content }}</td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </p-panel>
-  </p-dialog>
 
   <!-- This is dialog box to create new comment -->
   <p-dialog
@@ -178,30 +128,33 @@
       styleClass="p-card-shadow"
     >
       <ng-template pTemplate="header">
-        <img
-          *ngIf="forumToView.imageLink"
-          alt="forum image"
-          src="{{
-            'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
-              forumToView.imageLink
-          }}"
-        />
-        <img
-          *ngIf="!forumToView.imageLink"
-          alt="default forum image"
-          src="assets/images/forumDefault.png"
-        />
+        <div class="forum-image">
+          <img
+            *ngIf="forumToView.imageLink"
+            alt="forum image"
+            src="{{
+              'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
+                forumToView.imageLink
+            }}"
+          />
+          <img
+            *ngIf="!forumToView.imageLink"
+            alt="default forum image"
+            src="assets/images/forumDefault.png"
+          />
+        </div>
       </ng-template>
 
       <div style="overflow-wrap: break-word">
         {{ forumToView.content }}
       </div>
       <ng-template pTemplate="footer">
-        <p-chip
-          label="{{ forumToView.userWhoLikes?.length }}"
-          icon="pi pi-thumbs-up"
-          style="padding-right: 1em"
-        ></p-chip>
+        <p-button
+          label="Like"
+          badge="{{ forumToView.userWhoLikes?.length }}"
+          styleClass="mr-2"
+          (click)="showViewLikesDisplay(forumToView)"
+        ></p-button>
       </ng-template>
     </p-card>
     <p-panel header="Replies" [toggleable]="true">
@@ -212,15 +165,15 @@
             <div class="reply-avatar">
               <div class="avatar-only">
                 <p-avatar
-                  *ngIf = "reply.author.imageLink === null"
+                  *ngIf="reply.author.imageLink === null"
                   label="{{ reply.author.username.charAt(0) }}"
                   size="large"
                   style="text-align: center"
                 ></p-avatar>
-               
+
                 <p-avatar
-                  *ngIf = "reply.author.imageLink !== null"
-                  image = "{{
+                  *ngIf="reply.author.imageLink !== null"
+                  image="{{
                     'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
                       reply.author.imageLink
                   }}"
@@ -236,7 +189,7 @@
               <div class="forum-timestamp">
                 Published on {{ reply.timestamp | date: "medium" }}
               </div>
-              <br/>
+              <br />
             </div>
           </div>
           <br />
@@ -253,29 +206,28 @@
     [(visible)]="createReplyDisplay"
     [style]="{ width: '40vw' }"
   >
-
     <div class="reply-form-container">
       <div class="reply-profile">
         <div class="member-bio" style="margin-left: 1.2em">
           <p-avatar
-          *ngIf="currentMember.imageLink === null"
-          label="{{ currentMember.username.charAt(0) }}"
-          size="large"
-          style="text-align: center"
-        ></p-avatar>
+            *ngIf="currentMember.imageLink === null"
+            label="{{ currentMember.username.charAt(0) }}"
+            size="large"
+            style="text-align: center"
+          ></p-avatar>
 
-        <p-avatar
-          *ngIf="currentMember.imageLink !== null"
-          image="{{
-            'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
-              currentMember.imageLink
-          }}"
-          size="large"
-          style="text-align: center"
-        ></p-avatar>
-        <br />
-      </div>
-      <div>{{ currentMember.username }}</div>
+          <p-avatar
+            *ngIf="currentMember.imageLink !== null"
+            image="{{
+              'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
+                currentMember.imageLink
+            }}"
+            size="large"
+            style="text-align: center"
+          ></p-avatar>
+          <br />
+        </div>
+        <div>{{ currentMember.username }}</div>
       </div>
       <form>
         <div class="reply-content-form">
@@ -314,6 +266,45 @@
     </div>
   </p-dialog>
 </div>
+<p-dialog
+  class="add-new-comment"
+  *ngIf="viewLikesDisplay"
+  [modal]="true"
+  header="User who likes the post"
+  [(visible)]="viewLikesDisplay"
+  [style]="{ width: '20vw' }"
+>
+  <p-dataView [value]="likeList">
+    <ng-template let-userLikes pTemplate="listItem">
+      <div class="like-box">
+        <div class="like-avatar">
+          <div class="avatar-only">
+            <p-avatar
+              *ngIf="!doesNotHaveProfilePic(userLikes)"
+              label="{{ userLikes.username.charAt(0) }}"
+              size="large"
+              style="text-align: center; margin-right: 2em"
+            ></p-avatar>
+
+            <p-avatar
+              *ngIf="doesNotHaveProfilePic(userLikes)"
+              image="{{
+                'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
+                  userLikes.imageLink
+              }}"
+              size="large"
+              style="text-align: center; margin-right: 2em"
+            ></p-avatar>
+          </div>
+          <p>{{ userLikes.username }}</p>
+        </div>
+        <br />
+      </div>
+      <br />
+    </ng-template>
+  </p-dataView>
+</p-dialog>
+
 <div *ngIf="sessionService.getIsLogin() == false">
   You are not logged in yet! Please log in to view your forum posts!
 </div>
