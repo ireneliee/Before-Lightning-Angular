@@ -66,6 +66,7 @@ export class ViewMyOrdersPageComponent implements OnInit {
   purchaseOrderToReview: FullPurchaseOrderEntity;
   resultSuccess: boolean;
   resultError: boolean;
+  JSON;
 
   constructor(
     private router: Router,
@@ -111,6 +112,8 @@ export class ViewMyOrdersPageComponent implements OnInit {
     this.purchaseOrderToReview = new FullPurchaseOrderEntity();
     this.resultSuccess = false;
     this.resultError = false;
+
+    this.JSON = JSON;
 
     this.events1 = [
       {
@@ -446,6 +449,15 @@ export class ViewMyOrdersPageComponent implements OnInit {
   redirectToProductPage() {
     this.router.navigate(["productsHomePage"]);
   
+  }
+
+  // displaying cosmetic
+  checkIfImageExist(pol: FullPurchaseOrderLineItem) {
+    if(pol.cosmeticImageLink === null || pol.cosmeticImageLink === "") {
+      return false;
+    } else {
+      return true;
+    }
   }
 }
 

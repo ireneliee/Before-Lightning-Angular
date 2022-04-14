@@ -9,7 +9,10 @@
   >
     <ng-template pTemplate="header">
       <br />
-      <h1>Your purchase order</h1>
+      <div class="purchase-order-title">
+        <h1>Your purchase order</h1>
+      </div>
+
       <br />
     </ng-template>
     <ng-template let-purchaseOrder pTemplate="item">
@@ -90,21 +93,21 @@
       <div class="bee-sketch blue"></div>
     </div>
 
-    <h4>
+    <h5>
       Oops: looks like you have nothing on your list!
       <br />
       <small>Start browsing now!</small>
-      <br/>
-      <br/>
+      <br />
+      <br />
       <p-button
         title="Go to support page"
         icon="pi pi-shopping-cart"
         pButton
         class="p-button-raised p-button-rounded"
-        label = "Shop now"
+        label="Shop now"
         (onClick)="redirectToProductPage()"
       ></p-button>
-    </h4>
+    </h5>
   </div>
 </div>
 <p-dialog
@@ -198,6 +201,7 @@
           <th>Serial number</th>
           <th>Product</th>
           <th>Part choices</th>
+          <th>Chassis Customization</th>
           <th>Quantity</th>
         </tr>
       </ng-template>
@@ -216,6 +220,22 @@
                 </tr>
               </ng-template>
             </p-table>
+          </td>
+          <td>
+            <p-card *ngIf="checkIfImageExist(pol)">
+              <img
+                alt="default cosmetic"
+                src="{{
+                  'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
+                    pol.cosmeticImageLink
+                }}"
+                name="cosmetic image"
+                style="max-width: 100%; text-align: center"
+              />
+            </p-card>
+            <p *ngIf="!checkIfImageExist(pol)" style="text-align: center">
+              No cosmetic customization requested
+            </p>
           </td>
           <td *ngIf="isBuilt(pol)">{{ pol.quantity }}</td>
         </tr>
