@@ -1,87 +1,112 @@
 <app-breadcrumb pageName="View My Orders"></app-breadcrumb>
 <p-messages></p-messages>
-<p-carousel
-  [value]="listOfPurchaseOrder"
-  [numVisible]="3"
-  [numScroll]="3"
-  [circular]="false"
->
-  <ng-template pTemplate="header">
-    <br />
-    <h1>Your purchase order</h1>
-    <br />
-  </ng-template>
-  <ng-template let-purchaseOrder pTemplate="item">
-    <div class="po-container">
-      <p-card>
-        <h4 style="text-align: center">
-          Reference number: {{ purchaseOrder.referenceNumber }}
-        </h4>
-        <br />
-        <h6 style="text-align: center">
-          Timestamp: {{ purchaseOrder.dateCreated | date: "medium" }}
-        </h6>
-        <br />
-        <div class="status-badges">
-          <p *ngIf="isComplete(purchaseOrder)">
-            Status:
-            <p-badge
-              value="{{ purchaseOrder.purchaseOrderStatus }}"
-              severity="success"
-            ></p-badge>
-          </p>
-          <p *ngIf="inProgress(purchaseOrder)">
-            Status:
-            <p-badge
-              value="{{ purchaseOrder.purchaseOrderStatus }}"
-              severity="info"
-            ></p-badge>
-          </p>
-          <p *ngIf="readyForShipment(purchaseOrder)">
-            Status:
-            <p-badge
-              value="{{ purchaseOrder.purchaseOrderStatus }}"
-              severity="warning"
-            ></p-badge>
-          </p>
-          <p *ngIf="isRefunded(purchaseOrder)">
-            Status:
-            <p-badge
-              value="{{ purchaseOrder.purchaseOrderStatus }}"
-              severity="danger"
-            ></p-badge>
-          </p>
-        </div>
+<div *ngIf="listOfPurchaseOrder.length !== 0">
+  <p-carousel
+    [value]="listOfPurchaseOrder"
+    [numVisible]="3"
+    [numScroll]="3"
+    [circular]="false"
+  >
+    <ng-template pTemplate="header">
+      <br />
+      <h1>Your purchase order</h1>
+      <br />
+    </ng-template>
+    <ng-template let-purchaseOrder pTemplate="item">
+      <div class="po-container">
+        <p-card>
+          <h4 style="text-align: center">
+            Reference number: {{ purchaseOrder.referenceNumber }}
+          </h4>
+          <br />
+          <h6 style="text-align: center">
+            Timestamp: {{ purchaseOrder.dateCreated | date: "medium" }}
+          </h6>
+          <br />
+          <div class="status-badges">
+            <p *ngIf="isComplete(purchaseOrder)">
+              Status:
+              <p-badge
+                value="{{ purchaseOrder.purchaseOrderStatus }}"
+                severity="success"
+              ></p-badge>
+            </p>
+            <p *ngIf="inProgress(purchaseOrder)">
+              Status:
+              <p-badge
+                value="{{ purchaseOrder.purchaseOrderStatus }}"
+                severity="info"
+              ></p-badge>
+            </p>
+            <p *ngIf="readyForShipment(purchaseOrder)">
+              Status:
+              <p-badge
+                value="{{ purchaseOrder.purchaseOrderStatus }}"
+                severity="warning"
+              ></p-badge>
+            </p>
+            <p *ngIf="isRefunded(purchaseOrder)">
+              Status:
+              <p-badge
+                value="{{ purchaseOrder.purchaseOrderStatus }}"
+                severity="danger"
+              ></p-badge>
+            </p>
+          </div>
 
-        <div class="car-buttons p-mt-5">
-          <p-button
-            class="action-button"
-            type="button"
-            styleClass="p-button p-button-rounded p-mr-2"
-            icon="pi pi-search"
-            (onClick)="showViewPurchaseOrderDialog(purchaseOrder)"
-          ></p-button>
-          <p-button
-            class="action-button"
-            alt = "Create support ticket"
-            type="button"
-            styleClass="p-button p-button-rounded p-mr-2"
-            icon="pi pi-ticket"
-            (onClick) = "navigateToSupportTicket()"
-          ></p-button>
-          <p-button
-            class="action-button"
-            type="button"
-            styleClass="p-button p-button-rounded"
-            icon="pi pi-comments"
-            (onClick)="showForumPostDialog(purchaseOrder)"
-          ></p-button>
-        </div>
-      </p-card>
+          <div class="car-buttons p-mt-5">
+            <p-button
+              class="action-button"
+              type="button"
+              styleClass="p-button p-button-rounded p-mr-2"
+              icon="pi pi-search"
+              (onClick)="showViewPurchaseOrderDialog(purchaseOrder)"
+            ></p-button>
+            <p-button
+              class="action-button"
+              alt="Create support ticket"
+              type="button"
+              styleClass="p-button p-button-rounded p-mr-2"
+              icon="pi pi-ticket"
+              (onClick)="navigateToSupportTicket()"
+            ></p-button>
+            <p-button
+              class="action-button"
+              type="button"
+              styleClass="p-button p-button-rounded"
+              icon="pi pi-comments"
+              (onClick)="showForumPostDialog(purchaseOrder)"
+            ></p-button>
+          </div>
+        </p-card>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>
+<div *ngIf="listOfPurchaseOrder.length === 0">
+  <div class="site">
+    <div class="sketch">
+      <div class="bee-sketch red"></div>
+      <div class="bee-sketch blue"></div>
     </div>
-  </ng-template>
-</p-carousel>
 
+    <h4>
+      Oops: looks like you have nothing on your list!
+      <br />
+      <small>Start browsing now!</small>
+      <br/>
+      <br/>
+      <p-button
+        title="Go to support page"
+        icon="pi pi-shopping-cart"
+        pButton
+        class="p-button-raised p-button-rounded"
+        label = "Shop now"
+        (onClick)="redirectToProductPage()"
+      ></p-button>
+    </h4>
+  </div>
+</div>
 <p-dialog
   class="view-order-dialog"
   *ngIf="viewOrderDisplay"
@@ -251,7 +276,9 @@
       type="button"
       label="Create a new review"
       (onClick)="showCreateReviewDialog(purchaseOrderToReview)"
-      *ngIf = "isComplete(purchaseOrderToReview) || isRefunded(purchaseOrderToReview)"
+      *ngIf="
+        isComplete(purchaseOrderToReview) || isRefunded(purchaseOrderToReview)
+      "
     ></p-button>
 
     <p-button
@@ -261,7 +288,9 @@
       pTooltip="You can only review a product once the order is completed"
       label="Create a new review"
       (onClick)="showCreateReviewDialog(purchaseOrderToReview)"
-      *ngIf = "!isComplete(purchaseOrderToReview) && !isRefunded(purchaseOrderToReview)"
+      *ngIf="
+        !isComplete(purchaseOrderToReview) && !isRefunded(purchaseOrderToReview)
+      "
     ></p-button>
   </p-card>
 </p-dialog>
@@ -277,8 +306,7 @@
   [maximizable]="true"
   [style]="{ width: '70vw' }"
 >
-
-<p-divider></p-divider>
+  <p-divider></p-divider>
   <p-card>
     <p-messages></p-messages>
     <p>Choose item that you want to review in the purchase order:</p>
@@ -387,18 +415,23 @@
       type="submit"
       label="Create new review"
     ></button> -->
-    <br/>
-    <br/>
+    <br />
+    <br />
     <div class="form-action-button">
       <button
         type="submit"
-        class = "submit-button"
+        class="submit-button"
         pButton
         type="submit"
         label="Create new review"
         icon=" pi pi-thumbs-up"
       ></button>
-      <p-button class = "clear-button" icon="pi pi-times" (click)="clear()" label="Clear"></p-button>
+      <p-button
+        class="clear-button"
+        icon="pi pi-times"
+        (click)="clear()"
+        label="Clear"
+      ></p-button>
     </div>
   </form>
 
@@ -454,18 +487,23 @@
         ></textarea>
       </div>
     </p-card>
-    <br/>
-    <br/>
+    <br />
+    <br />
     <div class="form-action-button">
       <button
         type="submit"
-        class = "submit-button"
+        class="submit-button"
         pButton
         type="submit"
         label="Create new review"
         icon=" pi pi-thumbs-up"
       ></button>
-      <p-button class = "clear-button" icon="pi pi-times" (click)="clear()" label="Clear"></p-button>
+      <p-button
+        class="clear-button"
+        icon="pi pi-times"
+        (click)="clear()"
+        label="Clear"
+      ></p-button>
     </div>
   </form>
 </p-dialog>

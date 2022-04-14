@@ -442,4 +442,11 @@ export class ViewMyOrdersPageComponent implements OnInit {
   isDisabled() {
     return true;
   }
+
+  redirectToProductPage() {
+    this.router.navigate(["productsHomePage"]);
+  
+  }
 }
+
+
