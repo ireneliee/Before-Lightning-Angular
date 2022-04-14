@@ -9,9 +9,9 @@
 		<img alt="Card" src="assets/images/sampleLaptop.png" style="width: 350px; height: 300px; margin: 20px" />
 	</ng-template>
 
-	<div class="product-description">{{ productToCustomize.productOverview }}</div>
+	<div class="product-description"><h5>{{ productToCustomize.productOverview }}</h5></div>
 	<br />
-	<div class="product-description">{{ productToCustomize.description }}</div>
+	<div class="product-description"><h5>{{ productToCustomize.description }}</h5></div>
 	<br />
 	<br />
 	<h4>Please Select An Option For Each Part Category:</h4>
@@ -27,15 +27,30 @@
 			{{ part.description }}
 		</div>
 		<p-divider></p-divider>
-		<div *ngIf="selectionMap.get(part)!.imageLink != ''; else elseBlock2" style="text-align: center">
-			<img alt="forum image" src="{{ 'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' + selectionMap.get(part)!.imageLink }}" style="width: 350px; height: 300px; margin: 20px" />
-		</div>
-		<ng-template #elseBlock2>
-			<div style="text-align: center">
-				<img alt="Please Select a Part Choice" src="assets/images/samplePartChoice.png" style="width: 350px; height: 300px; margin: 20px" />
+		<div style="text-align: center">
+			<div *ngIf="selectionMap.get(part)!.imageLink != ''; else elseBlock2" style="text-align: center">
+				<img alt="part choice image" src="{{ 'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' + selectionMap.get(part)!.imageLink }}" style="width: 350px; height: 300px; margin: 20px" />
 			</div>
-		</ng-template>
-
+			<ng-template #elseBlock2>
+				<div style="text-align: center">
+					<img alt="Please Select a Part Choice" src="assets/images/samplePartChoice.png" style="width: 350px; height: 300px; margin: 20px" />
+				</div>
+			</ng-template>
+			&nbsp;
+			<div *ngIf="selectionMap.get(part)!.partChoiceName != ''; else elseBlock3" style="text-align: center">
+				<p-panel header="Selected Part Choice: {{ selectionMap.get(part)!.partChoiceName }}">
+					{{ selectionMap.get(part)!.partOverview }}
+					<br />
+					<br />
+					{{ selectionMap.get(part)!.partDescription }}
+				</p-panel>
+			</div>
+			<ng-template #elseBlock3>
+				<p-panel header="Part Choice Details: ">
+					<h3>please select a part choice first</h3>
+				</p-panel>
+			</ng-template>
+		</div>
 		<p-divider></p-divider>
 		<div *ngFor="let partChoice of part.partChoiceEntities" class="field-checkbox">
 			<div *ngIf="partChoice.quantityOnHand != 0">

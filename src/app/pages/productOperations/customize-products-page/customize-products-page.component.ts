@@ -28,13 +28,7 @@ export class CustomizeProductsPageComponent implements OnInit {
 	JSON;
 	map = new Map<PartChoice, PartChoice>();
 	selectionMap = new Map<Part, PartChoice>();
-	cosmeticDefaultImages = ["assets/images/chassisCosmetic.png", 
-	"assets/images/chassisdesign1.png",
-	"assets/images/chassisdesign2.png",
-	"assets/images/chassisdesign3.png",
-	"assets/images/chassisdesign4.png",
-	"assets/images/chassisdesign5.png"]
-
+	cosmeticDefaultImages = ["assets/images/chassisCosmetic.png", "assets/images/chassisdesign1.png", "assets/images/chassisdesign2.png", "assets/images/chassisdesign3.png", "assets/images/chassisdesign4.png", "assets/images/chassisdesign5.png"];
 
 	constructor(private router: Router, private activatedRoute: ActivatedRoute, public sessionService: SessionService, private messageService: MessageService, private productService: ProductService) {
 		this.productId = null;
@@ -98,7 +92,10 @@ export class CustomizeProductsPageComponent implements OnInit {
 		if (this.selectionMap.get(part) != null) {
 			this.map.delete(this.selectionMap.get(part)!);
 		}
+		console.log("INSIDE SETMAP BEFORE: " + this.selectionMap.get(part)?.partChoiceName);
 		this.selectionMap.set(part, partChoice);
+		console.log("INSIDE SETMAP: " + this.selectionMap.get(part)?.partChoiceName);
+
 		this.map.set(partChoice, partChoice);
 	}
 
@@ -177,7 +174,7 @@ export class CustomizeProductsPageComponent implements OnInit {
 		let selectedChoice = new SelectedPartChoicePair(part, this.getBestPrice(partChoice), partChoice);
 		this.listOfSelectedPartChoices.push(selectedChoice);
 		this.getTotalBuildPrice();
-		this.messageService.add({ severity: "success", summary: "Success", detail: "Successfully added " + partChoice.partChoiceName + " to build" });
+		this.messageService.add({ severity: "info", summary: "Added to Build", detail: "Successfully added " + partChoice.partChoiceName + " to build" });
 		// console.log(this.listOfSelectedPartChoices);
 	}
 
