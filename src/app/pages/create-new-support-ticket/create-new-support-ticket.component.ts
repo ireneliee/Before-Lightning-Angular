@@ -63,7 +63,6 @@ export class CreateNewSupportTicketComponent implements OnInit {
 
       this.supportService.createSupportTicket(this.issue).subscribe({
           next: (response) => {
-          this.clear();
           if (this.email != "") {
             this.messageService.add({ key: "successMessage", severity: 'info', summary: "Successfuly Created Support Ticket", detail: "Please Log In and visit the Support Page to view your entry" });
           } else {
@@ -74,6 +73,7 @@ export class CreateNewSupportTicketComponent implements OnInit {
             createSupportTicketForm.reset();
           this.sessionService.setEmail("");
           this.signalToRefresh.emit('');
+          this.clear();
 
           },
           error: (error) => {

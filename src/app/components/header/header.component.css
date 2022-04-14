@@ -12,6 +12,10 @@ h1 {
   margin-left: 1em;
 }
 
-.logout-button {
-  color: red;
+.log-in-as {
+  font-style: normal;
+  font-size: small;
+  color: #13142c;
+  margin-top: 0px;
+  flex-direction: row-reverse;
 }

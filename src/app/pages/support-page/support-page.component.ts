@@ -18,28 +18,34 @@ export class SupportPageComponent implements OnInit {
 	sortField: string;
 	sortOrder: number;
 	sortKey: string;
+	loggedIn: boolean;
 
 	constructor(private router: Router, public sessionService: SessionService, private memberService: MemberService, private supportService: SupportService) {
 		this.sortOptions = new Array();
 		this.sortField = "";
 		this.sortKey = "";
 		this.sortOrder = 0;
+		this.loggedIn = false;
 	}
 
 	ngOnInit(): void {
 		this.checkAccessRight();
 
-		let email = this.sessionService.getCurrentMember().email;
-
-		this.supportService.retrieveSupportTickets(email).subscribe({
-			next: (response) => {
-				console.log(response);
-				this.supportTicketEntities = response;
-			},
-			error: (error) => {
-				console.log("***********SupportTicketPageComponent.ts: " + error);
-			},
-		});
+		if (this.sessionService.getIsLogin() == true) {
+			this.loggedIn = true;
+			let email = this.sessionService.getCurrentMember().email;
+			this.supportService.retrieveSupportTickets(email).subscribe({
+				next: (response) => {
+					console.log(response);
+					this.supportTicketEntities = response;
+				},
+				error: (error) => {
+					console.log("***********SupportTicketPageComponent.ts: " + error);
+				},
+			});
+		} else {
+			this.loggedIn = false;
+		}
 	}
 	onSortChange(event: { value: any }) {
 		let value = event.value;

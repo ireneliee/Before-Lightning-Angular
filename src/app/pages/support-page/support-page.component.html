@@ -1,26 +1,25 @@
 <app-breadcrumb pageName="Support"></app-breadcrumb>
-
 <div class="card">
-  <p-dataView
-    #dv
-    [value]="supportTicketEntities"
-    [paginator]="true"
-    [rows]="9"
-    layout="grid"
-  >
-    <ng-template pTemplate="header">
-      <div class="flex flex-column md:flex-row md:justify-content-between">
-        <h1>Support Page</h1>
-        <br /><br />
-      </div>
-      <br />
-      <app-create-new-support-ticket
-        (signalToRefresh)="callRefreshList($event)"
-      ></app-create-new-support-ticket>
-    </ng-template>
-
-    <ng-template let-supportTicket pTemplate="gridItem">
-      <div *ngIf="sessionService.getIsLogin() == true">
+  <div *ngIf="loggedIn; else elseBlock">
+    <p-dataView
+      #dv
+      [value]="supportTicketEntities"
+      [paginator]="true"
+      [rows]="9"
+      layout="grid"
+    >
+      <ng-template pTemplate="header">
+        <div class="flex flex-column md:flex-row md:justify-content-between">
+          <h1>Support Page</h1>
+          <br /><br />
+        </div>
+        <br />
+        <app-create-new-support-ticket
+          (signalToRefresh)="callRefreshList($event)"
+        >
+        </app-create-new-support-ticket>
+      </ng-template>
+      <ng-template let-supportTicket pTemplate="gridItem">
         <div class="p-col-12 p-md-4">
           <div class="support-grid-item card">
             <div class="support-grid-item">
@@ -33,62 +32,44 @@
                   Email: {{ supportTicket.email }}
                 </div>
                 <p-divider></p-divider>
+
                 <div class="support-issue">
                   Issue: {{ supportTicket.issue }}
                 </div>
-
                 <div class="status-badges">
                   <p *ngIf="isOpen(supportTicket)">
                     Status:
-                    <p-badge
-                      value="Open"
-                      severity="success"
-                    ></p-badge>
+                    <p-badge value="Open" severity="success"></p-badge>
                   </p>
                   <p *ngIf="isClosed(supportTicket)">
                     Status:
-                    <p-badge
-                      value="Closed"
-                      severity="info"
-                    ></p-badge>
+                    <p-badge value="Closed" severity="info"></p-badge>
                   </p>
                   <p *ngIf="isProcessing(supportTicket)">
                     Status:
-                    <p-badge
-                      value="Processing"
-                      severity="warning"
-                    ></p-badge>
+                    <p-badge value="Processing" severity="warning"></p-badge>
                   </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </ng-template>
+      </ng-template>
+    </p-dataView>
+  </div>
 
-    <!-- <ng-template let-supportTicket pTemplate="gridItem">
-            <div class="col-12 md:col-4">
-                <div class="supportTicket-grid-item card">
-                    <div class="supportTicket-grid-item-top">
-                        <div>
-                            <i class="pi pi-tag supportTicket-category-icon"></i>
-                            <span class="supportTicket-category">{{supportTicket.category}}</span>
-                        </div>
-                        <span [class]="'supportTicket-badge status-' + supportTicket.inventoryStatus.toLowerCase()">{{supportTicket.inventoryStatus}}</span>
-                    </div>
-                    <div class="supportTicket-grid-item-content">
-                        <img [src]="'assets/showcase/images/demo/supportTicket/' + supportTicket.image" [alt]="supportTicket.name"/>
-                        <div class="supportTicket-name">{{supportTicket.name}}</div>
-                        <div class="supportTicket-description">{{supportTicket.description}}</div>
-                        <p-rating [ngModel]="supportTicket.rating" [readonly]="true" [cancel]="false"></p-rating>
-                    </div>
-                    <div class="supportTicket-grid-item-bottom">
-                        <span class="supportTicket-price">${{supportTicket.price}}</span>
-                        <p-button icon="pi pi-shopping-cart" [disabled]="supportTicket.inventoryStatus === 'OUTOFSTOCK'"></p-button>
-                    </div>
-                </div>
-            </div>
-        </ng-template> -->
-  </p-dataView>
+  <ng-template #elseBlock>
+    <div class="mike coxlong">
+      <h1>Support Page</h1>
+      <br /><br />
+      <p-divider></p-divider>
+      <p>
+        Welcome to the support page, feel free to let us know any issues you are
+        currently facing and we will get back to you shortly!
+      </p>
+    </div>
+    <br />
+    <app-create-new-support-ticket (signalToRefresh)="callRefreshList($event)">
+    </app-create-new-support-ticket>
+  </ng-template>
 </div>

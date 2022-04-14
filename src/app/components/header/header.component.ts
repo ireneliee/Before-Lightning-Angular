@@ -49,7 +49,10 @@ export class HeaderComponent implements OnInit {
 			},
 		});
 	}
-
+resetButton(): void {
+	this.password = ""
+	this.username = ""
+}
 	memberLogout(): void {
 		this.sessionService.setIsLogin(false);
 		this.messageService.add({ severity: "success", summary: "Log Out Successful!", detail: "Good Bye! " + this.sessionService.getCurrentMember().firstname + " " + this.sessionService.getCurrentMember().lastname });
