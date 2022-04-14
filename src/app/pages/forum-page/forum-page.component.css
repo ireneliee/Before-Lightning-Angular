@@ -66,12 +66,14 @@ p-panel {
 }
 
 .reply-box {
-    display: flex;
+    display: float;
 }
 
 .reply-avatar {
-    flex-basis: 20%;
+    min-width: 15%;
+    max-width: 15%;
     text-align: left;
+    
 }
 
 .avatar-only {

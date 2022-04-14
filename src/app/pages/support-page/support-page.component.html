@@ -13,21 +13,43 @@
 		<ng-template let-supportTicket pTemplate="gridItem">
 			<div *ngIf="sessionService.getIsLogin() == true">
 			<div class="p-col-12 p-md-4">
-				<div class="product-grid-item card">
-				  <div class="product-grid-item">
-					  <div class="forum-box-content-maincontent">
-						<div class="forum-title"> 
+				<div class="support-grid-item card">
+				  <div class="support-grid-item">
+					  <div class="support-box-content-maincontent">
+						<div class="support-title"> 
 							Ticket Ticket ID: {{ supportTicket.supportTicketId }}
 						</div><br/>
-						<div class="forum-content">
+						<div class="support-email">
+							Email: {{ supportTicket.email }}
+						</div>
+						<p-divider></p-divider>
+
+						<div class="support-issue">
 							Issue: {{ supportTicket.issue }}
 						</div>
-						<div class="forum-timestamp">
-							Email: {{ supportTicket.email }}
-						</div><br/>
-						<div class="supportTicket-status">
-							Status: {{ supportTicket.supportTicketStatus}}
-						</div>
+						
+							<p *ngIf="isOpen(supportTicket)">
+							  Status:
+							  <p-badge
+								value="{{ supportTicket.supportTicketStatus }}"
+								severity="success"
+							  ></p-badge>
+							</p>
+							<p *ngIf="isProcessing(supportTicket)">
+							  Status:
+							  <p-badge
+								value="{{ supportTicket.supportTicketStatus}}"
+								severity="info"
+							  ></p-badge>
+							</p>
+							<p *ngIf="isClosed(supportTicket)">
+							  Status:
+							  <p-badge
+								value="{{ supportTicket.supportTicketStatus }}"
+								severity="warning"
+							  ></p-badge>
+							</p>
+					
 					</div>
 				</div>
 			</div>

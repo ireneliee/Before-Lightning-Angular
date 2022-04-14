@@ -70,7 +70,7 @@ import { ViewAllAccessoryItemsPageComponent } from "./pages/accessoryOperations/
 import { CreateNewSupportTicketComponent } from "./pages/create-new-support-ticket/create-new-support-ticket.component";
 import { BanCustomerComponent } from "./pages/ban-customer/ban-customer.component";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
-
+import {AvatarGroupModule} from 'primeng/avatargroup';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -146,6 +146,7 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
 		CalendarModule,
 		ConfirmDialogModule,
 		ScrollTopModule,
+		AvatarGroupModule
 	],
 	providers: [MessageService, ConfirmationService],
 	bootstrap: [AppComponent],

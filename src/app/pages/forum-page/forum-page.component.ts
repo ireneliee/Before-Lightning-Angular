@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ForumPost } from 'src/app/models/forum-post';
 import { ForumService } from 'src/app/services/forum.service';
 import { SessionService } from 'src/app/services/session.service';
-import { MessageService, SelectItem } from 'primeng/api';
+import { Message, MessageService, SelectItem } from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
 import { NgForm } from '@angular/forms';
 import { Reply } from 'src/app/models/reply';
@@ -11,6 +11,7 @@ import { ChipModule } from 'primeng/chip';
 import { DividerModule } from 'primeng/divider';
 import { Member } from 'src/app/models/member';
 import { FixedSizeVirtualScrollStrategy } from '@angular/cdk/scrolling';
+import {AvatarGroupModule} from 'primeng/avatargroup';
 
 
 @Component({
@@ -33,13 +34,16 @@ export class ForumPageComponent implements OnInit {
   JSON;
 
   // attribute for create new reply
-  currentMember: string;
+  currentMember: Member;
   replyContent: string;
   createReplyDisplay: boolean;
   replySubmitted: boolean;
   replySuccess: boolean;
   replyError: boolean;
   likingMap: Map<ForumPost, Boolean>;
+
+  // customized msgs service
+  msgs: Message[];
 
   constructor(
     private router: Router,
@@ -60,7 +64,7 @@ export class ForumPageComponent implements OnInit {
 
     this.replyContent = '';
     this.sortOrder = 0;
-    this.currentMember = this.sessionService.getUsername();
+    this.currentMember = this.sessionService.getCurrentMember();
     this.createReplyDisplay = false;
     this.replySubmitted = false;
     this.replySuccess = false;
@@ -68,6 +72,9 @@ export class ForumPageComponent implements OnInit {
 
     this.likingMap = new Map();
     this.JSON = JSON;
+
+    // this message
+    this.msgs = [];
   }
 
   testtest(): void {
@@ -124,6 +131,11 @@ export class ForumPageComponent implements OnInit {
       this.sortField = value;
     }
   }
+  // showing message
+  makeMessageAppear(m: Message) {
+    this.msgs = [];
+    this.msgs.push(m);
+  }
 
   // view forum post details
 
@@ -132,6 +144,7 @@ export class ForumPageComponent implements OnInit {
     this.display = true;
     this.forumToView = forumToView;
     this.forumToViewReplies = forumToView.replies!;
+    
   }
 
   // below are the method for create new reply
@@ -152,6 +165,7 @@ export class ForumPageComponent implements OnInit {
     if(this.replyContent !== "") {
       this.replySubmitted = true;
     if (true) {
+      
       console.log('Creating the new class');
       this.forumService
         .createNewReply(this.forumToView.forumPostEntityId!, this.replyContent)
@@ -162,7 +176,7 @@ export class ForumPageComponent implements OnInit {
             this.replySuccess = true;
             this.replyError = false;
             this.clearReplyForm();
-            this.messageService.add({
+            this.makeMessageAppear({
               severity: 'info',
               summary: 'Successfuly posted a forum reply',
             });
@@ -173,7 +187,7 @@ export class ForumPageComponent implements OnInit {
           error: (error) => {
             this.replyError = true;
             this.replySuccess = false;
-            this.messageService.add({
+            this.makeMessageAppear({
               severity: 'error',
               summary: 'Error',
               detail: 'An error has occured while posting the entry',
@@ -184,7 +198,7 @@ export class ForumPageComponent implements OnInit {
         });
     }
     } else {
-      this.messageService.add({
+      this.makeMessageAppear({
         severity: 'error',
         summary: 'Comment cannot be empty!'
       });
@@ -219,9 +233,10 @@ export class ForumPageComponent implements OnInit {
         .then((response) => {
           this.refreshList();
           if(this.fastCheckHasAlreadyLiked(post)) {
-            this.messageService.add({ severity: 'info', summary: "You unlike this post!"});
+            this.makeMessageAppear({severity: 'info', summary: "You unlike this post!"});
           } else {
-            this.messageService.add({ severity: 'info', summary: "You like this post!"});
+            
+            this.makeMessageAppear({severity: 'info', summary: "You like this post!"});
           }
         });
     }
