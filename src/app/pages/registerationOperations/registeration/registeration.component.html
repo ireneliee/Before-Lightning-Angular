@@ -1,150 +1,326 @@
 <app-breadcrumb pageName="Registeration"></app-breadcrumb>
 <p-messages></p-messages>
 <p-toast></p-toast>
-<form #createNewMemberForm="ngForm" (ngSubmit)="createNewMember(createNewMemberForm)">
-	<p-panel header="Register An Account: ">
-		<ng-template pTemplate="body" style="height: max-content">
-			<div class="form-group" style="width: 50%; float: left; padding: 10px">
-				<h3>User Details</h3>
-				<br />
-				<table width="100%" style="border-color: transparent">
-					<tr>
-						<span class="p-float-label">
-							<input id="inputUsername" name="username" type="text" pInputText #inputUsername="ngModel" [(ngModel)]="username" required="true" />
-							<label for="inputUsername">Username</label>
-						</span>
-						<div *ngIf="inputUsername.invalid && (inputUsername.dirty || inputUsername.touched || submitted)" class="errorText">
-							<div *ngIf="inputUsername.errors?.['required']">Username is required.</div>
-						</div>
-						<br />
-					</tr>
-					<tr>
-						<span class="p-float-label">
-							<input id="inputPassword" name="password" type="password" [(ngModel)]="password" required="true" #inputPassword="ngModel" pPassword />
-							<label for="inputPassword">Password</label>
-						</span>
-						<div *ngIf="inputPassword.invalid && (inputPassword.dirty || inputPassword.touched || submitted)" class="errorText">
-							<div *ngIf="inputPassword.errors?.['required']">Password is required.</div>
-						</div>
+<form
+  #createNewMemberForm="ngForm"
+  (ngSubmit)="createNewMember(createNewMemberForm)"
+>
+  <p-panel header="Register An Account: ">
+    <ng-template pTemplate="body" style="height: max-content">
+      <div class="form-group" style="width: 50%; float: left; padding: 10px">
+        <h3>User Details</h3>
+        <br />
+        <table width="100%" style="border-color: transparent">
+          <tr>
+            <span class="p-float-label">
+              <input
+                id="inputUsername"
+                name="username"
+                type="text"
+                pInputText
+                #inputUsername="ngModel"
+                [(ngModel)]="username"
+                required="true"
+              />
+              <label for="inputUsername">Username</label>
+            </span>
+            <div
+              *ngIf="
+                inputUsername.invalid &&
+                (inputUsername.dirty || inputUsername.touched || submitted)
+              "
+              class="errorText"
+            >
+              <div *ngIf="inputUsername.errors?.['required']">
+                Username is required.
+              </div>
+            </div>
+            <br />
+          </tr>
+          <tr>
+            <span class="p-float-label">
+              <input
+                id="inputPassword"
+                name="password"
+                type="password"
+                [(ngModel)]="password"
+                required="true"
+                #inputPassword="ngModel"
+                pPassword
+              />
+              <label for="inputPassword">Password</label>
+            </span>
+            <div
+              *ngIf="
+                inputPassword.invalid &&
+                (inputPassword.dirty || inputPassword.touched || submitted)
+              "
+              class="errorText"
+            >
+              <div *ngIf="inputPassword.errors?.['required']">
+                Password is required.
+              </div>
+            </div>
 
-						<br />
-					</tr>
-					<tr>
-						<span class="p-float-label">
-							<input id="inputFirstName" name="firstname" type="text" [(ngModel)]="firstname" required="true" #inputFirstName="ngModel" pInputText />
-							<label for="inputFirstName">First Name</label>
-						</span>
-						<div *ngIf="inputFirstName.invalid && (inputFirstName.dirty || inputFirstName.touched || submitted)" class="errorText">
-							<div *ngIf="inputFirstName.errors?.['required']">First Name is required.</div>
-						</div>
+            <br />
+          </tr>
+          <tr>
+            <span class="p-float-label">
+              <input
+                id="inputFirstName"
+                name="firstname"
+                type="text"
+                [(ngModel)]="firstname"
+                required="true"
+                #inputFirstName="ngModel"
+                pInputText
+              />
+              <label for="inputFirstName">First Name</label>
+            </span>
+            <div
+              *ngIf="
+                inputFirstName.invalid &&
+                (inputFirstName.dirty || inputFirstName.touched || submitted)
+              "
+              class="errorText"
+            >
+              <div *ngIf="inputFirstName.errors?.['required']">
+                First Name is required.
+              </div>
+            </div>
 
-						<br />
-					</tr>
-					<tr>
-						<span class="p-float-label">
-							<input id="inputLastName" name="lastname" type="text" [(ngModel)]="lastname" required="true" #inputLastName="ngModel" pInputText />
-							<label for="inputLastName">Last Name</label>
-						</span>
-						<div *ngIf="inputLastName.invalid && (inputLastName.dirty || inputLastName.touched || submitted)" class="errorText">
-							<div *ngIf="inputLastName.errors?.['required']">Last Name is required.</div>
-						</div>
+            <br />
+          </tr>
+          <tr>
+            <span class="p-float-label">
+              <input
+                id="inputLastName"
+                name="lastname"
+                type="text"
+                [(ngModel)]="lastname"
+                required="true"
+                #inputLastName="ngModel"
+                pInputText
+              />
+              <label for="inputLastName">Last Name</label>
+            </span>
+            <div
+              *ngIf="
+                inputLastName.invalid &&
+                (inputLastName.dirty || inputLastName.touched || submitted)
+              "
+              class="errorText"
+            >
+              <div *ngIf="inputLastName.errors?.['required']">
+                Last Name is required.
+              </div>
+            </div>
 
-						<br />
-					</tr>
-					<tr>
-						<span class="p-float-label">
-							<input id="inputEmail" name="email" type="text" [(ngModel)]="email" required="true" #inputEmail="ngModel" pInputText />
-							<label for="inputEmail">Email</label>
-						</span>
-						<div *ngIf="inputEmail.invalid && (inputEmail.dirty || inputEmail.touched || submitted)" class="errorText">
-							<div *ngIf="inputEmail.errors?.['required']">Email is required.</div>
-						</div>
+            <br />
+          </tr>
+          <tr>
+            <span class="p-float-label">
+              <input
+                id="inputEmail"
+                name="email"
+                type="text"
+                [(ngModel)]="email"
+                required="true"
+                #inputEmail="ngModel"
+                pInputText
+              />
+              <label for="inputEmail">Email</label>
+            </span>
+            <div
+              *ngIf="
+                inputEmail.invalid &&
+                (inputEmail.dirty || inputEmail.touched || submitted)
+              "
+              class="errorText"
+            >
+              <div *ngIf="inputEmail.errors?.['required']">
+                Email is required.
+              </div>
+            </div>
 
-						<br />
-					</tr>
-					<tr>
-						<span class="p-float-label">
-							<input id="inputContact" name="contact" type="text" [(ngModel)]="contact" required="true" #inputContact="ngModel" pInputText />
-							<label for="inputContact">Contact</label>
-						</span>
-						<div *ngIf="inputContact.invalid && (inputContact.dirty || inputContact.touched || submitted)" class="errorText">
-							<div *ngIf="inputContact.errors?.['required']">Contact is required.</div>
-						</div>
-						<br />
-					</tr>
-				</table>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				
-				<div style="margin: auto">
-					<button pButton type="submit" label="Register Account"></button>
-				</div>
-			</div>
+            <br />
+          </tr>
+          <tr>
+            <span class="p-float-label">
+              <input
+                id="inputContact"
+                name="contact"
+                type="text"
+                [(ngModel)]="contact"
+                required="true"
+                #inputContact="ngModel"
+                pInputText
+              />
+              <label for="inputContact">Contact</label>
+            </span>
+            <div
+              *ngIf="
+                inputContact.invalid &&
+                (inputContact.dirty || inputContact.touched || submitted)
+              "
+              class="errorText"
+            >
+              <div *ngIf="inputContact.errors?.['required']">
+                Contact is required.
+              </div>
+            </div>
+            <br />
+          </tr>
+        </table>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
 
-			<div style="width: 50%; float: left; height: 500px">
-				<h3>Address:</h3>
-				<br />
-				<table width="100%" style="border-color: transparent">
-					<tr>
-						<span class="p-float-label">
-							<input id="inputCountry" name="country" type="text" [(ngModel)]="address.country" required="true" #inputCountry="ngModel" pInputText />
-							<label for="inputCountry">Country</label>
-						</span>
-						<div *ngIf="inputCountry.invalid && (inputCountry.dirty || inputCountry.touched || submitted)" class="errorText">
-							<div *ngIf="inputCountry.errors?.['required']">Country is required.</div>
-						</div>
-						<br />
-					</tr>
-					<tr>
-						<span class="p-float-label">
-							<input id="inputBlock" name="block" type="text" [(ngModel)]="address.block" required="true" #inputBlock="ngModel" pInputText />
-							<label for="inputBlock">Block</label>
-						</span>
-						<div *ngIf="inputBlock.invalid && (inputBlock.dirty || inputBlock.touched || submitted)" class="errorText">
-							<div *ngIf="inputBlock.errors?.['required']">Block is required.</div>
-						</div>
-						<br />
-					</tr>
-					<tr>
-						<span class="p-float-label">
-							<input id="inputUnit" name="unit" type="text" [(ngModel)]="address.unit" required="true" #inputUnit="ngModel" pInputText />
-							<label for="inputUnit">Unit</label>
-						</span>
-						<div *ngIf="inputUnit.invalid && (inputUnit.dirty || inputUnit.touched || submitted)" class="errorText">
-							<div *ngIf="inputUnit.errors?.['required']">Unit is required.</div>
-						</div>
-						<br />
-					</tr>
-					<tr>
-						<span class="p-float-label">
-							<input id="inputPostalCode" name="postalcode" type="text" [(ngModel)]="address.postalCode" required="true" #inputPostalCode="ngModel" pInputText />
-							<label for="inputPostalCode">Postal Code</label>
-						</span>
-						<div *ngIf="inputPostalCode.invalid && (inputPostalCode.dirty || inputPostalCode.touched || submitted)" class="errorText">
-							<div *ngIf="inputPostalCode.errors?.['required']">Postal Code is required.</div>
-						</div>
-						<br />
-					</tr>
-					<tr>
-						<div class="forum-photo-upload card">
-							<br />
-							<h5>Upload your photo here</h5>
-							<br />
-							<p-fileUpload method="post" mode="advanced" name="file" url="http://localhost:8080/beforeLightningRWS/Resources/File/upload" accept="image/*"></p-fileUpload>
-						</div>
-						<br />
-						<div class="forum-photo-filename">
-							<h5>Photo name</h5>
-							<br />
-							<input name="forum-photo-name" type="text" pInputText pTooltip="Help us to store your photo nicely by filling in the exact name and extension of your photo!" [(ngModel)]="imageLink" style="width: 100%" />
-						</div>
-					</tr>
-					<br/>
-				</table>
-				<!-- <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload />
+        <div style="margin: auto">
+          <button pButton type="submit" label="Register Account"></button>
+        </div>
+      </div>
+
+      <div style="width: 50%; float: left; height: 500px">
+        <h3>Address:</h3>
+        <br />
+        <table width="100%" style="border-color: transparent">
+          <tr>
+            <span class="p-float-label">
+              <input
+                id="inputCountry"
+                name="country"
+                type="text"
+                [(ngModel)]="address.country"
+                required="true"
+                #inputCountry="ngModel"
+                pInputText
+              />
+              <label for="inputCountry">Country</label>
+            </span>
+            <div
+              *ngIf="
+                inputCountry.invalid &&
+                (inputCountry.dirty || inputCountry.touched || submitted)
+              "
+              class="errorText"
+            >
+              <div *ngIf="inputCountry.errors?.['required']">
+                Country is required.
+              </div>
+            </div>
+            <br />
+          </tr>
+          <tr>
+            <span class="p-float-label">
+              <input
+                id="inputBlock"
+                name="block"
+                type="text"
+                [(ngModel)]="address.block"
+                required="true"
+                #inputBlock="ngModel"
+                pInputText
+              />
+              <label for="inputBlock">Block</label>
+            </span>
+            <div
+              *ngIf="
+                inputBlock.invalid &&
+                (inputBlock.dirty || inputBlock.touched || submitted)
+              "
+              class="errorText"
+            >
+              <div *ngIf="inputBlock.errors?.['required']">
+                Block is required.
+              </div>
+            </div>
+            <br />
+          </tr>
+          <tr>
+            <span class="p-float-label">
+              <input
+                id="inputUnit"
+                name="unit"
+                type="text"
+                [(ngModel)]="address.unit"
+                required="true"
+                #inputUnit="ngModel"
+                pInputText
+              />
+              <label for="inputUnit">Unit</label>
+            </span>
+            <div
+              *ngIf="
+                inputUnit.invalid &&
+                (inputUnit.dirty || inputUnit.touched || submitted)
+              "
+              class="errorText"
+            >
+              <div *ngIf="inputUnit.errors?.['required']">
+                Unit is required.
+              </div>
+            </div>
+            <br />
+          </tr>
+          <tr>
+            <span class="p-float-label">
+              <input
+                id="inputPostalCode"
+                name="postalcode"
+                type="text"
+                [(ngModel)]="address.postalCode"
+                required="true"
+                #inputPostalCode="ngModel"
+                pInputText
+              />
+              <label for="inputPostalCode">Postal Code</label>
+            </span>
+            <div
+              *ngIf="
+                inputPostalCode.invalid &&
+                (inputPostalCode.dirty || inputPostalCode.touched || submitted)
+              "
+              class="errorText"
+            >
+              <div *ngIf="inputPostalCode.errors?.['required']">
+                Postal Code is required.
+              </div>
+            </div>
+            <br />
+          </tr>
+          <tr>
+            <div class="forum-photo-upload card">
+              <br />
+              <h5>Upload your photo here</h5>
+              <br />
+              <p-fileUpload
+                method="post"
+                mode="advanced"
+                name="file"
+                url="http://localhost:8080/beforeLightningRWS/Resources/File/upload"
+                accept="image/*"
+              ></p-fileUpload>
+            </div>
+            <br />
+            <div class="forum-photo-filename">
+              <h5>Photo name</h5>
+              <br />
+              <input
+                name="forum-photo-name"
+                type="text"
+                pInputText
+                pTooltip="Help us to store your photo nicely by filling in the exact name and extension of your photo!"
+                [(ngModel)]="imageLink"
+                style="width: 100%"
+              />
+            </div>
+          </tr>
+          <br />
+        </table>
+        <!-- <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload />
 
 				<div class="file-upload">
 					{{ fileName || "No file uploaded yet." }}
@@ -152,9 +328,7 @@
 					<button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
 					</button>
 				</div> -->
-			</div>
-
-			
-		</ng-template>
-	</p-panel>
+      </div>
+    </ng-template>
+  </p-panel>
 </form>

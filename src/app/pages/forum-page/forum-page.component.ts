@@ -260,9 +260,9 @@ export class ForumPageComponent implements OnInit {
 
   doesNotHaveProfilePic(member: Member) {
     if(member.imageLink === null || member.imageLink === "") {
-      return false;
-    } else {
       return true;
+    } else {
+      return false;
     }
   }
 }

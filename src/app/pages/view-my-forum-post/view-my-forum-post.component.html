@@ -165,14 +165,14 @@
             <div class="reply-avatar">
               <div class="avatar-only">
                 <p-avatar
-                  *ngIf="reply.author.imageLink === null"
+                  *ngIf="doesNotHaveProfilePic(reply.author)"
                   label="{{ reply.author.username.charAt(0) }}"
                   size="large"
                   style="text-align: center"
                 ></p-avatar>
 
                 <p-avatar
-                  *ngIf="reply.author.imageLink !== null"
+                  *ngIf="!doesNotHaveProfilePic(reply.author)"
                   image="{{
                     'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
                       reply.author.imageLink
@@ -210,14 +210,14 @@
       <div class="reply-profile">
         <div class="member-bio" style="margin-left: 1.2em">
           <p-avatar
-            *ngIf="currentMember.imageLink === null"
+            *ngIf="doesNotHaveProfilePic(currentMember)"
             label="{{ currentMember.username.charAt(0) }}"
             size="large"
             style="text-align: center"
           ></p-avatar>
 
           <p-avatar
-            *ngIf="currentMember.imageLink !== null"
+            *ngIf="!(doesNotHaveProfilePic(currentMember))"
             image="{{
               'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
                 currentMember.imageLink
@@ -280,14 +280,14 @@
         <div class="like-avatar">
           <div class="avatar-only">
             <p-avatar
-              *ngIf="!doesNotHaveProfilePic(userLikes)"
+              *ngIf="doesNotHaveProfilePic(userLikes)"
               label="{{ userLikes.username.charAt(0) }}"
               size="large"
               style="text-align: center; margin-right: 2em"
             ></p-avatar>
 
             <p-avatar
-              *ngIf="doesNotHaveProfilePic(userLikes)"
+              *ngIf="!doesNotHaveProfilePic(userLikes)"
               image="{{
                 'http://localhost:8080/beforeLightningBackend-war/uploadedFiles/' +
                   userLikes.imageLink

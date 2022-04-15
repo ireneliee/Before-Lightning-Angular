@@ -64,9 +64,9 @@ export class CreateNewSupportTicketComponent implements OnInit {
       this.supportService.createSupportTicket(this.issue).subscribe({
           next: (response) => {
           if (this.email != "") {
-            this.messageService.add({ key: "successMessage", severity: 'info', summary: "Successfuly Created Support Ticket", detail: "Please Log In and visit the Support Page to view your entry" });
+            this.messageService.add({ key: "successMessage", severity: 'info', summary: "Successfuly Created Support Ticket", detail: "We will contact you through your email!" });
           } else {
-            this.messageService.add({ key: "successMessage", severity: 'info', summary: "Successfuly Created Support Ticket", detail: "Please visit the Support Page to view your entry" });
+            this.messageService.add({ key: "successMessage", severity: 'info', summary: "Successfuly Created Support Ticket", detail: "We will contact you through your email!" });
 
           }
             createSupportTicketForm.resetForm();
