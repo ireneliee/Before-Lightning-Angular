@@ -63,6 +63,7 @@
               type="button"
               styleClass="p-button p-button-rounded p-mr-2"
               icon="pi pi-search"
+              pTooltip = "View purchase order details"
               (onClick)="showViewPurchaseOrderDialog(purchaseOrder)"
             ></p-button>
             <p-button
@@ -71,6 +72,7 @@
               type="button"
               styleClass="p-button p-button-rounded p-mr-2"
               icon="pi pi-ticket"
+              pTooltip  = "Ask for support"
               (onClick)="navigateToSupportTicket()"
             ></p-button>
             <p-button
@@ -78,6 +80,7 @@
               type="button"
               styleClass="p-button p-button-rounded"
               icon="pi pi-comments"
+              pTooltip  = "Create review / post forum"
               (onClick)="showForumPostDialog(purchaseOrder)"
             ></p-button>
           </div>
@@ -400,10 +403,10 @@
     </span> -->
     <p-card *ngIf="prodId != 0">
       <div class="rating-review-box">
-        <h4 for="inputRating">Choose the rating of the product</h4>
+        <h4 for="inputRating1">Choose the rating of the product</h4>
         <br />
         <p-rating
-          id="inputRating"
+          id="inputRating1"
           name="rating"
           type="number"
           [(ngModel)]="rating"
@@ -413,17 +416,18 @@
 
         <br />
         <br />
-        <h4 for="inputDesc">What do you like / dislike from our product?</h4>
+        <h4 for="inputDesc1">What do you like / dislike from our product?</h4>
         <br />
         <textarea
           style="width: 100%"
-          id="inputDesc"
+          id="inputDesc1"
           name="description"
           type="text"
           [(ngModel)]="description"
           required="false"
           #inputDesc="ngModel"
           pInputTextarea
+          title = "product-review-txtarea"
         ></textarea>
       </div>
     </p-card>
@@ -439,6 +443,7 @@
     <br />
     <div class="form-action-button">
       <button
+      title = "submit-review-button"
         type="submit"
         class="submit-button"
         pButton
@@ -500,6 +505,7 @@
           id="inputDesc"
           name="description"
           type="text"
+          title = "review-txt-area"
           [(ngModel)]="description"
           required="false"
           #inputDesc="ngModel"
@@ -512,6 +518,7 @@
     <div class="form-action-button">
       <button
         type="submit"
+        title = "submit-button"
         class="submit-button"
         pButton
         type="submit"

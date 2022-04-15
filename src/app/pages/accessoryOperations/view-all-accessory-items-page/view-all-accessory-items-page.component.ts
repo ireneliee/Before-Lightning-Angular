@@ -105,6 +105,10 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 							item.quantity = this.selectedAccessoryItem?.quantityOnHand!;
 							this.triggerMessage("Quantity selected has exceeded maximum stock available!", "info", "Exceeded Quantity Available");
 						}
+
+						if(this.selectedAccessoryItem!.price !== this.getBestPrice(this.selectedAccessoryItem!)) {
+							this.triggerMessage("What a sweet deal! " + this.selectedAccessoryItem?.accessoryItemName + " has a promotion", "warn", "Promotion applied! ");
+						}
 						item.subTotalPrice = item.quantity * this.getBestPrice(this.selectedAccessoryItem!);
 						this.triggerMessage("Successfully added Accessory to Cart!", "success", "Success");
 					}
