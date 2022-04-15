@@ -80,7 +80,7 @@
 	</ng-template>
 </p-dialog>
 
-<p-dialog header="View All Reviews" [(visible)]="displayReviewsDialog" [style]="{ width: '50vw' }">
+<!-- <p-dialog header="View All Reviews" [(visible)]="displayReviewsDialog" [style]="{ width: '50vw' }">
 	<div *ngIf="listOfReviews.length > 0; else elseBlock3">
 		<div *ngFor="let review of listOfReviews">
 			<p-panel header="Written By: {{ review.customerUsername }}">
@@ -96,4 +96,71 @@
 	<ng-template pTemplate="footer">
 		<h3>There are a total of {{ listOfReviews.length }} reviews</h3>
 	</ng-template>
+</p-dialog> -->
+
+<p-dialog
+  [modal]="true"
+  header="View All Reviews"
+  [(visible)]="displayReviewsDialog"
+  [style]="{ width: '50vw' }"
+>
+  <!-- <div *ngIf="listOfReviews.length > 0; else elseBlock3">
+		<div *ngFor="let review of listOfReviews">
+			<p-panel header="Written By: {{ review.customerUsername }}">
+				<h5>{{ review.description }}</h5>
+				<br />
+				<p-rating [ngModel]="review.rating" [readonly]="true" [stars]="5" [cancel]="false"></p-rating>
+			</p-panel>
+		</div>
+	</div> -->
+  <p-panel
+    header="Replies"
+    [toggleable]="true"
+    *ngIf="listOfReviews.length > 0; else elseBlock3"
+  >
+    <p-dataView [value]="listOfReviews">
+      <ng-template let-review pTemplate="listItem">
+        <div class="reply-box">
+          <div class="reply-avatar">
+            <div class="avatar-only">
+              <p-avatar
+                label="{{ review.customerUsername.charAt(0) }}"
+                size="large"
+                style="text-align: center"
+              ></p-avatar>
+
+        
+            </div>
+            <p>{{ review.customerUsername }}</p>
+          </div>
+          <div class="reply-content">
+            <div class="forum-timestamp">
+              <p-rating
+                [ngModel]="review.rating"
+                [readonly]="true"
+                [stars]="5"
+                [cancel]="false"
+              ></p-rating>
+            </div>
+            <br />
+            <p>{{ review.description }}</p>
+
+            <br />
+          </div>
+        </div>
+        <br />
+      </ng-template>
+    </p-dataView>
+  </p-panel>
+  <ng-template #elseBlock3 style="text-align: center">
+    <img
+      alt="Card"
+      src="assets/images/noReviewsImage.png"
+      style="width: 90%; height: 90%; margin: 20px"
+    />
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <h3>There are a total of {{ listOfReviews.length }} reviews</h3>
+  </ng-template>
 </p-dialog>
+
