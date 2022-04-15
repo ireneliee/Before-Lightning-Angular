@@ -175,11 +175,11 @@ export class CustomizeProductsPageComponent implements OnInit {
 		this.listOfSelectedPartChoices = this.listOfSelectedPartChoices.filter((pair) => pair.part != part);
 		//create pair and add into list
 		let selectedChoice = new SelectedPartChoicePair(part, this.getBestPrice(partChoice), partChoice);
-		
+
 		this.listOfSelectedPartChoices.push(selectedChoice);
 		this.getTotalBuildPrice();
 
-		if(this.getBestPrice(partChoice) !== partChoice.price) {
+		if (this.getBestPrice(partChoice) !== partChoice.price) {
 			this.messageService.add({ severity: "warn", summary: "Promotion applied", detail: "What a sweet deal! " + partChoice.partChoiceName + " has a promotion" });
 		}
 		this.messageService.add({ severity: "info", summary: "Added to Build", detail: "Successfully added " + partChoice.partChoiceName + " to build" });
@@ -218,7 +218,7 @@ export class CustomizeProductsPageComponent implements OnInit {
 					// console.log(promotion.discount);
 
 					if (promotion.discount > 0) {
-						let newPrice = (promotion.discount/100) * originalPrice;
+						let newPrice = originalPrice - ((promotion.discount / 100) * originalPrice);
 						if (newPrice < bestPrice) {
 							bestPrice = newPrice;
 							console.log("set best price (discount percentage)");

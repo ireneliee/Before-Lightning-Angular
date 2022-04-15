@@ -106,7 +106,7 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 							this.triggerMessage("Quantity selected has exceeded maximum stock available!", "info", "Exceeded Quantity Available");
 						}
 
-						if(this.selectedAccessoryItem!.price !== this.getBestPrice(this.selectedAccessoryItem!)) {
+						if (this.selectedAccessoryItem!.price !== this.getBestPrice(this.selectedAccessoryItem!)) {
 							this.triggerMessage("What a sweet deal! " + this.selectedAccessoryItem?.accessoryItemName + " has a promotion", "warn", "Promotion applied! ");
 						}
 						item.subTotalPrice = item.quantity * this.getBestPrice(this.selectedAccessoryItem!);
@@ -158,7 +158,7 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 				// console.log(promotion.endDate, currentDate);
 				if (dateEndDate > currentDate.getTime() && dateStartDate <= currentDate.getTime()) {
 					if (promotion.discount != 0) {
-						let newPrice = (promotion.discount / 100) * originalPrice;
+						let newPrice = originalPrice - ((promotion.discount / 100) * originalPrice);
 						if (newPrice < bestPrice) {
 							bestPrice = newPrice;
 						}

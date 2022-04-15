@@ -32,6 +32,7 @@ export class SettingsPageComponent implements OnInit {
 	//delte Credit card
 	deleteCreditCardId: string;
 	deleteCreditCardDisplay: boolean;
+	cvv: number | null;
 
 	constructor(private router: Router, private sessionService: SessionService, private memberService: MemberService, private messageService: MessageService, private confirmationService: ConfirmationService) {
 		this.currMember = this.sessionService.getCurrentMember();
@@ -47,6 +48,7 @@ export class SettingsPageComponent implements OnInit {
 		this.deleteAddressCardDisplay = false;
 		this.deleteCreditCardId = "";
 		this.deleteCreditCardDisplay = false;
+		this.cvv = null;
 	}
 
 	deleteAddress() {
@@ -158,6 +160,7 @@ export class SettingsPageComponent implements OnInit {
 									this.sessionService.setCurrentMember(member);
 									this.currMember = this.sessionService.getCurrentMember();
 									this.cardList = this.currMember.creditCards!;
+									this.cvv = null;
 									this.newCreditCard = new CreditCard();
 									this.messageService.add({ severity: "info", summary: "Successfully created the credit card" });
 								}
