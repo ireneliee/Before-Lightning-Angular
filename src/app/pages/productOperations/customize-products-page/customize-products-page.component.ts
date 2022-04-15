@@ -182,29 +182,55 @@ export class CustomizeProductsPageComponent implements OnInit {
 	}
 
 	getBestPrice(partChoice: PartChoice): number {
+		// console.log(partChoice);
+
 		//check if partchoice has promotions first
 		let originalPrice = partChoice.price;
 		let bestPrice = partChoice.price;
 		if (partChoice.promotionEntities.length > 0) {
+			console.log("have promotions");
+
 			partChoice.promotionEntities.forEach((promotion) => {
+				// console.log(promotion);
+
 				let currentDate = new Date();
 				// console.log(promotion.endDate, currentDate);
-				if (promotion.endDate > currentDate && promotion.startDate <= currentDate) {
-					if (promotion.discount != 0) {
-						let newPrice = promotion.discount * originalPrice;
+				// console.log(promotion.endDate < currentDate);
+				// console.log("This is the date: " + promotion.endDate);
+				let varEndDate: any = promotion.endDate;
+				let varStartDate: any = promotion.startDate;
+				// console.log(Date.parse(varEndDate));
+				// console.log(Date.parse(varStartDate));
+				// console.log(currentDate.getTime());
+
+				let dateEndDate = Date.parse(varEndDate);
+				let dateStartDate = Date.parse(varStartDate);
+				// console.log(currentDate.getTime());
+
+				if (dateEndDate > currentDate.getTime() && dateStartDate <= currentDate.getTime()) {
+					// console.log("INSIDE HERE FINALLY");
+					// console.log(typeof promotion.discount);
+					// console.log(promotion.discount);
+
+					if (promotion.discount > 0) {
+						let newPrice = (promotion.discount/100) * originalPrice;
 						if (newPrice < bestPrice) {
 							bestPrice = newPrice;
+							console.log("set best price (discount percentage)");
 						}
 					} else {
-						let newPrice = promotion.discountedPrice;
+						let newPrice = originalPrice - promotion.discountedPrice;
 						if (newPrice < bestPrice) {
 							bestPrice = newPrice;
+							console.log("set best price (discounted price)");
 						}
 					}
 				}
+				// console.log(bestPrice);
 			});
 			return bestPrice;
 		} else {
+			// console.log("NO PROMO");
 			return partChoice.price;
 		}
 	}

@@ -9,14 +9,18 @@
 		<img alt="Card" src="assets/images/sampleLaptop.png" style="width: 350px; height: 300px; margin: 20px" />
 	</ng-template>
 
-	<div class="product-description"><h5>{{ productToCustomize.productOverview }}</h5></div>
+	<div class="product-description">
+		<h5>{{ productToCustomize.productOverview }}</h5>
+	</div>
 	<br />
-	<div class="product-description"><h5>{{ productToCustomize.description }}</h5></div>
+	<div class="product-description">
+		<h5>{{ productToCustomize.description }}</h5>
+	</div>
 	<br />
 	<br />
 	<h4>Please Select An Option For Each Part Category:</h4>
 	<div class="product-description">
-		<h3>Current Price: ${{ buildPrice }}</h3>
+		<h3>Current Price: ${{ buildPrice }} (Promotions are applied if any)</h3>
 	</div>
 	<p-button (click)="addBuildToCart()" label="Add Build To Cart" icon="pi pi-shopping-cart"></p-button>
 </p-panel>
@@ -59,7 +63,7 @@
 			</div>
 			<div *ngIf="partChoice.quantityOnHand == 0">
 				<p-radioButton [(ngModel)]="selectedValue" name="{{ partChoice.partChoiceEntityId }}" value="{{ partChoice }}" disable="true"></p-radioButton>
-				<label for="partChoice.partChoiceEntityId"> {{ partChoice.partChoiceName }} (${{ partChoice.price }}) </label>
+				<label for="partChoice.partChoiceEntityId"> {{ partChoice.partChoiceName }} (${{ getBestPrice(partChoice) }}) </label>
 			</div>
 		</div>
 	</p-accordionTab>

@@ -29,7 +29,7 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 	selectedQuantity: number = 1;
 	selectedAccessoryItemQuantityOnHand: number = 0;
 	listOfReviews: Review[] = [];
-	ratingsMap : Map<AccessoryItem,number> = new Map();
+	ratingsMap: Map<AccessoryItem, number> = new Map();
 
 	constructor(private router: Router, private activatedRoute: ActivatedRoute, public sessionService: SessionService, private messageService: MessageService, private accessoryService: AccessoryService) {
 		this.retrieveAccessoryError = false;
@@ -50,17 +50,17 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 				next: (response) => {
 					this.accessory = response;
 					this.listOfAccessoryItems = this.accessory.accessoryItemEntities!;
-					this.listOfAccessoryItems.forEach(acc => {
+					this.listOfAccessoryItems.forEach((acc) => {
 						let rating = 0;
 						let total = 0;
 						if (acc.reviewEntities!.length > 0) {
-							acc.reviewEntities!.forEach(review => {
+							acc.reviewEntities!.forEach((review) => {
 								total += review.rating!;
 							});
-							rating = Math.round(total/acc.reviewEntities!.length);
+							rating = Math.round(total / acc.reviewEntities!.length);
 						}
 						this.ratingsMap.set(acc, rating);
-					})
+					});
 				},
 				error: (error) => {
 					this.retrieveAccessoryError = true;
@@ -114,7 +114,7 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 			if (checkExist == false) {
 				console.log("NO EXISTING ACCESSORY LINE ITEM");
 
-				let poli: PurchaseOrderLineItem = new PurchaseOrderLineItem(0, this.selectedQuantity, this.selectedQuantity * this.selectedAccessoryItem?.price!, "", PurchaseOrderLineItemTypeEnum.ACCESSORY);
+				let poli: PurchaseOrderLineItem = new PurchaseOrderLineItem(0, this.selectedQuantity, this.selectedQuantity * this.getBestPrice(this.selectedAccessoryItem!), "", PurchaseOrderLineItemTypeEnum.ACCESSORY);
 				poli.accessoryItemEntity = this.selectedAccessoryItem!;
 				cart.push(poli);
 				this.triggerMessage("Successfully added Accessory to Cart!", "success", "Success");
@@ -147,15 +147,19 @@ export class ViewAllAccessoryItemsPageComponent implements OnInit {
 		if (accessoryItem.promotionEntities!.length > 0) {
 			accessoryItem.promotionEntities!.forEach((promotion) => {
 				let currentDate = new Date();
+				let varEndDate: any = promotion.endDate;
+				let varStartDate: any = promotion.startDate;
+				let dateEndDate = Date.parse(varEndDate);
+				let dateStartDate = Date.parse(varStartDate);
 				// console.log(promotion.endDate, currentDate);
-				if (promotion.endDate > currentDate && promotion.startDate <= currentDate) {
+				if (dateEndDate > currentDate.getTime() && dateStartDate <= currentDate.getTime()) {
 					if (promotion.discount != 0) {
-						let newPrice = promotion.discount * originalPrice;
+						let newPrice = (promotion.discount / 100) * originalPrice;
 						if (newPrice < bestPrice) {
 							bestPrice = newPrice;
 						}
 					} else {
-						let newPrice = promotion.discountedPrice;
+						let newPrice = originalPrice - promotion.discountedPrice;
 						if (newPrice < bestPrice) {
 							bestPrice = newPrice;
 						}
