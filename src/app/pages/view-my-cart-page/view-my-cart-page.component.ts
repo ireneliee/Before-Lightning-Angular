@@ -53,7 +53,6 @@ export class ViewMyCartPageComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.checkAccessRight();
-		this.member = this.sessionService.getCurrentMember();
 		let cart: PurchaseOrderLineItem[] | undefined = this.sessionService.getCart();
 		if (cart) {
 			this.myCart = cart;
@@ -65,6 +64,7 @@ export class ViewMyCartPageComponent implements OnInit {
 				this.totalPrice += lineItem.subTotalPrice;
 			});
 		}
+		this.member = this.sessionService.getCurrentMember();
 		this.deliveryDate.setDate(new Date().getDate() + 14);
 		this.deliveryDate.setHours(12);
 		this.deliveryDate.setMinutes(0);
