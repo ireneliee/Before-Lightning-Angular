@@ -28,7 +28,7 @@ export class ViewMyForumPostComponent implements OnInit {
   sortKey: string;
 
   // attribute for create new reply
-  currentMember: Member;
+  currentMember: Member | undefined;
   replyContent: string;
   createReplyDisplay:boolean;
   replySubmitted: boolean;
@@ -68,7 +68,10 @@ export class ViewMyForumPostComponent implements OnInit {
 
     this.replyContent = "";
     this.sortOrder = 0;
-    this.currentMember = this.sessionService.getCurrentMember();
+    if(this.sessionService.getIsLogin() === true) {
+       this.currentMember = this.sessionService.getCurrentMember();
+    }
+   
     this.createReplyDisplay = false;
     this.replySubmitted = false;
     this.replySuccess = false;

@@ -33,7 +33,7 @@ export class ForumPageComponent implements OnInit {
   JSON;
 
   // attribute for create new reply
-  currentMember: Member;
+  currentMember: Member | undefined;
   replyContent: string;
   createReplyDisplay: boolean;
   replySubmitted: boolean;
@@ -67,7 +67,10 @@ export class ForumPageComponent implements OnInit {
 
     this.replyContent = '';
     this.sortOrder = 0;
-    this.currentMember = this.sessionService.getCurrentMember();
+    if(this.sessionService.getIsLogin() === true) {
+      this.currentMember = this.sessionService.getCurrentMember();
+    }
+   
     this.createReplyDisplay = false;
     this.replySubmitted = false;
     this.replySuccess = false;
