@@ -1,27 +1,22 @@
-# CustomerWebApp
+# beforeLightningAngular: Customer Web-app
+BeforeLightningAngular: Customer Web-app is a part of Before Lightning Enterprise, an enterprise system created to facilitate customizable laptops and simple accessories online sales.  The enterprise system consists of two web-app, one for BeforeLightning Staff to handle administration matters such as handling purchase orders, regulating forum posts, etc. 
+The customer portal is in this repository, while the source code of the customer portal and the backend would be in the other repository: BeforeLightningBackend. 
+Tech stack used in this repository is The Angular Framework.
+To know more about our project, please take a look at the thorough documentation the team has prepared inside the docs folder in this repository. 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.0.
+Instructions to Deploy:
+1. start MySQL80 in your services
+2. create database and name it beforelightningbackend on netbeans
+3. connect to it
+4. ensure that you have primefaces 8 library, jasperreport, JSF community theme bluesky, Mimepull and Jersey Media (provided in source folder under java libraries)
+5. unzip uploadedFiles in your docroot (provided in source folder as well)
+6. clean build and deploy and ensure that the tables are generated and data is populated in the tables
+7. go to visual studio
+8. npm install
+9. ng serve
+10. now go to your web browser and enter the appropriate links to access each app
+localhost8080 for our jsf application
+localhost4200 for our angular application
+both apps should be working fine from this point.
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+A full demo video of this enterprise system can be seen here: https://www.youtube.com/watch?v=k5CZJt5hBnY
